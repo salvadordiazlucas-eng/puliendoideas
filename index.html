@@ -13,25 +13,27 @@
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background:#0a0a0a;
+background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
 color:white;
+overflow-x:hidden;
 }
 
 .container{
 max-width:1000px;
 margin:auto;
-padding:80px 20px;
+padding:100px 20px;
 text-align:center;
 }
 
 h1{
-font-size:56px;
+font-size:60px;
 color:#4bb6ff;
 margin-bottom:10px;
+letter-spacing:1px;
 }
 
 .subtitle{
-font-size:20px;
+font-size:22px;
 opacity:0.8;
 margin-bottom:40px;
 }
@@ -39,41 +41,60 @@ margin-bottom:40px;
 .description{
 max-width:700px;
 margin:auto;
-line-height:1.6;
+line-height:1.7;
 font-size:18px;
 opacity:0.9;
 }
 
 .section{
-margin-top:80px;
+margin-top:100px;
 }
 
 .box{
 background:rgba(255,255,255,0.03);
-padding:30px;
-border-radius:12px;
+padding:40px;
+border-radius:16px;
 margin-top:30px;
+backdrop-filter: blur(10px);
 }
 
 .contact{
-margin-top:80px;
+margin-top:100px;
 }
 
 .button{
 display:inline-block;
-margin-top:20px;
-padding:14px 30px;
-background:#4bb6ff;
+margin-top:25px;
+padding:16px 35px;
+background:linear-gradient(135deg,#4bb6ff,#2e8fff);
 color:black;
-border-radius:8px;
+border-radius:10px;
 font-weight:600;
 text-decoration:none;
+transition:0.3s;
+}
+
+.button:hover{
+transform:scale(1.05);
 }
 
 .footer{
-margin-top:100px;
+margin-top:120px;
 font-size:14px;
 opacity:0.5;
+}
+
+/* EFECTO LUZ */
+.glow{
+position:absolute;
+width:300px;
+height:300px;
+background:radial-gradient(circle, rgba(75,182,255,0.2), transparent 70%);
+top:20%;
+left:50%;
+transform:translateX(-50%);
+filter:blur(40px);
+z-index:-1;
 }
 
 </style>
@@ -81,14 +102,16 @@ opacity:0.5;
 
 <body>
 
+<div class="glow"></div>
+
 <div class="container">
 
 <h1>Puliendo Ideas</h1>
 <p class="subtitle">Dando luz a sus ideas</p>
 
 <p class="description">
-Desarrollamos soluciones creativas y digitales para negocios que buscan mejorar su imagen,
-comunicación y presencia profesional.
+Transformamos ideas en soluciones digitales con estructura, claridad y propósito.
+Diseñamos herramientas, imagen y estrategia para negocios reales.
 </p>
 
 <div class="section">
@@ -96,7 +119,8 @@ comunicación y presencia profesional.
 <div class="box">
 <h2>Estamos construyendo algo importante</h2>
 <p>
-Muy pronto podrá descubrir nuestras soluciones, servicios y proyectos.
+Muy pronto podrá descubrir un sistema diseñado para ayudar a negocios a organizar,
+automatizar y crecer.
 </p>
 </div>
 
