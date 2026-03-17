@@ -27,7 +27,7 @@ background:radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
 z-index:-2;
 }
 
-/* LUZ */
+/* AURA */
 .glow{
 position:absolute;
 width:220px;
@@ -39,20 +39,19 @@ transform:translate(-50%,-50%);
 filter:blur(40px);
 }
 
-.light{
+/* LOGO LUCIERNAGA */
+.logo{
 position:absolute;
-width:70px;
-height:70px;
-background:radial-gradient(circle, #ffd86b, rgba(255,220,100,0.1));
-border-radius:50%;
 top:18%;
 left:50%;
 transform:translate(-50%,-50%);
+width:90px;
+z-index:2;
 }
 
 /* CONTENIDO */
 .container{
-padding:90px 20px 60px;
+padding:110px 20px 60px;
 text-align:center;
 max-width:500px;
 margin:auto;
@@ -117,7 +116,7 @@ font-size:12px;
 opacity:0.4;
 }
 
-/* DESKTOP (solo mejora, no base) */
+/* DESKTOP */
 @media (min-width:768px){
 
 h1{
@@ -125,13 +124,12 @@ font-size:64px;
 }
 
 .container{
-padding:140px 20px 80px;
+padding:160px 20px 80px;
 max-width:900px;
 }
 
-.light{
+.logo{
 width:140px;
-height:140px;
 }
 
 .glow{
@@ -148,7 +146,9 @@ height:400px;
 
 <div class="background"></div>
 <div class="glow"></div>
-<div class="light"></div>
+
+<!-- LOGO -->
+<img src="luciernaga.png" class="logo">
 
 <div class="container">
 
