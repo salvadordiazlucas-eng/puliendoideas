@@ -15,7 +15,7 @@ margin:0;
 font-family:'Poppins',sans-serif;
 background:#050505;
 color:white;
-overflow:hidden;
+overflow-x:hidden;
 }
 
 /* FONDO */
@@ -27,89 +27,118 @@ background:radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
 z-index:-2;
 }
 
-/* LUZ PRINCIPAL */
-.light{
-position:absolute;
-width:120px;
-height:120px;
-background:radial-gradient(circle, rgba(255,220,100,0.9), rgba(255,220,100,0.1));
-border-radius:50%;
-top:40%;
-left:50%;
-transform:translate(-50%,-50%);
-animation:float 6s ease-in-out infinite;
-filter:blur(2px);
-}
-
-/* AURA */
+/* LUZ */
 .glow{
 position:absolute;
-width:400px;
-height:400px;
-background:radial-gradient(circle, rgba(255,220,100,0.15), transparent 70%);
-top:40%;
+width:220px;
+height:220px;
+background:radial-gradient(circle, rgba(255,220,100,0.2), transparent 70%);
+top:18%;
 left:50%;
 transform:translate(-50%,-50%);
-animation:float 6s ease-in-out infinite;
 filter:blur(40px);
 }
 
-/* ANIMACIÓN */
-@keyframes float{
-0%{transform:translate(-50%,-50%) translateY(0);}
-50%{transform:translate(-50%,-50%) translateY(-20px);}
-100%{transform:translate(-50%,-50%) translateY(0);}
+.light{
+position:absolute;
+width:70px;
+height:70px;
+background:radial-gradient(circle, #ffd86b, rgba(255,220,100,0.1));
+border-radius:50%;
+top:18%;
+left:50%;
+transform:translate(-50%,-50%);
 }
 
 /* CONTENIDO */
 .container{
-position:relative;
+padding:90px 20px 60px;
 text-align:center;
-top:50%;
-transform:translateY(-50%);
-padding:20px;
+max-width:500px;
+margin:auto;
 }
 
 h1{
-font-size:64px;
+font-size:36px;
 color:#4bb6ff;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .subtitle{
-font-size:22px;
+font-size:16px;
 opacity:0.8;
-margin-bottom:30px;
+margin-bottom:15px;
+}
+
+.tagline{
+font-size:14px;
+opacity:0.6;
+margin-bottom:25px;
 }
 
 .description{
-max-width:700px;
-margin:auto;
-line-height:1.6;
-font-size:18px;
-opacity:0.85;
+font-size:15px;
+line-height:1.5;
+opacity:0.9;
 }
 
-.button{
-display:inline-block;
+/* BLOQUE */
+.box{
 margin-top:40px;
-padding:14px 30px;
-background:#4bb6ff;
+padding:20px;
+background:rgba(255,255,255,0.03);
+border-radius:12px;
+}
+
+/* BOTÓN */
+.button{
+display:block;
+margin-top:30px;
+padding:16px;
+background:linear-gradient(135deg,#4bb6ff,#2e8fff);
 color:black;
 border-radius:10px;
 font-weight:600;
 text-decoration:none;
-transition:0.3s;
+font-size:16px;
 }
 
-.button:hover{
-transform:scale(1.05);
-}
-
+/* CONTACTO */
 .contact{
-margin-top:30px;
-font-size:14px;
+margin-top:20px;
+font-size:13px;
 opacity:0.7;
+}
+
+/* FOOTER */
+.footer{
+margin-top:50px;
+font-size:12px;
+opacity:0.4;
+}
+
+/* DESKTOP (solo mejora, no base) */
+@media (min-width:768px){
+
+h1{
+font-size:64px;
+}
+
+.container{
+padding:140px 20px 80px;
+max-width:900px;
+}
+
+.light{
+width:140px;
+height:140px;
+}
+
+.glow{
+width:400px;
+height:400px;
+}
+
 }
 
 </style>
@@ -118,7 +147,6 @@ opacity:0.7;
 <body>
 
 <div class="background"></div>
-
 <div class="glow"></div>
 <div class="light"></div>
 
@@ -127,16 +155,30 @@ opacity:0.7;
 <h1>Puliendo Ideas</h1>
 <p class="subtitle">Dando luz a sus ideas</p>
 
+<p class="tagline">Soluciones digitales para negocios reales</p>
+
 <p class="description">
-No estamos creando una web.  
-Estamos construyendo un sistema para transformar ideas en soluciones reales.
+Transformamos ideas en sistemas que organizan, automatizan y hacen crecer su negocio.
 </p>
 
-<a class="button" href="mailto:info@puliendoideas.com">Contactar</a>
+<div class="box">
+<h3>Estamos construyendo algo importante</h3>
+<p>
+Muy pronto podrá descubrir una nueva forma de trabajar su negocio con claridad y estructura.
+</p>
+</div>
+
+<a class="button" href="mailto:info@puliendoideas.com">
+Contactar ahora
+</a>
 
 <div class="contact">
 <p>+34 643 34 41 06</p>
 <p>info@puliendoideas.com</p>
+</div>
+
+<div class="footer">
+<p>© Puliendo Ideas</p>
 </div>
 
 </div>
