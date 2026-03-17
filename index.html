@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Puliendo Ideas | Soluciones digitales</title>
+<title>Puliendo Ideas | Dando luz a sus ideas</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -13,60 +13,88 @@
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
-background: radial-gradient(circle at center, #0a0a0a 0%, #050505 100%);
+background:#050505;
 color:white;
-overflow-x:hidden;
+overflow:hidden;
 }
 
+/* FONDO */
+.background{
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
+z-index:-2;
+}
+
+/* LUZ PRINCIPAL */
+.light{
+position:absolute;
+width:120px;
+height:120px;
+background:radial-gradient(circle, rgba(255,220,100,0.9), rgba(255,220,100,0.1));
+border-radius:50%;
+top:40%;
+left:50%;
+transform:translate(-50%,-50%);
+animation:float 6s ease-in-out infinite;
+filter:blur(2px);
+}
+
+/* AURA */
+.glow{
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle, rgba(255,220,100,0.15), transparent 70%);
+top:40%;
+left:50%;
+transform:translate(-50%,-50%);
+animation:float 6s ease-in-out infinite;
+filter:blur(40px);
+}
+
+/* ANIMACIÓN */
+@keyframes float{
+0%{transform:translate(-50%,-50%) translateY(0);}
+50%{transform:translate(-50%,-50%) translateY(-20px);}
+100%{transform:translate(-50%,-50%) translateY(0);}
+}
+
+/* CONTENIDO */
 .container{
-max-width:1000px;
-margin:auto;
-padding:100px 20px;
+position:relative;
 text-align:center;
+top:50%;
+transform:translateY(-50%);
+padding:20px;
 }
 
 h1{
-font-size:60px;
+font-size:64px;
 color:#4bb6ff;
 margin-bottom:10px;
-letter-spacing:1px;
 }
 
 .subtitle{
 font-size:22px;
 opacity:0.8;
-margin-bottom:40px;
+margin-bottom:30px;
 }
 
 .description{
 max-width:700px;
 margin:auto;
-line-height:1.7;
+line-height:1.6;
 font-size:18px;
-opacity:0.9;
-}
-
-.section{
-margin-top:100px;
-}
-
-.box{
-background:rgba(255,255,255,0.03);
-padding:40px;
-border-radius:16px;
-margin-top:30px;
-backdrop-filter: blur(10px);
-}
-
-.contact{
-margin-top:100px;
+opacity:0.85;
 }
 
 .button{
 display:inline-block;
-margin-top:25px;
-padding:16px 35px;
-background:linear-gradient(135deg,#4bb6ff,#2e8fff);
+margin-top:40px;
+padding:14px 30px;
+background:#4bb6ff;
 color:black;
 border-radius:10px;
 font-weight:600;
@@ -78,23 +106,10 @@ transition:0.3s;
 transform:scale(1.05);
 }
 
-.footer{
-margin-top:120px;
+.contact{
+margin-top:30px;
 font-size:14px;
-opacity:0.5;
-}
-
-/* EFECTO LUZ */
-.glow{
-position:absolute;
-width:300px;
-height:300px;
-background:radial-gradient(circle, rgba(75,182,255,0.2), transparent 70%);
-top:20%;
-left:50%;
-transform:translateX(-50%);
-filter:blur(40px);
-z-index:-1;
+opacity:0.7;
 }
 
 </style>
@@ -102,7 +117,10 @@ z-index:-1;
 
 <body>
 
+<div class="background"></div>
+
 <div class="glow"></div>
+<div class="light"></div>
 
 <div class="container">
 
@@ -110,35 +128,15 @@ z-index:-1;
 <p class="subtitle">Dando luz a sus ideas</p>
 
 <p class="description">
-Transformamos ideas en soluciones digitales con estructura, claridad y propósito.
-Diseñamos herramientas, imagen y estrategia para negocios reales.
+No estamos creando una web.  
+Estamos construyendo un sistema para transformar ideas en soluciones reales.
 </p>
-
-<div class="section">
-
-<div class="box">
-<h2>Estamos construyendo algo importante</h2>
-<p>
-Muy pronto podrá descubrir un sistema diseñado para ayudar a negocios a organizar,
-automatizar y crecer.
-</p>
-</div>
-
-</div>
-
-<div class="contact">
-
-<h2>Contacto</h2>
-
-<p><strong>+34 643 34 41 06</strong></p>
-<p><strong>info@puliendoideas.com</strong></p>
 
 <a class="button" href="mailto:info@puliendoideas.com">Contactar</a>
 
-</div>
-
-<div class="footer">
-<p>© Puliendo Ideas</p>
+<div class="contact">
+<p>+34 643 34 41 06</p>
+<p>info@puliendoideas.com</p>
 </div>
 
 </div>
