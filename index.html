@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Puliendo Ideas | Más clientes, menos complicaciones</title>
+<title>Puliendo Ideas | Más clientes sin complicaciones</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -21,12 +21,31 @@ color:white;
 .container{
 max-width:500px;
 margin:auto;
-padding:30px 20px 60px;
+padding:40px 20px 60px;
+text-align:center;
+}
+
+/* LOGO LUZ */
+.logo{
+width:70px;
+height:70px;
+margin:auto;
+border-radius:50%;
+background: radial-gradient(circle, #ffd86b 0%, #ffb300 60%, transparent 80%);
+box-shadow: 0 0 40px rgba(255,200,0,0.6);
+margin-bottom:25px;
+animation:pulse 2.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1); opacity:1;}
+50%{transform:scale(1.1); opacity:0.85;}
+100%{transform:scale(1); opacity:1;}
 }
 
 /* TITULAR */
 h1{
-font-size:28px;
+font-size:26px;
 line-height:1.3;
 margin-bottom:15px;
 }
@@ -37,7 +56,7 @@ color:#4bb6ff;
 
 /* SUBTÍTULO */
 .subtitle{
-font-size:16px;
+font-size:15px;
 opacity:0.85;
 margin-bottom:25px;
 line-height:1.5;
@@ -49,25 +68,25 @@ background:rgba(255,255,255,0.04);
 padding:18px;
 border-radius:12px;
 margin-bottom:12px;
+text-align:left;
 }
 
 .block h3{
-margin:0 0 8px;
-font-size:16px;
+margin:0 0 6px;
+font-size:15px;
 }
 
 .block p{
 margin:0;
 font-size:14px;
-opacity:0.8;
+opacity:0.75;
 }
 
 /* MENSAJE */
 .message{
 margin:25px 0;
-font-size:14px;
+font-size:13px;
 opacity:0.6;
-text-align:center;
 }
 
 /* BOTÓN */
@@ -86,9 +105,8 @@ margin-top:10px;
 
 /* EMAIL */
 .email{
-text-align:center;
 margin-top:10px;
-font-size:14px;
+font-size:13px;
 opacity:0.7;
 }
 
@@ -97,7 +115,7 @@ opacity:0.7;
 
 .container{
 max-width:800px;
-padding:60px 20px;
+padding:80px 20px;
 }
 
 h1{
@@ -114,6 +132,11 @@ align-items:center;
 max-width:60%;
 }
 
+.logo{
+width:90px;
+height:90px;
+}
+
 }
 
 </style>
@@ -123,44 +146,38 @@ max-width:60%;
 
 <div class="container">
 
-<!-- TITULAR -->
+<div class="logo"></div>
+
 <h1>
 Más clientes y más orden en su negocio  
 <span class="highlight">sin complicaciones</span>
 </h1>
 
-<!-- SUBTÍTULO -->
 <p class="subtitle">
-Le ayudamos a captar clientes, mejorar su presencia digital
-y automatizar procesos para que su negocio funcione mejor
-sin perder tiempo.
+Captamos clientes, mejoramos su presencia digital y automatizamos su negocio para que funcione mejor sin perder tiempo.
 </p>
-
-<!-- BLOQUES -->
 
 <div class="block">
 <h3>Captación de clientes</h3>
-<p>Atraiga más clientes sin depender del boca a boca.</p>
+<p>Atraiga clientes de forma constante sin depender del boca a boca.</p>
 </div>
 
 <div class="block">
 <h3>Automatización</h3>
-<p>Menos tareas manuales, más tiempo para su negocio.</p>
+<p>Menos tareas manuales, más control y eficiencia.</p>
 </div>
 
 <div class="block">
 <h3>Presencia digital</h3>
-<p>Una imagen profesional que genera confianza.</p>
+<p>Una imagen profesional que genera confianza y convierte.</p>
 </div>
 
-<!-- MENSAJE -->
 <p class="message">
 Estamos activando nuevos sistemas para negocios locales.
 </p>
 
-<!-- CTA -->
 <a class="cta" href="https://wa.me/34643344106">
-Contactar por WhatsApp
+Hablar por WhatsApp
 </a>
 
 <p class="email">
