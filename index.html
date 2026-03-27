@@ -18,7 +18,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* HERO (MOBILE FIRST) */
+/* HERO */
 .hero{
 min-height:100vh;
 display:flex;
@@ -30,14 +30,11 @@ padding:90px 20px 40px;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
-/* LOGO */
 .logo{
 width:180px;
 margin-bottom:15px;
-opacity:0.95;
 }
 
-/* TITULAR */
 .headline{
 font-size:28px;
 font-weight:700;
@@ -45,17 +42,13 @@ max-width:320px;
 margin-bottom:10px;
 }
 
-/* TEXTO DINÁMICO */
 .text{
 font-size:18px;
-font-weight:500;
 max-width:320px;
-line-height:1.4;
 min-height:60px;
 opacity:0.8;
 }
 
-/* SUB */
 .sub{
 margin-top:20px;
 font-size:14px;
@@ -63,19 +56,16 @@ opacity:0.7;
 max-width:320px;
 }
 
-/* BOTÓN PRINCIPAL */
 .cta{
 margin-top:30px;
-padding:18px 28px;
+padding:18px;
 background:linear-gradient(135deg,#00c6ff,#0072ff);
-color:white;
 border-radius:12px;
 text-decoration:none;
+color:white;
 font-weight:700;
-font-size:16px;
 width:100%;
 max-width:280px;
-text-align:center;
 }
 
 /* PROBLEMA */
@@ -105,15 +95,9 @@ padding:18px;
 border-radius:10px;
 }
 
-.item p{
-margin:0;
-font-size:14px;
-}
-
 /* SOLUCIÓN */
 .solucion{
 padding:70px 20px;
-background:#0b0f19;
 text-align:center;
 }
 
@@ -121,12 +105,6 @@ text-align:center;
 font-size:24px;
 max-width:320px;
 margin:0 auto 15px;
-}
-
-.intro{
-font-size:14px;
-opacity:0.7;
-margin-bottom:40px;
 }
 
 .solucion-grid{
@@ -144,69 +122,47 @@ border-radius:12px;
 text-align:left;
 }
 
-.card h3{
-margin-top:0;
-font-size:16px;
-}
-
-.card p{
-opacity:0.8;
-font-size:14px;
-}
-
-/* BOTÓN SECUNDARIO */
 .cta2{
-display:inline-block;
 margin-top:40px;
-padding:18px 28px;
+display:inline-block;
+padding:18px;
 background:linear-gradient(135deg,#00c6ff,#0072ff);
-color:white;
 border-radius:12px;
 text-decoration:none;
+color:white;
 font-weight:700;
-font-size:16px;
 width:100%;
 max-width:280px;
 }
 
+/* BOTÓN FLOTANTE */
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+border-radius:50%;
+width:60px;
+height:60px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+text-decoration:none;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+z-index:999;
+}
+
 /* DESKTOP */
 @media(min-width:768px){
-
-.logo{
-width:320px;
-}
 
 .headline{
 font-size:52px;
 max-width:700px;
 }
 
-.text{
-font-size:24px;
-max-width:600px;
-}
-
-.sub{
-font-size:17px;
-max-width:500px;
-}
-
-.problema h2{
-font-size:36px;
-max-width:700px;
-}
-
-.problema-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-max-width:700px;
-}
-
-.solucion h2{
-font-size:38px;
-max-width:700px;
-}
-
+.problema-grid,
 .solucion-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -225,9 +181,7 @@ max-width:700px;
 
 <img src="logo.png" class="logo">
 
-<h1 class="headline">
-Más clientes para su negocio local
-</h1>
+<h1 class="headline">Más clientes para su negocio local</h1>
 
 <div class="text" id="dynamicText"></div>
 
@@ -236,9 +190,7 @@ No hacemos todo.<br>
 Pero buscamos la excelencia en todo lo que hacemos.
 </div>
 
-<a href="https://wa.me/34643344106?text=Hola,%20quiero%20información" target="_blank" class="cta">
-¿Hablamos?
-</a>
+<a href="https://wa.me/34643344106" class="cta">¿Hablamos?</a>
 
 </section>
 
@@ -249,25 +201,11 @@ Pero buscamos la excelencia en todo lo que hacemos.
 
 <div class="problema-grid">
 
-<div class="item">
-<p>No aparece cuando sus clientes le buscan en Google</p>
-</div>
-
-<div class="item">
-<p>Tiene pocas reseñas o no las está aprovechando</p>
-</div>
-
-<div class="item">
-<p>Publica en redes, pero no le generan clientes</p>
-</div>
-
-<div class="item">
-<p>Responde mensajes tarde o pierde oportunidades</p>
-</div>
-
-<div class="item">
-<p>No tiene un sistema que convierta visitas en ventas</p>
-</div>
+<div class="item">No aparece en Google</div>
+<div class="item">No tiene reseñas suficientes</div>
+<div class="item">Las redes no le generan clientes</div>
+<div class="item">Pierde mensajes y oportunidades</div>
+<div class="item">No tiene sistema de ventas</div>
 
 </div>
 
@@ -276,47 +214,26 @@ Pero buscamos la excelencia en todo lo que hacemos.
 <!-- SOLUCIÓN -->
 <section class="solucion">
 
-<h2>Convertimos su presencia digital en clientes reales</h2>
-
-<p class="intro">
-No se trata de hacer más cosas.<br>
-Se trata de hacer lo correcto y que funcione.
-</p>
+<h2>Convertimos su presencia digital en clientes</h2>
 
 <div class="solucion-grid">
 
-<div class="card">
-<h3>Visibilidad</h3>
-<p>Optimizamos su negocio para que aparezca cuando sus clientes le buscan.</p>
-</div>
-
-<div class="card">
-<h3>Reputación</h3>
-<p>Implementamos sistemas para conseguir más reseñas y generar confianza.</p>
-</div>
-
-<div class="card">
-<h3>Contenido</h3>
-<p>Automatizamos sus redes para mantener presencia constante sin esfuerzo.</p>
-</div>
-
-<div class="card">
-<h3>Sistema</h3>
-<p>Organizamos su negocio para que cada contacto tenga una oportunidad real de convertirse en cliente.</p>
-</div>
-
-<div class="card">
-<h3>LUZÍA</h3>
-<p>Gestionamos sus reservas de forma profesional para que no pierda oportunidades.</p>
-</div>
+<div class="card"><b>Visibilidad</b><br>Le encuentran</div>
+<div class="card"><b>Reputación</b><br>Confían en usted</div>
+<div class="card"><b>Contenido</b><br>Presencia constante</div>
+<div class="card"><b>Sistema</b><br>No pierde clientes</div>
+<div class="card"><b>LUZÍA</b><br>Gestión de reservas</div>
 
 </div>
 
-<a href="https://wa.me/34643344106?text=Hola,%20quiero%20información" target="_blank" class="cta2">
-¿Hablamos?
-</a>
+<a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
 
 </section>
+
+<!-- BOTÓN FLOTANTE -->
+<a href="https://wa.me/34643344106" class="whatsapp-float">
+💬
+</a>
 
 <script>
 
@@ -332,7 +249,6 @@ const textEl = document.getElementById("dynamicText");
 
 function showText() {
 textEl.style.opacity = 0;
-
 setTimeout(() => {
 textEl.textContent = phrases[index];
 textEl.style.opacity = 1;
