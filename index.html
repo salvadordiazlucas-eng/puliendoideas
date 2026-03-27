@@ -18,42 +18,38 @@ color:white;
 overflow-x:hidden;
 }
 
-/* HERO */
+/* HERO (MOBILE FIRST) */
 .hero{
 min-height:100vh;
-padding-top:60px;
-padding-bottom:60px;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
-padding-top:120px;
-padding-bottom:60px;
 align-items:center;
 text-align:center;
-padding:20px;
+padding:90px 20px 40px;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
 /* LOGO */
 .logo{
-width:260px;
-margin-bottom:30px;
+width:180px;
+margin-bottom:15px;
 opacity:0.95;
 }
 
-/* TITULAR FUERTE */
+/* TITULAR */
 .headline{
-font-size:32px;
+font-size:28px;
 font-weight:700;
-max-width:700px;
-margin-bottom:15px;
+max-width:320px;
+margin-bottom:10px;
 }
 
 /* TEXTO DINÁMICO */
 .text{
-font-size:20px;
+font-size:18px;
 font-weight:500;
-max-width:400px;
+max-width:320px;
 line-height:1.4;
 min-height:60px;
 opacity:0.8;
@@ -61,34 +57,128 @@ opacity:0.8;
 
 /* SUB */
 .sub{
-margin-top:25px;
-font-size:15px;
-opacity:0.6;
-max-width:420px;
+margin-top:20px;
+font-size:14px;
+opacity:0.7;
+max-width:320px;
 }
 
-/* BOTÓN */
+/* BOTÓN PRINCIPAL */
 .cta{
-margin-top:40px;
-padding:16px 30px;
+margin-top:30px;
+padding:18px 28px;
 background:linear-gradient(135deg,#00c6ff,#0072ff);
 color:white;
 border-radius:12px;
 text-decoration:none;
 font-weight:700;
-transition:0.3s;
-box-shadow:0 10px 30px rgba(0,114,255,0.3);
+font-size:16px;
+width:100%;
+max-width:280px;
+text-align:center;
 }
 
-.cta:hover{
-transform:scale(1.05);
+/* PROBLEMA */
+.problema{
+padding:60px 20px;
+background:#020617;
+text-align:center;
+}
+
+.problema h2{
+font-size:24px;
+max-width:320px;
+margin:0 auto 40px;
+}
+
+.problema-grid{
+display:flex;
+flex-direction:column;
+gap:15px;
+max-width:320px;
+margin:0 auto;
+}
+
+.item{
+background:#0f172a;
+padding:18px;
+border-radius:10px;
+}
+
+.item p{
+margin:0;
+font-size:14px;
+}
+
+/* SOLUCIÓN */
+.solucion{
+padding:70px 20px;
+background:#0b0f19;
+text-align:center;
+}
+
+.solucion h2{
+font-size:24px;
+max-width:320px;
+margin:0 auto 15px;
+}
+
+.intro{
+font-size:14px;
+opacity:0.7;
+margin-bottom:40px;
+}
+
+.solucion-grid{
+display:flex;
+flex-direction:column;
+gap:15px;
+max-width:320px;
+margin:0 auto;
+}
+
+.card{
+background:#020617;
+padding:20px;
+border-radius:12px;
+text-align:left;
+}
+
+.card h3{
+margin-top:0;
+font-size:16px;
+}
+
+.card p{
+opacity:0.8;
+font-size:14px;
+}
+
+/* BOTÓN SECUNDARIO */
+.cta2{
+display:inline-block;
+margin-top:40px;
+padding:18px 28px;
+background:linear-gradient(135deg,#00c6ff,#0072ff);
+color:white;
+border-radius:12px;
+text-decoration:none;
+font-weight:700;
+font-size:16px;
+width:100%;
+max-width:280px;
 }
 
 /* DESKTOP */
 @media(min-width:768px){
 
+.logo{
+width:320px;
+}
+
 .headline{
 font-size:52px;
+max-width:700px;
 }
 
 .text{
@@ -98,10 +188,29 @@ max-width:600px;
 
 .sub{
 font-size:17px;
+max-width:500px;
 }
 
-.logo{
-width:320px;
+.problema h2{
+font-size:36px;
+max-width:700px;
+}
+
+.problema-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+max-width:700px;
+}
+
+.solucion h2{
+font-size:38px;
+max-width:700px;
+}
+
+.solucion-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+max-width:700px;
 }
 
 }
@@ -111,6 +220,7 @@ width:320px;
 
 <body>
 
+<!-- HERO -->
 <section class="hero">
 
 <img src="logo.png" class="logo">
@@ -122,12 +232,88 @@ Más clientes para su negocio local
 <div class="text" id="dynamicText"></div>
 
 <div class="sub">
-No lo hacemos todo.<br>
+No hacemos todo.<br>
 Pero buscamos la excelencia en todo lo que hacemos.
 </div>
 
-<a href="https://wa.me/34643344106" target="_blank" class="cta">
-¿hablamos?
+<a href="https://wa.me/34643344106?text=Hola,%20quiero%20información" target="_blank" class="cta">
+¿Hablamos?
+</a>
+
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema">
+
+<h2>Si su negocio no está creciendo, no es casualidad</h2>
+
+<div class="problema-grid">
+
+<div class="item">
+<p>No aparece cuando sus clientes le buscan en Google</p>
+</div>
+
+<div class="item">
+<p>Tiene pocas reseñas o no las está aprovechando</p>
+</div>
+
+<div class="item">
+<p>Publica en redes, pero no le generan clientes</p>
+</div>
+
+<div class="item">
+<p>Responde mensajes tarde o pierde oportunidades</p>
+</div>
+
+<div class="item">
+<p>No tiene un sistema que convierta visitas en ventas</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- SOLUCIÓN -->
+<section class="solucion">
+
+<h2>Convertimos su presencia digital en clientes reales</h2>
+
+<p class="intro">
+No se trata de hacer más cosas.<br>
+Se trata de hacer lo correcto y que funcione.
+</p>
+
+<div class="solucion-grid">
+
+<div class="card">
+<h3>Visibilidad</h3>
+<p>Optimizamos su negocio para que aparezca cuando sus clientes le buscan.</p>
+</div>
+
+<div class="card">
+<h3>Reputación</h3>
+<p>Implementamos sistemas para conseguir más reseñas y generar confianza.</p>
+</div>
+
+<div class="card">
+<h3>Contenido</h3>
+<p>Automatizamos sus redes para mantener presencia constante sin esfuerzo.</p>
+</div>
+
+<div class="card">
+<h3>Sistema</h3>
+<p>Organizamos su negocio para que cada contacto tenga una oportunidad real de convertirse en cliente.</p>
+</div>
+
+<div class="card">
+<h3>LUZÍA</h3>
+<p>Gestionamos sus reservas de forma profesional para que no pierda oportunidades.</p>
+</div>
+
+</div>
+
+<a href="https://wa.me/34643344106?text=Hola,%20quiero%20información" target="_blank" class="cta2">
+¿Hablamos?
 </a>
 
 </section>
