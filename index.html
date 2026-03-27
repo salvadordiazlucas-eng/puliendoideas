@@ -122,6 +122,41 @@ border-radius:12px;
 text-align:left;
 }
 
+/* CÓMO TRABAJAMOS */
+.proceso{
+padding:70px 20px;
+background:#020617;
+text-align:center;
+}
+
+.proceso h2{
+font-size:24px;
+max-width:320px;
+margin:0 auto 40px;
+}
+
+.pasos{
+display:flex;
+flex-direction:column;
+gap:20px;
+max-width:320px;
+margin:0 auto;
+}
+
+.paso{
+background:#0f172a;
+padding:20px;
+border-radius:12px;
+}
+
+.paso-num{
+font-size:22px;
+font-weight:700;
+margin-bottom:10px;
+color:#4da6ff;
+}
+
+/* CTA FINAL */
 .cta2{
 margin-top:40px;
 display:inline-block;
@@ -150,7 +185,6 @@ justify-content:center;
 align-items:center;
 font-size:28px;
 text-decoration:none;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
 z-index:999;
 }
 
@@ -163,7 +197,8 @@ max-width:700px;
 }
 
 .problema-grid,
-.solucion-grid{
+.solucion-grid,
+.pasos{
 display:grid;
 grid-template-columns:1fr 1fr;
 max-width:700px;
@@ -204,7 +239,7 @@ Pero buscamos la excelencia en todo lo que hacemos.
 <div class="item">No aparece en Google</div>
 <div class="item">No tiene reseñas suficientes</div>
 <div class="item">Las redes no le generan clientes</div>
-<div class="item">Pierde mensajes y oportunidades</div>
+<div class="item">Pierde oportunidades</div>
 <div class="item">No tiene sistema de ventas</div>
 
 </div>
@@ -226,14 +261,38 @@ Pero buscamos la excelencia en todo lo que hacemos.
 
 </div>
 
+</section>
+
+<!-- CÓMO TRABAJAMOS -->
+<section class="proceso">
+
+<h2>Así de simple es empezar</h2>
+
+<div class="pasos">
+
+<div class="paso">
+<div class="paso-num">1</div>
+<p>Hablamos y analizamos su negocio</p>
+</div>
+
+<div class="paso">
+<div class="paso-num">2</div>
+<p>Diseñamos una solución adaptada</p>
+</div>
+
+<div class="paso">
+<div class="paso-num">3</div>
+<p>Implementamos y empieza a notar resultados</p>
+</div>
+
+</div>
+
 <a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
 
 </section>
 
 <!-- BOTÓN FLOTANTE -->
-<a href="https://wa.me/34643344106" class="whatsapp-float">
-💬
-</a>
+<a href="https://wa.me/34643344106" class="whatsapp-float">💬</a>
 
 <script>
 
