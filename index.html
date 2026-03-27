@@ -30,31 +30,10 @@ padding:90px 20px 40px;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
-.logo{
-width:180px;
-margin-bottom:15px;
-}
-
-.headline{
-font-size:28px;
-font-weight:700;
-max-width:320px;
-margin-bottom:10px;
-}
-
-.text{
-font-size:18px;
-max-width:320px;
-min-height:60px;
-opacity:0.8;
-}
-
-.sub{
-margin-top:20px;
-font-size:14px;
-opacity:0.7;
-max-width:320px;
-}
+.logo{width:180px;margin-bottom:15px;}
+.headline{font-size:28px;font-weight:700;max-width:320px;margin-bottom:10px;}
+.text{font-size:18px;max-width:320px;min-height:60px;opacity:0.8;}
+.sub{margin-top:20px;font-size:14px;opacity:0.7;max-width:320px;}
 
 .cta{
 margin-top:30px;
@@ -69,90 +48,53 @@ max-width:280px;
 }
 
 /* PROBLEMA */
-.problema{
-padding:60px 20px;
-background:#020617;
-text-align:center;
-}
-
-.problema h2{
-font-size:24px;
-max-width:320px;
-margin:0 auto 40px;
-}
-
-.problema-grid{
-display:flex;
-flex-direction:column;
-gap:15px;
-max-width:320px;
-margin:0 auto;
-}
-
-.item{
-background:#0f172a;
-padding:18px;
-border-radius:10px;
-}
+.problema{padding:60px 20px;background:#020617;text-align:center;}
+.problema h2{font-size:24px;max-width:320px;margin:0 auto 40px;}
+.problema-grid{display:flex;flex-direction:column;gap:15px;max-width:320px;margin:0 auto;}
+.item{background:#0f172a;padding:18px;border-radius:10px;}
 
 /* SOLUCIÓN */
-.solucion{
-padding:70px 20px;
-text-align:center;
-}
-
-.solucion h2{
-font-size:24px;
-max-width:320px;
-margin:0 auto 15px;
-}
-
-.solucion-grid{
-display:flex;
-flex-direction:column;
-gap:15px;
-max-width:320px;
-margin:0 auto;
-}
-
-.card{
-background:#020617;
-padding:20px;
-border-radius:12px;
-text-align:left;
-}
+.solucion{padding:70px 20px;text-align:center;}
+.solucion h2{font-size:24px;margin-bottom:20px;}
+.solucion-grid{display:flex;flex-direction:column;gap:15px;max-width:320px;margin:0 auto;}
+.card{background:#020617;padding:20px;border-radius:12px;text-align:left;}
 
 /* PROCESO */
-.proceso{
+.proceso{padding:70px 20px;background:#020617;text-align:center;}
+.pasos{display:flex;flex-direction:column;gap:20px;max-width:320px;margin:0 auto;}
+.paso{background:#0f172a;padding:20px;border-radius:12px;}
+.paso-num{font-size:22px;font-weight:700;color:#4da6ff;margin-bottom:10px;}
+
+/* CONFIANZA */
+.confianza{
 padding:70px 20px;
-background:#020617;
 text-align:center;
 }
 
-.proceso h2{
+.confianza h2{
 font-size:24px;
+max-width:320px;
+margin:0 auto 20px;
+}
+
+.confianza p{
+opacity:0.7;
 margin-bottom:40px;
 }
 
-.pasos{
+.pruebas{
 display:flex;
 flex-direction:column;
-gap:20px;
+gap:15px;
 max-width:320px;
 margin:0 auto;
 }
 
-.paso{
-background:#0f172a;
+.prueba{
+background:#020617;
 padding:20px;
 border-radius:12px;
-}
-
-.paso-num{
-font-size:22px;
-font-weight:700;
-color:#4da6ff;
-margin-bottom:10px;
+font-size:14px;
 }
 
 /* CTA FINAL */
@@ -169,7 +111,7 @@ width:100%;
 max-width:280px;
 }
 
-/* BOTÓN FLOTANTE CON IMAGEN */
+/* BOTÓN FLOTANTE */
 .whatsapp-float{
 position:fixed;
 bottom:20px;
@@ -178,24 +120,19 @@ width:65px;
 height:65px;
 z-index:999;
 }
-
 .whatsapp-float img{
 width:100%;
-height:100%;
-object-fit:contain;
 }
 
 /* DESKTOP */
 @media(min-width:768px){
 
-.headline{
-font-size:52px;
-max-width:700px;
-}
+.headline{font-size:52px;max-width:700px;}
 
 .problema-grid,
 .solucion-grid,
-.pasos{
+.pasos,
+.pruebas{
 display:grid;
 grid-template-columns:1fr 1fr;
 max-width:700px;
@@ -210,77 +147,64 @@ max-width:700px;
 
 <!-- HERO -->
 <section class="hero">
-
 <img src="logo.png" class="logo">
-
 <h1 class="headline">Más clientes para su negocio local</h1>
-
 <div class="text" id="dynamicText"></div>
-
 <div class="sub">
 No hacemos todo.<br>
 Pero buscamos la excelencia en todo lo que hacemos.
 </div>
-
 <a href="https://wa.me/34643344106" class="cta">¿Hablamos?</a>
-
 </section>
 
 <!-- PROBLEMA -->
 <section class="problema">
-
 <h2>Si su negocio no está creciendo, no es casualidad</h2>
-
 <div class="problema-grid">
-
 <div class="item">No aparece en Google</div>
 <div class="item">No tiene reseñas suficientes</div>
 <div class="item">Las redes no le generan clientes</div>
 <div class="item">Pierde oportunidades</div>
 <div class="item">No tiene sistema de ventas</div>
-
 </div>
-
 </section>
 
 <!-- SOLUCIÓN -->
 <section class="solucion">
-
 <h2>Convertimos su presencia digital en clientes</h2>
-
 <div class="solucion-grid">
-
 <div class="card"><b>Visibilidad</b><br>Le encuentran</div>
 <div class="card"><b>Reputación</b><br>Confían en usted</div>
 <div class="card"><b>Contenido</b><br>Presencia constante</div>
 <div class="card"><b>Sistema</b><br>No pierde clientes</div>
 <div class="card"><b>LUZÍA</b><br>Gestión de reservas</div>
-
 </div>
-
 </section>
 
 <!-- PROCESO -->
 <section class="proceso">
-
 <h2>Así de simple es empezar</h2>
-
 <div class="pasos">
-
-<div class="paso">
-<div class="paso-num">1</div>
-<p>Hablamos y analizamos su negocio</p>
+<div class="paso"><div class="paso-num">1</div>Hablamos y analizamos su negocio</div>
+<div class="paso"><div class="paso-num">2</div>Diseñamos una solución adaptada</div>
+<div class="paso"><div class="paso-num">3</div>Implementamos y empieza a notar resultados</div>
 </div>
+<a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
+</section>
 
-<div class="paso">
-<div class="paso-num">2</div>
-<p>Diseñamos una solución adaptada</p>
-</div>
+<!-- CONFIANZA -->
+<section class="confianza">
 
-<div class="paso">
-<div class="paso-num">3</div>
-<p>Implementamos y empieza a notar resultados</p>
-</div>
+<h2>Negocios como el suyo ya están mejorando resultados</h2>
+
+<p>No vendemos promesas.<br>Aplicamos sistemas que funcionan.</p>
+
+<div class="pruebas">
+
+<div class="prueba">Más visibilidad en Google en pocas semanas</div>
+<div class="prueba">Incremento de reseñas reales</div>
+<div class="prueba">Más mensajes y contactos diarios</div>
+<div class="prueba">Mejor organización del negocio</div>
 
 </div>
 
@@ -290,7 +214,7 @@ Pero buscamos la excelencia en todo lo que hacemos.
 
 <!-- BOTÓN FLOTANTE -->
 <a href="https://wa.me/34643344106" class="whatsapp-float">
-<img src="whatsapp.png" alt="WhatsApp">
+<img src="whatsapp.png">
 </a>
 
 <script>
