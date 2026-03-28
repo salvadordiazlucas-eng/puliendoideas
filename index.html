@@ -25,8 +25,7 @@ display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
-padding:90px 20px 80px;
-position:relative;
+padding:90px 20px 40px;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
@@ -60,20 +59,14 @@ width:100%;
 max-width:280px;
 }
 
-/* INDICADOR SCROLL */
+/* INDICADOR SCROLL (AJUSTADO) */
 .scroll-indicator{
-position:absolute;
-bottom:20px;
+margin-top:20px;
 display:flex;
 flex-direction:column;
 align-items:center;
 font-size:13px;
 opacity:0.7;
-animation:fadeIn 2s ease forwards;
-}
-
-.scroll-indicator span{
-margin-bottom:5px;
 }
 
 .arrow{
@@ -81,15 +74,10 @@ font-size:20px;
 animation:bounce 1.5s infinite;
 }
 
-/* ANIMACIONES */
+/* ANIMACIÓN */
 @keyframes bounce{
 0%,100%{transform:translateY(0);}
-50%{transform:translateY(8px);}
-}
-
-@keyframes fadeIn{
-from{opacity:0;}
-to{opacity:0.7;}
+50%{transform:translateY(6px);}
 }
 
 /* SECCIONES */
@@ -118,6 +106,34 @@ padding:18px;
 border-radius:10px;
 }
 
+/* BOTÓN FLOTANTE WHATSAPP (RECUPERADO) */
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+width:65px;
+height:65px;
+z-index:999;
+}
+
+.whatsapp-float img{
+width:100%;
+}
+
+/* DESKTOP */
+@media(min-width:768px){
+.headline{
+font-size:52px;
+max-width:700px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+max-width:700px;
+}
+}
+
 </style>
 </head>
 
@@ -141,7 +157,7 @@ Pero buscamos la excelencia en todo lo que hacemos.
 ¿Hablamos?
 </a>
 
-<!-- INDICADOR -->
+<!-- INDICADOR (SUBIDO) -->
 <div class="scroll-indicator">
 <span>Desliza para ver más información</span>
 <div class="arrow">↓</div>
@@ -149,15 +165,22 @@ Pero buscamos la excelencia en todo lo que hacemos.
 
 </section>
 
-<!-- SIGUIENTE BLOQUE (EJEMPLO) -->
+<!-- CONTENIDO -->
 <section>
 <h2>Si su negocio no está creciendo, no es casualidad</h2>
+
 <div class="grid">
 <div class="box">No aparece en Google</div>
 <div class="box">No tiene reseñas suficientes</div>
 <div class="box">Las redes no le generan clientes</div>
 </div>
+
 </section>
+
+<!-- BOTÓN FLOTANTE -->
+<a href="https://wa.me/34643344106" class="whatsapp-float">
+<img src="whatsapp.png" alt="WhatsApp">
+</a>
 
 </body>
 </html>
