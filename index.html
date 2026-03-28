@@ -16,6 +16,19 @@ font-family:'Inter',sans-serif;
 background:#0b0f19;
 color:white;
 overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+/* ANIMACIÓN GENERAL */
+.fade-in{
+opacity:0;
+transform:translateY(20px);
+transition:all 0.8s ease;
+}
+
+.fade-in.visible{
+opacity:1;
+transform:translateY(0);
 }
 
 /* HERO */
@@ -23,66 +36,76 @@ overflow-x:hidden;
 min-height:100vh;
 display:flex;
 flex-direction:column;
-justify-content:flex-start;
 align-items:center;
 text-align:center;
 padding:90px 20px 40px;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
-.logo{width:180px;margin-bottom:15px;}
-.headline{font-size:28px;font-weight:700;max-width:320px;margin-bottom:10px;}
-.text{font-size:18px;max-width:320px;min-height:60px;opacity:0.8;}
-.sub{margin-top:20px;font-size:14px;opacity:0.7;max-width:320px;}
+.logo{
+width:180px;
+margin-bottom:15px;
+animation:float 3s ease-in-out infinite;
+}
+
+/* LOGO FLOTANTE */
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(-8px);}
+}
+
+.headline{
+font-size:28px;
+font-weight:700;
+max-width:320px;
+}
+
+.text{
+font-size:18px;
+max-width:320px;
+min-height:60px;
+opacity:0.8;
+margin-top:10px;
+}
+
+.sub{
+margin-top:20px;
+font-size:14px;
+opacity:0.7;
+max-width:320px;
+}
 
 .cta{
 margin-top:30px;
 padding:18px;
 background:linear-gradient(135deg,#00c6ff,#0072ff);
 border-radius:12px;
-text-decoration:none;
 color:white;
+text-decoration:none;
 font-weight:700;
 width:100%;
 max-width:280px;
+transition:0.3s;
 }
 
-/* PROBLEMA */
-.problema{padding:60px 20px;background:#020617;text-align:center;}
-.problema h2{font-size:24px;max-width:320px;margin:0 auto 40px;}
-.problema-grid{display:flex;flex-direction:column;gap:15px;max-width:320px;margin:0 auto;}
-.item{background:#0f172a;padding:18px;border-radius:10px;}
+.cta:hover{
+transform:scale(1.05);
+}
 
-/* SOLUCIÓN */
-.solucion{padding:70px 20px;text-align:center;}
-.solucion h2{font-size:24px;margin-bottom:20px;}
-.solucion-grid{display:flex;flex-direction:column;gap:15px;max-width:320px;margin:0 auto;}
-.card{background:#020617;padding:20px;border-radius:12px;text-align:left;}
-
-/* PROCESO */
-.proceso{padding:70px 20px;background:#020617;text-align:center;}
-.pasos{display:flex;flex-direction:column;gap:20px;max-width:320px;margin:0 auto;}
-.paso{background:#0f172a;padding:20px;border-radius:12px;}
-.paso-num{font-size:22px;font-weight:700;color:#4da6ff;margin-bottom:10px;}
-
-/* CONFIANZA */
-.confianza{
-padding:70px 20px;
+/* SECCIONES */
+section{
+padding:60px 20px;
 text-align:center;
 }
 
-.confianza h2{
+h2{
 font-size:24px;
 max-width:320px;
-margin:0 auto 20px;
+margin:0 auto 30px;
 }
 
-.confianza p{
-opacity:0.7;
-margin-bottom:40px;
-}
-
-.pruebas{
+/* GRID */
+.grid{
 display:flex;
 flex-direction:column;
 gap:15px;
@@ -90,16 +113,38 @@ max-width:320px;
 margin:0 auto;
 }
 
-.prueba{
+.box{
 background:#020617;
-padding:20px;
-border-radius:12px;
-font-size:14px;
+padding:18px;
+border-radius:10px;
+transition:0.3s;
 }
 
-/* CTA FINAL */
+.box:hover{
+transform:translateY(-5px);
+}
+
+/* PASOS */
+.paso{
+background:#0f172a;
+padding:20px;
+border-radius:12px;
+}
+
+.paso-num{
+font-size:22px;
+font-weight:700;
+color:#4da6ff;
+margin-bottom:10px;
+}
+
+/* CIERRE */
+.cierre{
+background:#020617;
+}
+
 .cta2{
-margin-top:40px;
+margin-top:30px;
 display:inline-block;
 padding:18px;
 background:linear-gradient(135deg,#00c6ff,#0072ff);
@@ -111,7 +156,7 @@ width:100%;
 max-width:280px;
 }
 
-/* BOTÓN FLOTANTE */
+/* BOTÓN FLOTANTE PRO */
 .whatsapp-float{
 position:fixed;
 bottom:20px;
@@ -119,20 +164,29 @@ right:20px;
 width:65px;
 height:65px;
 z-index:999;
+animation:pulse 2s infinite;
 }
+
 .whatsapp-float img{
 width:100%;
+}
+
+/* EFECTO LATIDO */
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
 }
 
 /* DESKTOP */
 @media(min-width:768px){
 
-.headline{font-size:52px;max-width:700px;}
+.headline{
+font-size:52px;
+max-width:700px;
+}
 
-.problema-grid,
-.solucion-grid,
-.pasos,
-.pruebas{
+.grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 max-width:700px;
@@ -146,7 +200,7 @@ max-width:700px;
 <body>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero fade-in">
 <img src="logo.png" class="logo">
 <h1 class="headline">Más clientes para su negocio local</h1>
 <div class="text" id="dynamicText"></div>
@@ -158,55 +212,60 @@ Pero buscamos la excelencia en todo lo que hacemos.
 </section>
 
 <!-- PROBLEMA -->
-<section class="problema">
+<section class="fade-in">
 <h2>Si su negocio no está creciendo, no es casualidad</h2>
-<div class="problema-grid">
-<div class="item">No aparece en Google</div>
-<div class="item">No tiene reseñas suficientes</div>
-<div class="item">Las redes no le generan clientes</div>
-<div class="item">Pierde oportunidades</div>
-<div class="item">No tiene sistema de ventas</div>
+<div class="grid">
+<div class="box">No aparece en Google</div>
+<div class="box">No tiene reseñas suficientes</div>
+<div class="box">Las redes no le generan clientes</div>
+<div class="box">Pierde oportunidades</div>
+<div class="box">No tiene sistema de ventas</div>
 </div>
 </section>
 
 <!-- SOLUCIÓN -->
-<section class="solucion">
+<section class="fade-in">
 <h2>Convertimos su presencia digital en clientes</h2>
-<div class="solucion-grid">
-<div class="card"><b>Visibilidad</b><br>Le encuentran</div>
-<div class="card"><b>Reputación</b><br>Confían en usted</div>
-<div class="card"><b>Contenido</b><br>Presencia constante</div>
-<div class="card"><b>Sistema</b><br>No pierde clientes</div>
-<div class="card"><b>LUZÍA</b><br>Gestión de reservas</div>
+<div class="grid">
+<div class="box">Visibilidad real</div>
+<div class="box">Reputación sólida</div>
+<div class="box">Contenido constante</div>
+<div class="box">Sistema organizado</div>
+<div class="box">Gestión de reservas (LUZÍA)</div>
 </div>
 </section>
 
 <!-- PROCESO -->
-<section class="proceso">
+<section class="fade-in">
 <h2>Así de simple es empezar</h2>
-<div class="pasos">
-<div class="paso"><div class="paso-num">1</div>Hablamos y analizamos su negocio</div>
-<div class="paso"><div class="paso-num">2</div>Diseñamos una solución adaptada</div>
-<div class="paso"><div class="paso-num">3</div>Implementamos y empieza a notar resultados</div>
+<div class="grid">
+<div class="paso"><div class="paso-num">1</div>Hablamos</div>
+<div class="paso"><div class="paso-num">2</div>Diseñamos</div>
+<div class="paso"><div class="paso-num">3</div>Implementamos</div>
 </div>
 <a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
 </section>
 
 <!-- CONFIANZA -->
-<section class="confianza">
-
+<section class="fade-in">
 <h2>Negocios como el suyo ya están mejorando resultados</h2>
-
-<p>No vendemos promesas.<br>Aplicamos sistemas que funcionan.</p>
-
-<div class="pruebas">
-
-<div class="prueba">Más visibilidad en Google en pocas semanas</div>
-<div class="prueba">Incremento de reseñas reales</div>
-<div class="prueba">Más mensajes y contactos diarios</div>
-<div class="prueba">Mejor organización del negocio</div>
-
+<div class="grid">
+<div class="box">Más visibilidad</div>
+<div class="box">Más reseñas</div>
+<div class="box">Más clientes</div>
+<div class="box">Mejor organización</div>
 </div>
+</section>
+
+<!-- CIERRE -->
+<section class="cierre fade-in">
+
+<h2>Trabajamos con pocos negocios a la vez</h2>
+
+<p>
+Si quiere mejorar resultados, este es el momento.<br>
+Cuando cerramos cupo, no aceptamos nuevos clientes.
+</p>
 
 <a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
 
@@ -219,6 +278,7 @@ Pero buscamos la excelencia en todo lo que hacemos.
 
 <script>
 
+/* TEXTO DINÁMICO */
 const phrases = [
 "Su negocio puede tener más clientes",
 "El problema no es su servicio",
@@ -240,6 +300,19 @@ index = (index + 1) % phrases.length;
 
 setInterval(showText, 2200);
 showText();
+
+/* ANIMACIÓN AL HACER SCROLL */
+const elements = document.querySelectorAll('.fade-in');
+
+const observer = new IntersectionObserver(entries => {
+entries.forEach(entry => {
+if(entry.isIntersecting){
+entry.target.classList.add('visible');
+}
+});
+});
+
+elements.forEach(el => observer.observe(el));
 
 </script>
 
