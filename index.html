@@ -15,20 +15,7 @@ margin:0;
 font-family:'Inter',sans-serif;
 background:#0b0f19;
 color:white;
-overflow-x:hidden;
 scroll-behavior:smooth;
-}
-
-/* ANIMACIÓN GENERAL */
-.fade-in{
-opacity:0;
-transform:translateY(20px);
-transition:all 0.8s ease;
-}
-
-.fade-in.visible{
-opacity:1;
-transform:translateY(0);
 }
 
 /* HERO */
@@ -38,58 +25,71 @@ display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
-padding:90px 20px 40px;
+padding:90px 20px 80px;
+position:relative;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
 .logo{
 width:180px;
 margin-bottom:15px;
-animation:float 3s ease-in-out infinite;
-}
-
-/* LOGO FLOTANTE */
-@keyframes float{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-8px);}
 }
 
 .headline{
 font-size:28px;
-font-weight:700;
 max-width:320px;
-}
-
-.text{
-font-size:18px;
-max-width:320px;
-min-height:60px;
-opacity:0.8;
-margin-top:10px;
 }
 
 .sub{
-margin-top:20px;
+margin-top:15px;
 font-size:14px;
 opacity:0.7;
 max-width:320px;
 }
 
+/* BOTÓN */
 .cta{
 margin-top:30px;
-padding:18px;
-background:linear-gradient(135deg,#00c6ff,#0072ff);
+padding:16px;
+background:#0072ff;
 border-radius:12px;
 color:white;
 text-decoration:none;
 font-weight:700;
 width:100%;
 max-width:280px;
-transition:0.3s;
 }
 
-.cta:hover{
-transform:scale(1.05);
+/* INDICADOR SCROLL */
+.scroll-indicator{
+position:absolute;
+bottom:20px;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:13px;
+opacity:0.7;
+animation:fadeIn 2s ease forwards;
+}
+
+.scroll-indicator span{
+margin-bottom:5px;
+}
+
+.arrow{
+font-size:20px;
+animation:bounce 1.5s infinite;
+}
+
+/* ANIMACIONES */
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(8px);}
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:0.7;}
 }
 
 /* SECCIONES */
@@ -104,7 +104,6 @@ max-width:320px;
 margin:0 auto 30px;
 }
 
-/* GRID */
 .grid{
 display:flex;
 flex-direction:column;
@@ -117,81 +116,6 @@ margin:0 auto;
 background:#020617;
 padding:18px;
 border-radius:10px;
-transition:0.3s;
-}
-
-.box:hover{
-transform:translateY(-5px);
-}
-
-/* PASOS */
-.paso{
-background:#0f172a;
-padding:20px;
-border-radius:12px;
-}
-
-.paso-num{
-font-size:22px;
-font-weight:700;
-color:#4da6ff;
-margin-bottom:10px;
-}
-
-/* CIERRE */
-.cierre{
-background:#020617;
-}
-
-.cta2{
-margin-top:30px;
-display:inline-block;
-padding:18px;
-background:linear-gradient(135deg,#00c6ff,#0072ff);
-border-radius:12px;
-text-decoration:none;
-color:white;
-font-weight:700;
-width:100%;
-max-width:280px;
-}
-
-/* BOTÓN FLOTANTE PRO */
-.whatsapp-float{
-position:fixed;
-bottom:20px;
-right:20px;
-width:65px;
-height:65px;
-z-index:999;
-animation:pulse 2s infinite;
-}
-
-.whatsapp-float img{
-width:100%;
-}
-
-/* EFECTO LATIDO */
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.1);}
-100%{transform:scale(1);}
-}
-
-/* DESKTOP */
-@media(min-width:768px){
-
-.headline{
-font-size:52px;
-max-width:700px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-max-width:700px;
-}
-
 }
 
 </style>
@@ -200,121 +124,40 @@ max-width:700px;
 <body>
 
 <!-- HERO -->
-<section class="hero fade-in">
+<section class="hero">
+
 <img src="logo.png" class="logo">
-<h1 class="headline">Más clientes para su negocio local</h1>
-<div class="text" id="dynamicText"></div>
+
+<h1 class="headline">
+Más clientes para su negocio local
+</h1>
+
 <div class="sub">
 No hacemos todo.<br>
 Pero buscamos la excelencia en todo lo que hacemos.
 </div>
-<a href="https://wa.me/34643344106" class="cta">¿Hablamos?</a>
+
+<a href="https://wa.me/34643344106" class="cta">
+¿Hablamos?
+</a>
+
+<!-- INDICADOR -->
+<div class="scroll-indicator">
+<span>Desliza para ver más información</span>
+<div class="arrow">↓</div>
+</div>
+
 </section>
 
-<!-- PROBLEMA -->
-<section class="fade-in">
+<!-- SIGUIENTE BLOQUE (EJEMPLO) -->
+<section>
 <h2>Si su negocio no está creciendo, no es casualidad</h2>
 <div class="grid">
 <div class="box">No aparece en Google</div>
 <div class="box">No tiene reseñas suficientes</div>
 <div class="box">Las redes no le generan clientes</div>
-<div class="box">Pierde oportunidades</div>
-<div class="box">No tiene sistema de ventas</div>
 </div>
 </section>
-
-<!-- SOLUCIÓN -->
-<section class="fade-in">
-<h2>Convertimos su presencia digital en clientes</h2>
-<div class="grid">
-<div class="box">Visibilidad real</div>
-<div class="box">Reputación sólida</div>
-<div class="box">Contenido constante</div>
-<div class="box">Sistema organizado</div>
-<div class="box">Gestión de reservas (LUZÍA)</div>
-</div>
-</section>
-
-<!-- PROCESO -->
-<section class="fade-in">
-<h2>Así de simple es empezar</h2>
-<div class="grid">
-<div class="paso"><div class="paso-num">1</div>Hablamos</div>
-<div class="paso"><div class="paso-num">2</div>Diseñamos</div>
-<div class="paso"><div class="paso-num">3</div>Implementamos</div>
-</div>
-<a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
-</section>
-
-<!-- CONFIANZA -->
-<section class="fade-in">
-<h2>Negocios como el suyo ya están mejorando resultados</h2>
-<div class="grid">
-<div class="box">Más visibilidad</div>
-<div class="box">Más reseñas</div>
-<div class="box">Más clientes</div>
-<div class="box">Mejor organización</div>
-</div>
-</section>
-
-<!-- CIERRE -->
-<section class="cierre fade-in">
-
-<h2>Trabajamos con pocos negocios a la vez</h2>
-
-<p>
-Si quiere mejorar resultados, este es el momento.<br>
-Cuando cerramos cupo, no aceptamos nuevos clientes.
-</p>
-
-<a href="https://wa.me/34643344106" class="cta2">¿Hablamos?</a>
-
-</section>
-
-<!-- BOTÓN FLOTANTE -->
-<a href="https://wa.me/34643344106" class="whatsapp-float">
-<img src="whatsapp.png">
-</a>
-
-<script>
-
-/* TEXTO DINÁMICO */
-const phrases = [
-"Su negocio puede tener más clientes",
-"El problema no es su servicio",
-"Es cómo aparece en internet",
-"Nosotros lo convertimos en ventas"
-];
-
-let index = 0;
-const textEl = document.getElementById("dynamicText");
-
-function showText() {
-textEl.style.opacity = 0;
-setTimeout(() => {
-textEl.textContent = phrases[index];
-textEl.style.opacity = 1;
-index = (index + 1) % phrases.length;
-}, 300);
-}
-
-setInterval(showText, 2200);
-showText();
-
-/* ANIMACIÓN AL HACER SCROLL */
-const elements = document.querySelectorAll('.fade-in');
-
-const observer = new IntersectionObserver(entries => {
-entries.forEach(entry => {
-if(entry.isIntersecting){
-entry.target.classList.add('visible');
-}
-});
-});
-
-elements.forEach(el => observer.observe(el));
-
-</script>
 
 </body>
 </html>
