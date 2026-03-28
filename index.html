@@ -24,16 +24,31 @@ display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
-padding:90px 20px 40px;
+padding:80px 20px 40px;
 background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
 }
 
-.logo{width:180px;margin-bottom:15px;}
+/* LOGO MÁS GRANDE */
+.logo{
+width:220px;
+margin-bottom:20px;
+}
 
-.headline{font-size:28px;max-width:320px;}
+/* TITULAR */
+.headline{
+font-size:28px;
+max-width:320px;
+}
 
-.sub{margin-top:15px;font-size:14px;opacity:0.7;max-width:320px;}
+/* SUB */
+.sub{
+margin-top:15px;
+font-size:14px;
+opacity:0.7;
+max-width:320px;
+}
 
+/* BOTÓN */
 .cta{
 margin-top:30px;
 padding:16px;
@@ -44,6 +59,26 @@ text-decoration:none;
 font-weight:700;
 width:100%;
 max-width:280px;
+}
+
+/* INDICADOR SCROLL (VISIBLE) */
+.scroll-indicator{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:14px;
+opacity:0.8;
+}
+
+.arrow{
+font-size:20px;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(6px);}
 }
 
 /* SECCIONES */
@@ -84,7 +119,7 @@ border-radius:10px;
 background:#020617;
 }
 
-/* CTA FINAL */
+/* BOTÓN FINAL */
 .cta2{
 margin-top:30px;
 display:inline-block;
@@ -114,6 +149,10 @@ width:100%;
 
 /* DESKTOP */
 @media(min-width:768px){
+
+.logo{
+width:320px;
+}
 
 .headline{
 font-size:52px;
@@ -151,40 +190,38 @@ Pero buscamos la excelencia en todo lo que hacemos.
 ¿Hablamos?
 </a>
 
+<!-- INDICADOR -->
+<div class="scroll-indicator">
+<span>Desliza para más información</span>
+<div class="arrow">↓</div>
+</div>
+
 </section>
 
-<!-- PROBLEMA -->
+<!-- BLOQUE NUEVO TITULAR -->
 <section>
-<h2>Si su negocio no está creciendo, no es casualidad</h2>
-<div class="grid">
-<div class="box">No aparece en Google</div>
-<div class="box">No tiene reseñas suficientes</div>
-<div class="box">Las redes no le generan clientes</div>
-<div class="box">Pierde oportunidades</div>
-<div class="box">No tiene sistema de ventas</div>
-</div>
+
+<h2>
+Su negocio es bueno.<br>
+Ahora necesita que internet lo reconozca.
+</h2>
+
 </section>
 
 <!-- SOLUCIÓN -->
 <section>
-<h2>Convertimos su presencia digital en clientes</h2>
-<div class="grid">
-<div class="box">Visibilidad real</div>
-<div class="box">Reputación sólida</div>
-<div class="box">Contenido constante</div>
-<div class="box">Sistema organizado</div>
-<div class="box">Gestión de reservas (LUZÍA)</div>
-</div>
-</section>
+<h2>Organizamos su presencia digital para que todo tenga sentido</h2>
 
-<!-- PROCESO -->
-<section>
-<h2>Así de simple es empezar</h2>
 <div class="grid">
-<div class="box">Hablamos</div>
-<div class="box">Diseñamos</div>
-<div class="box">Implementamos</div>
+
+<div class="box">Visibilidad</div>
+<div class="box">Presencia</div>
+<div class="box">Organización</div>
+<div class="box">Comunicación</div>
+<div class="box">Gestión</div>
+
 </div>
+
 </section>
 
 <!-- EXPERIENCIA -->
@@ -205,11 +242,10 @@ Hoy llevamos toda esa experiencia al entorno digital para ayudar a negocios loca
 <!-- CIERRE -->
 <section>
 
-<h2>Trabajamos con pocos negocios a la vez</h2>
+<h2>Si siente que podemos aportar valor a su negocio</h2>
 
 <p>
-Si quiere mejorar resultados, este es el momento.<br>
-Cuando cerramos cupo, no aceptamos nuevos clientes.
+Estaremos encantados de hablar con usted.
 </p>
 
 <a href="https://wa.me/34643344106" class="cta2">
