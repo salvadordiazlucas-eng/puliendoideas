@@ -83,18 +83,13 @@ text-align:center;
 
 <p>Estaremos encantados de conocer su negocio.</p>
 
-<form action="https://hook.eu1.make.com/4dcczfuompwdh6ogx12cvc4nralv" method="POST">
+<form id="formulario">
 
 <input type="text" name="Nombre" placeholder="Nombre" required>
-
 <input type="text" name="Población" placeholder="Población">
-
 <input type="text" name="Provincia" placeholder="Provincia">
-
 <input type="text" name="País" placeholder="País">
-
 <input type="email" name="Email" placeholder="Email" required>
-
 <input type="tel" name="Teléfono" placeholder="Teléfono de contacto">
 
 <select name="Preferencia de contacto">
@@ -106,9 +101,6 @@ text-align:center;
 
 <textarea name="Mensaje" placeholder="¿Qué desea contarnos?"></textarea>
 
-<!-- REDIRECCIÓN -->
-<input type="hidden" name="_redirect" value="https://puliendoideas.com/gracias.html">
-
 <button type="submit">Enviar</button>
 
 </form>
@@ -118,6 +110,25 @@ Le responderemos en un plazo máximo de 24 horas
 </div>
 
 </div>
+
+<script>
+const form = document.getElementById("formulario");
+
+form.addEventListener("submit", function(e){
+e.preventDefault();
+
+fetch("https://hook.eu1.make.com/4dcczfuompwdh6ogx12cvc4nralv", {
+method: "POST",
+body: new FormData(form)
+})
+.then(() => {
+window.location.href = "https://puliendoideas.com/gracias.html";
+})
+.catch(() => {
+alert("Error al enviar el formulario");
+});
+});
+</script>
 
 </body>
 </html>
