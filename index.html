@@ -86,21 +86,28 @@ text-align:center;
 h2{
 font-size:24px;
 max-width:320px;
-margin:0 auto 20px;
+margin:0 auto 25px;
 }
 
-.grid{
+/* BLOQUE MEJORAS */
+.mejoras{
 display:flex;
 flex-direction:column;
-gap:15px;
+gap:20px;
 max-width:320px;
 margin:0 auto;
+text-align:left;
 }
 
-.box{
+.mejora{
 background:#020617;
-padding:18px;
-border-radius:10px;
+padding:20px;
+border-radius:12px;
+}
+
+.mejora strong{
+display:block;
+margin-bottom:8px;
 }
 
 /* BLOQUE IMAGEN */
@@ -161,9 +168,7 @@ font-size:52px;
 max-width:700px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
+.mejoras{
 max-width:700px;
 }
 
@@ -211,22 +216,43 @@ Ahora necesita que internet lo reconozca.
 
 <!-- IMAGEN -->
 <section class="bloque-imagen">
-
 <img src="google-presencia.png">
-
 </section>
 
-<!-- CONTENIDO -->
+<!-- NUEVO BLOQUE -->
 <section>
 
-<h2>Organizamos su presencia digital para que todo tenga sentido</h2>
+<h2>
+Mejoramos su presencia digital trabajando aspectos clave como:
+</h2>
 
-<div class="grid">
-<div class="box">Visibilidad</div>
-<div class="box">Presencia</div>
-<div class="box">Organización</div>
-<div class="box">Comunicación</div>
-<div class="box">Gestión</div>
+<div class="mejoras">
+
+<div class="mejora">
+<strong>Mejor visibilidad</strong>
+Una página con contenidos actualizados y bien estructurados mejora su visibilidad en buscadores.
+</div>
+
+<div class="mejora">
+<strong>Mejor presencia</strong>
+Su negocio se muestra de forma clara y constante en internet.
+</div>
+
+<div class="mejora">
+<strong>Mejor comunicación</strong>
+Su mensaje se transmite de forma coherente y alineada.
+</div>
+
+<div class="mejora">
+<strong>Mejor organización</strong>
+La información y los procesos se estructuran correctamente.
+</div>
+
+<div class="mejora">
+<strong>Mejor gestión</strong>
+Contactos, reservas o solicitudes se gestionan de forma ordenada.
+</div>
+
 </div>
 
 </section>
@@ -257,3 +283,14 @@ Estaremos encantados de hablar con usted.
 
 <a href="https://wa.me/34643344106" class="cta2">
 ¿Hablamos?
+</a>
+
+</section>
+
+<!-- BOTÓN FLOTANTE -->
+<a href="https://wa.me/34643344106" class="whatsapp-float">
+<img src="whatsapp.png">
+</a>
+
+</body>
+</html>
