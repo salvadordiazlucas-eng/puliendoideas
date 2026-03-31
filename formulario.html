@@ -6,83 +6,34 @@
 
 <title>Contacto | Puliendo Ideas</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-
 body{
 margin:0;
-font-family:'Inter',sans-serif;
 background:#0b0f19;
-color:white;
 }
-
-/* CONTENEDOR */
-.container{
-max-width:600px;
-margin:0 auto;
-padding:40px 20px;
-text-align:center;
-}
-
-/* TITULO */
-h1{
-font-size:28px;
-margin-bottom:10px;
-}
-
-.sub{
-opacity:0.7;
-font-size:14px;
-margin-bottom:30px;
-}
-
-/* FORMULARIO */
-.form-wrapper{
-border-radius:12px;
-overflow:hidden;
-background:#020617;
-padding:10px;
-}
-
-/* IFRAME */
-.form-wrapper iframe{
+iframe{
 width:100%;
-height:900px;
+height:100vh;
 border:none;
 }
-
-/* NOTA */
-.nota{
-margin-top:20px;
-font-size:12px;
-opacity:0.6;
-}
-
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<iframe src="AQUI_PEGA_TU_LINK_DEL_FORMULARIO"></iframe>
 
-<h1>Cuéntenos su caso</h1>
+<script>
 
-<div class="sub">
-Estaremos encantados de conocer su negocio.
-</div>
+// REDIRECCIÓN AUTOMÁTICA
+window.addEventListener("message", function(e){
+  if(e.data === "submitted"){
+    window.location.href = "gracias.html";
+  }
+});
 
-<div class="form-wrapper">
-
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdH5Q5jArkHunlIir6LerhGpetmnU16LOOaO0h29veZPxbAPQ/viewform?embedded=true"></iframe>
-
-</div>
-
-<div class="nota">
-Le responderemos en un plazo máximo de 24 horas
-</div>
-
-</div>
+</script>
 
 </body>
 </html>
