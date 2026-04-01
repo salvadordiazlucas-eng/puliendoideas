@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 body{
 margin:0;
 font-family:'Inter',sans-serif;
@@ -65,13 +64,6 @@ font-weight:700;
 font-size:16px;
 }
 
-.nota{
-margin-top:20px;
-font-size:12px;
-opacity:0.6;
-text-align:center;
-}
-
 </style>
 </head>
 
@@ -105,10 +97,6 @@ text-align:center;
 
 </form>
 
-<div class="nota">
-Le responderemos en un plazo máximo de 24 horas
-</div>
-
 </div>
 
 <script>
@@ -119,13 +107,14 @@ e.preventDefault();
 
 fetch("https://hook.eu1.make.com/4dcczfuompwdh6ogx12cvc4nralv", {
 method: "POST",
+mode: "no-cors",
 body: new FormData(form)
 })
 .then(() => {
 window.location.href = "https://puliendoideas.com/gracias.html";
 })
 .catch(() => {
-alert("Error al enviar el formulario");
+window.location.href = "https://puliendoideas.com/gracias.html";
 });
 });
 </script>
