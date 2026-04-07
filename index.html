@@ -1,22 +1,215 @@
-<section class="hero">
+<!DOCTYPE html><html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Puliendo Ideas</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
 
-<img src="logo.png" class="logo">
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:#0b0f19;
+color:white;
+}
 
-<h1 class="headline">
-Diseñamos sistemas que atraen clientes y ponen orden en su negocio
-</h1>
+/* HERO */
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+padding:80px 20px 40px;
+background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+}
 
-<div class="sub">
-Automatizamos procesos, mejoramos su presencia digital y le ayudamos a crecer sin complicaciones.
-</div>
+.logo{
+width:220px;
+margin-bottom:20px;
+}
 
-<a href="formulario.html" class="cta">
+.headline{
+font-size:28px;
+max-width:320px;
+}
+
+.sub{
+margin-top:15px;
+font-size:14px;
+opacity:0.7;
+max-width:320px;
+}
+
+.cta{
+margin-top:30px;
+padding:16px;
+background:#0072ff;
+border-radius:12px;
+color:white;
+text-decoration:none;
+font-weight:700;
+width:100%;
+max-width:280px;
+}
+
+/* SCROLL */
+.scroll-indicator{
+margin-top:20px;
+display:flex;
+flex-direction:column;
+align-items:center;
+font-size:14px;
+opacity:0.8;
+}
+
+.arrow{
+font-size:20px;
+animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(6px);}
+}
+
+/* SECCIONES */
+section{
+padding:60px 20px;
+text-align:center;
+}
+
+h2{
+font-size:24px;
+max-width:320px;
+margin:0 auto 25px;
+}
+
+/* BLOQUE MEJORAS */
+.mejoras{
+display:flex;
+flex-direction:column;
+gap:20px;
+max-width:320px;
+margin:0 auto;
+text-align:left;
+}
+
+.mejora{
+background:#020617;
+padding:20px;
+border-radius:12px;
+}
+
+.mejora strong{
+display:block;
+margin-bottom:8px;
+}
+
+/* BLOQUE IMAGEN */
+.bloque-imagen{
+padding:40px 20px;
+display:flex;
+justify-content:center;
+}
+
+.bloque-imagen img{
+width:90%;
+max-width:270px;
+opacity:0.95;
+}
+
+/* EXPERIENCIA */
+.experiencia{
+background:#020617;
+}
+
+/* CTA FINAL */
+.cta2{
+margin-top:30px;
+display:inline-block;
+padding:16px;
+background:#0072ff;
+border-radius:12px;
+color:white;
+text-decoration:none;
+font-weight:700;
+width:100%;
+max-width:280px;
+}
+
+/* WHATSAPP */
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+width:65px;
+height:65px;
+z-index:999;
+}
+
+.whatsapp-float img{
+width:100%;
+}
+
+/* DESKTOP */
+@media(min-width:768px){
+
+.logo{
+width:320px;
+}
+
+.headline{
+font-size:52px;
+max-width:700px;
+}
+
+.mejoras{
+max-width:700px;
+}
+
+}
+
+</style></head><body><!-- HERO --><section class="hero"><img src="logo.png" class="logo"><h1 class="headline">
+Más clientes para su negocio local
+</h1><div class="sub">
+No hacemos todo.<br>
+Pero buscamos la excelencia en todo lo que hacemos.
+</div><a href="formulario.html" class="cta">
 ¿Hablamos?
-</a>
-
-<div class="scroll-indicator">
+</a><div class="scroll-indicator">
 <span>Desliza para más información</span>
 <div class="arrow">↓</div>
-</div>
-
-</section>
+</div></section><!-- FRASE --><section><h2>
+Su negocio es bueno.<br>
+Ahora necesita que internet lo reconozca.
+</h2></section><!-- IMAGEN --><section class="bloque-imagen">
+<img src="google-presencia.png">
+</section><!-- NUEVO BLOQUE --><section><h2>
+Mejoramos su presencia digital trabajando aspectos clave como:
+</h2><div class="mejoras"><div class="mejora">
+<strong>Mejor visibilidad</strong>
+Una página con contenidos actualizados y bien estructurados mejora su visibilidad en buscadores.
+</div><div class="mejora">
+<strong>Mejor presencia</strong>
+Su negocio se muestra de forma clara y constante en internet.
+</div><div class="mejora">
+<strong>Mejor comunicación</strong>
+Su mensaje se transmite de forma coherente y alineada.
+</div><div class="mejora">
+<strong>Mejor organización</strong>
+La información y los procesos se estructuran correctamente.
+</div><div class="mejora">
+<strong>Mejor gestión</strong>
+Contactos, reservas o solicitudes se gestionan de forma ordenada.
+</div></div></section><!-- EXPERIENCIA --><section class="experiencia"><h2>
+Casi dos décadas impulsando negocios.<br>
+Hoy aplicamos esa experiencia en el entorno digital.
+</h2><p>
+Durante años hemos trabajado en marketing, publicidad, merchandising, imagen y posicionamiento de empresas.  
+Hoy llevamos toda esa experiencia al entorno digital para ayudar a negocios locales a crecer con estructura, visibilidad y resultados.
+</p></section><!-- CIERRE --><section><h2>Si siente que podemos aportar valor a su negocio</h2><p>
+Estaremos encantados de hablar con usted.
+</p><a href="https://wa.me/34643344106" class="cta2">
+¿Hablamos?
+</a></section><!-- BOTÓN FLOTANTE --><a href="https://wa.me/34643344106" class="whatsapp-float">
+<img src="whatsapp.png">
+</a></body>
+</html>
