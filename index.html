@@ -26,12 +26,12 @@
         /* HERO SECTION */
         .hero {
             position: relative;
-            min-height: 100vh; /* Ocupa toda la pantalla inicial */
+            min-height: 92vh; /* Altura optimizada para dejar ver la flecha */
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 60px 24px;
+            padding: 40px 24px;
             background: radial-gradient(circle at top, #1e293b 0%, #020617 100%);
             box-sizing: border-box;
             justify-content: center;
@@ -39,7 +39,7 @@
 
         .logo-container {
             width: 100%;
-            max-width: 260px;
+            max-width: 240px;
             margin-bottom: 20px;
         }
 
@@ -50,7 +50,7 @@
         }
 
         .headline {
-            font-size: clamp(28px, 8vw, 48px);
+            font-size: clamp(26px, 7vw, 48px);
             font-weight: 700;
             line-height: 1.2;
             margin-bottom: 16px;
@@ -64,32 +64,31 @@
             color: var(--text-muted);
             max-width: 500px;
             margin-bottom: 32px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        /* FLECHA INDICADORA (SCROLL) */
+        /* FLECHA SUBIDA PARA MÓVIL */
         .scroll-indicator {
             position: absolute;
-            bottom: 30px;
+            bottom: 90px; /* Subida considerable para que no la tape ninguna barra */
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
-            opacity: 0.7;
+            opacity: 0.9;
+            z-index: 10;
         }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-10px);}
-            60% {transform: translateX(-50%) translateY(-5px);}
+            40% {transform: translateX(-50%) translateY(-12px);}
+            60% {transform: translateX(-50%) translateY(-6px);}
         }
 
         /* BOTONES */
         .cta-btn {
             display: inline-block;
             width: 100%;
-            max-width: 320px;
-            padding: 18px;
+            max-width: 300px;
+            padding: 16px;
             background: var(--primary);
             color: white !important;
             text-decoration: none;
@@ -97,12 +96,11 @@
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3);
-            font-size: 17px;
         }
 
-        /* SECCIONES Y GRID */
+        /* SECCIONES */
         section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-        h2 { font-size: clamp(22px, 6vw, 32px); text-align: center; margin-bottom: 40px; }
+        h2 { font-size: 28px; text-align: center; margin-bottom: 40px; }
         
         .grid {
             display: grid;
@@ -118,11 +116,10 @@
             border: 1px solid rgba(255,255,255,0.08);
             padding: 24px;
             border-radius: 16px;
-            text-align: left;
         }
         .card h3 { color: var(--accent); margin-top: 0; }
 
-        /* WHATSAPP FLOAT */
+        /* WHATSAPP FLOAT - RUTA CORREGIDA */
         .whatsapp-float {
             position: fixed;
             bottom: 20px;
@@ -131,71 +128,48 @@
             height: 65px;
             z-index: 999;
         }
-        .whatsapp-float img { width: 100%; }
+        .whatsapp-float img { width: 100%; height: 100%; }
 
     </style>
 </head>
 <body>
 
-    <!-- HERO SECTION -->
     <section class="hero">
         <div class="logo-container">
             <img src="logo.png" alt="Puliendo Ideas" class="logo-img">
         </div>
         <h1 class="headline">Estrategia real para su negocio local</h1>
-        <p class="sub">Optimizamos su presencia en Google y automatizamos procesos para que usted se enfoque en lo que mejor sabe hacer.</p>
+        <p class="sub">Optimizamos su presencia en Google y automatizamos procesos.</p>
         <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico</a>
 
-        <!-- INDICADOR DE SCROLL (FLECHA) -->
         <div class="scroll-indicator">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
             </svg>
         </div>
     </section>
 
-    <!-- RESTO DEL CONTENIDO -->
     <section id="soluciones">
         <h2>Soluciones de Impacto</h2>
         <div class="grid">
             <div class="card">
                 <h3>Hostelería</h3>
-                <p>Gestión de Google Business, control de reseñas y sistema inteligente de reservas <strong>TuLuzia</strong>.</p>
+                <p>Gestión de reseñas y sistema inteligente <strong>TuLuzia</strong>.</p>
             </div>
             <div class="card">
                 <h3>Clínicas y Servicios</h3>
-                <p>Optimización de agenda local y posicionamiento de autoridad para centros de salud.</p>
+                <p>Optimización de agenda local y autoridad de marca.</p>
             </div>
             <div class="card">
                 <h3>Inmobiliarias</h3>
-                <p>Automatización de captación y estrategia de contenidos con <strong>TuEXTRATEGIA IA</strong>.</p>
+                <p>Automatización de captación con <strong>TuEXTRATEGIA IA</strong>.</p>
             </div>
         </div>
     </section>
 
-    <section style="background: #020617; text-align: center;">
-        <h2>Tecnología Propia</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>TuLuzia.com</h3>
-                <p>El asistente inteligente que atiende sus reservas mientras usted descansa.</p>
-            </div>
-            <div class="card">
-                <h3>TuEXTRATEGIA IA</h3>
-                <p>Presencia constante y profesional en redes sociales sin esfuerzo manual.</p>
-            </div>
-        </div>
-    </section>
-
-    <section style="text-align: center; padding-bottom: 120px;">
-        <h2>¿Hablamos hoy mismo?</h2>
-        <p class="sub">Analizamos su negocio y le proponemos mejoras en menos de 48 horas.</p>
-        <a href="https://wa.me/34643344106" class="cta-btn">Contactar por WhatsApp</a>
-    </section>
-
-    <!-- WHATSAPP FLOAT -->
+    <!-- WHATSAPP FLOAT - USANDO NOMBRE EXACTO DEL ARCHIVO -->
     <a href="https://wa.me/34643344106" class="whatsapp-float">
-        <img src="WhatsApp.png" alt="Contactar">
+        <img src="WhatsApp.png" alt="WhatsApp">
     </a>
 
 </body>
