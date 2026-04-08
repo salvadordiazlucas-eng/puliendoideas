@@ -23,7 +23,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HERO - AJUSTE MÓVIL */
+        /* HERO - MOBILE FIRST */
         .hero {
             min-height: 90vh;
             display: flex;
@@ -38,17 +38,7 @@
         .logo-container {
             width: 100%;
             max-width: 280px;
-            margin-bottom: 40px;
-            background: white; /* Para que el logo negro sea visible */
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .logo-img {
-            width: 100%;
-            height: auto;
-            display: block;
+            margin-bottom: 30px;
         }
 
         .headline {
@@ -66,9 +56,11 @@
             color: var(--text-muted);
             max-width: 500px;
             margin-bottom: 32px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* SECCIONES Y CONTENEDORES */
+        /* SECCIONES */
         section {
             padding: 60px 24px;
             max-width: 1100px;
@@ -99,12 +91,12 @@
             border-radius: 16px;
             backdrop-filter: blur(8px);
             transition: 0.3s ease;
+            text-align: left;
         }
 
         .card h3 { color: var(--accent); margin-top: 0; font-size: 20px; }
         .card p { font-size: 15px; color: var(--text-muted); margin-bottom: 0; }
 
-        /* BADGES TECNOLÓGICOS */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -114,25 +106,27 @@
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             margin-bottom: 12px;
         }
 
-        /* BOTÓN ACCIÓN MÓVIL */
+        /* BOTONES */
         .cta-btn {
             display: inline-block;
             width: 100%;
             max-width: 320px;
             padding: 18px;
             background: var(--primary);
-            color: white;
+            color: white !important;
             text-decoration: none;
             font-weight: 700;
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 8px 20px rgba(0, 114, 255, 0.3);
             font-size: 17px;
+            transition: 0.3s;
         }
+
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(0, 114, 255, 0.5); }
 
         /* WHATSAPP FLOAT */
         .wa-float {
@@ -155,16 +149,28 @@
 </head>
 <body>
 
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="logo-container">
-            <!-- He usado el enlace directo a la imagen que subiste -->
-            <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Puliendo_Ideas_Logo.original.png" alt="Puliendo Ideas" class="logo-img">
+            <!-- LOGO VECTORIAL DE PULIENDO IDEAS -->
+            <svg viewBox="0 0 500 180" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+                    <!-- Icono Abeja -->
+                    <path d="M140 100c0 20-15 35-35 35s-35-15-35-35 15-35 35-35 35 15 35 35z" fill="#ffffff" stroke="none"/>
+                    <path d="M125 85 l50-30 a25 15 0 0 1 15 30 l-65 0z" stroke="#ffffff" stroke-width="5"/>
+                    <path d="M115 95 l60 15 a20 12 0 0 1 8 30 l-68-15z" stroke="#ffffff" stroke-width="5"/>
+                    <path d="M75 80 c-8-12-20-8-25 0M85 70 c-4-15-18-12-22-4" stroke="#ffffff" stroke-width="3"/>
+                </g>
+                <text x="190" y="95" font-family="'Inter', sans-serif" font-weight="700" font-size="52" fill="#ffffff">Puliendo</text>
+                <text x="190" y="155" font-family="'Inter', sans-serif" font-weight="700" font-size="62" fill="#ffffff">Ideas</text>
+            </svg>
         </div>
         <h1 class="headline">Estrategia real para su negocio local</h1>
         <p class="sub">Optimizamos su presencia en Google y automatizamos procesos para que usted se enfoque en lo que mejor sabe hacer.</p>
         <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico</a>
     </section>
 
+    <!-- SOLUCIONES -->
     <section>
         <h2>Soluciones de Impacto</h2>
         <div class="grid">
@@ -183,8 +189,9 @@
         </div>
     </section>
 
+    <!-- TECNOLOGÍA -->
     <section style="background: #020617;">
-        <h2>Tecnología Propia</h2>
+        <h2 style="margin-top: 0;">Tecnología Propia</h2>
         <div class="grid">
             <div class="card">
                 <span class="badge">Inteligencia Artificial</span>
@@ -199,12 +206,20 @@
         </div>
     </section>
 
-    <section style="text-align: center;">
+    <!-- SOBRE NOSOTROS -->
+    <section>
+        <h2>20 años impulsando negocios</h2>
+        <p class="sub">Llevamos nuestra experiencia en marketing, publicidad e imagen al entorno digital. Ayudamos a negocios locales a crecer con estructura y resultados tangibles.</p>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section style="text-align: center; padding-bottom: 100px;">
         <h2>¿Hablamos hoy mismo?</h2>
-        <p class="sub" style="margin: 0 auto 30px;">Analizamos su negocio y le proponemos mejoras tangibles en menos de 48 horas.</p>
+        <p class="sub">Analizamos su negocio y le proponemos mejoras en menos de 48 horas.</p>
         <a href="https://wa.me/34643344106" class="cta-btn">Contactar por WhatsApp</a>
     </section>
 
+    <!-- BOTÓN WHATSAPP -->
     <a href="https://wa.me/34643344106" class="wa-float">
         <svg viewBox="0 0 32 32"><path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.733 5.48 2.01 7.79l-2.01 7.21 7.377-1.937c2.17 1.143 4.643 1.797 7.273 1.797 8.837 0 16-7.163 16-16s-7.163-16-16-16zm8.125 22.463c-0.342 0.962-1.725 1.756-2.4 1.844-0.638 0.081-1.438 0.131-2.313-0.15-0.531-0.169-1.225-0.394-2.1-0.769-3.719-1.588-6.113-5.363-6.294-5.613-0.188-0.25-1.531-2.031-1.531-3.875 0-1.844 0.963-2.744 1.306-3.119 0.344-0.375 0.75-0.469 1-0.469s0.5 0 0.719 0.006c0.231 0.012 0.544-0.088 0.85 0.644 0.313 0.75 1.063 2.594 1.156 2.781 0.094 0.188 0.156 0.406 0.031 0.656-0.125 0.25-0.188 0.406-0.375 0.625-0.188 0.219-0.394 0.494-0.563 0.663-0.188 0.188-0.381 0.394-0.163 0.769 0.219 0.375 0.975 1.606 2.088 2.594 1.431 1.275 2.631 1.675 3.006 1.856s0.6-0.031 0.825-0.288c0.225-0.256 0.963-1.119 1.219-1.5 0.256-0.381 0.513-0.319 0.869-0.194 0.356 0.125 2.256 1.063 2.644 1.256s0.644 0.288 0.738 0.45c0.094 0.163 0.094 0.944-0.244 1.906z"/></svg>
     </a>
