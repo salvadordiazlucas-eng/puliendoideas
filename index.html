@@ -23,9 +23,10 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* HERO - MOBILE FIRST */
+        /* HERO SECTION */
         .hero {
-            min-height: 80vh;
+            position: relative;
+            min-height: 100vh; /* Ocupa toda la pantalla inicial */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -33,12 +34,13 @@
             padding: 60px 24px;
             background: radial-gradient(circle at top, #1e293b 0%, #020617 100%);
             box-sizing: border-box;
+            justify-content: center;
         }
 
         .logo-container {
             width: 100%;
-            max-width: 260px; /* Tamaño ideal para que no "se coma" la pantalla */
-            margin-bottom: 30px;
+            max-width: 260px;
+            margin-bottom: 20px;
         }
 
         .logo-img {
@@ -66,52 +68,20 @@
             margin-right: auto;
         }
 
-        /* SECCIONES */
-        section {
-            padding: 60px 24px;
-            max-width: 1100px;
-            margin: 0 auto;
+        /* FLECHA INDICADORA (SCROLL) */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
         }
 
-        h2 {
-            font-size: clamp(22px, 6vw, 32px);
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        /* GRID RESPONSIVE */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        @media (min-width: 768px) {
-            .grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 24px;
-            border-radius: 16px;
-            backdrop-filter: blur(8px);
-            text-align: left;
-        }
-
-        .card h3 { color: var(--accent); margin-top: 0; font-size: 20px; }
-        .card p { font-size: 15px; color: var(--text-muted); margin-bottom: 0; }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(0, 212, 255, 0.15);
-            color: var(--accent);
-            border-radius: 100px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 12px;
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
         }
 
         /* BOTONES */
@@ -130,22 +100,38 @@
             font-size: 17px;
         }
 
+        /* SECCIONES Y GRID */
+        section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
+        h2 { font-size: clamp(22px, 6vw, 32px); text-align: center; margin-bottom: 40px; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media (min-width: 768px) {
+            .grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: left;
+        }
+        .card h3 { color: var(--accent); margin-top: 0; }
+
         /* WHATSAPP FLOAT */
-        .wa-float {
+        .whatsapp-float {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: #25d366;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            bottom: 20px;
+            right: 20px;
+            width: 65px;
+            height: 65px;
             z-index: 999;
         }
-        .wa-float svg { fill: white; width: 30px; }
+        .whatsapp-float img { width: 100%; }
 
     </style>
 </head>
@@ -154,16 +140,22 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="logo-container">
-            <!-- Volvemos al archivo real que tienes en tu carpeta -->
             <img src="logo.png" alt="Puliendo Ideas" class="logo-img">
         </div>
         <h1 class="headline">Estrategia real para su negocio local</h1>
         <p class="sub">Optimizamos su presencia en Google y automatizamos procesos para que usted se enfoque en lo que mejor sabe hacer.</p>
         <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico</a>
+
+        <!-- INDICADOR DE SCROLL (FLECHA) -->
+        <div class="scroll-indicator">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+            </svg>
+        </div>
     </section>
 
-    <!-- SOLUCIONES -->
-    <section>
+    <!-- RESTO DEL CONTENIDO -->
+    <section id="soluciones">
         <h2>Soluciones de Impacto</h2>
         <div class="grid">
             <div class="card">
@@ -172,48 +164,38 @@
             </div>
             <div class="card">
                 <h3>Clínicas y Servicios</h3>
-                <p>Optimización de agenda local y posicionamiento de autoridad para centros de salud y despachos.</p>
+                <p>Optimización de agenda local y posicionamiento de autoridad para centros de salud.</p>
             </div>
             <div class="card">
                 <h3>Inmobiliarias</h3>
-                <p>Automatización de captación de clientes y estrategia de contenidos con <strong>TuEXTRATEGIA IA</strong>.</p>
+                <p>Automatización de captación y estrategia de contenidos con <strong>TuEXTRATEGIA IA</strong>.</p>
             </div>
         </div>
     </section>
 
-    <!-- TECNOLOGÍA -->
-    <section style="background: #020617;">
-        <h2 style="margin-top: 0;">Tecnología Propia</h2>
+    <section style="background: #020617; text-align: center;">
+        <h2>Tecnología Propia</h2>
         <div class="grid">
             <div class="card">
-                <span class="badge">Inteligencia Artificial</span>
                 <h3>TuLuzia.com</h3>
-                <p>El asistente que atiende sus reservas y clientes mientras usted descansa.</p>
+                <p>El asistente inteligente que atiende sus reservas mientras usted descansa.</p>
             </div>
             <div class="card">
-                <span class="badge">Contenido Estratégico</span>
                 <h3>TuEXTRATEGIA IA</h3>
                 <p>Presencia constante y profesional en redes sociales sin esfuerzo manual.</p>
             </div>
         </div>
     </section>
 
-    <!-- SOBRE NOSOTROS -->
-    <section>
-        <h2>20 años impulsando negocios</h2>
-        <p class="sub">Llevamos nuestra experiencia en marketing, publicidad e imagen al entorno digital. Ayudamos a negocios locales a crecer con estructura y resultados tangibles.</p>
-    </section>
-
-    <!-- CTA FINAL -->
-    <section style="text-align: center; padding-bottom: 100px;">
+    <section style="text-align: center; padding-bottom: 120px;">
         <h2>¿Hablamos hoy mismo?</h2>
         <p class="sub">Analizamos su negocio y le proponemos mejoras en menos de 48 horas.</p>
         <a href="https://wa.me/34643344106" class="cta-btn">Contactar por WhatsApp</a>
     </section>
 
-    <!-- BOTÓN WHATSAPP -->
-    <a href="https://wa.me/34643344106" class="wa-float">
-        <svg viewBox="0 0 32 32"><path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.733 5.48 2.01 7.79l-2.01 7.21 7.377-1.937c2.17 1.143 4.643 1.797 7.273 1.797 8.837 0 16-7.163 16-16s-7.163-16-16-16zm8.125 22.463c-0.342 0.962-1.725 1.756-2.4 1.844-0.638 0.081-1.438 0.131-2.313-0.15-0.531-0.169-1.225-0.394-2.1-0.769-3.719-1.588-6.113-5.363-6.294-5.613-0.188-0.25-1.531-2.031-1.531-3.875 0-1.844 0.963-2.744 1.306-3.119 0.344-0.375 0.75-0.469 1-0.469s0.5 0 0.719 0.006c0.231 0.012 0.544-0.088 0.85 0.644 0.313 0.75 1.063 2.594 1.156 2.781 0.094 0.188 0.156 0.406 0.031 0.656-0.125 0.25-0.188 0.406-0.375 0.625-0.188 0.219-0.394 0.494-0.563 0.663-0.188 0.188-0.381 0.394-0.163 0.769 0.219 0.375 0.975 1.606 2.088 2.594 1.431 1.275 2.631 1.675 3.006 1.856s0.6-0.031 0.825-0.288c0.225-0.256 0.963-1.119 1.219-1.5 0.256-0.381 0.513-0.319 0.869-0.194 0.356 0.125 2.256 1.063 2.644 1.256s0.644 0.288 0.738 0.45c0.094 0.163 0.094 0.944-0.244 1.906z"/></svg>
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/34643344106" class="whatsapp-float">
+        <img src="WhatsApp.png" alt="Contactar">
     </a>
 
 </body>
