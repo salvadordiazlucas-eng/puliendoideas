@@ -1,215 +1,209 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Puliendo Ideas</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puliendo Ideas | Estrategia y Automatización IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0072ff;
+            --bg: #0b0f19;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --accent: #00d4ff;
+        }
 
-body{
-margin:0;
-font-family:'Inter',sans-serif;
-background:#0b0f19;
-color:white;
-}
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-/* HERO */
-.hero{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-text-align:center;
-padding:80px 20px 40px;
-background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
-}
+        /* HERO DINÁMICO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 40px;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%);
+        }
 
-.logo{
-width:220px;
-margin-bottom:20px;
-}
+        .logo {
+            width: 250px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 15px rgba(0,114,255,0.3));
+        }
 
-.headline{
-font-size:28px;
-max-width:320px;
-}
+        .headline {
+            font-size: clamp(32px, 5vw, 56px);
+            max-width: 800px;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
 
-.sub{
-margin-top:15px;
-font-size:14px;
-opacity:0.7;
-max-width:320px;
-}
+        .sub {
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
 
-.cta{
-margin-top:30px;
-padding:16px;
-background:#0072ff;
-border-radius:12px;
-color:white;
-text-decoration:none;
-font-weight:700;
-width:100%;
-max-width:280px;
-}
+        /* SELECTOR DE SECTOR */
+        .sectores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 20px;
+            margin: 0 auto;
+        }
 
-/* SCROLL */
-.scroll-indicator{
-margin-top:20px;
-display:flex;
-flex-direction:column;
-align-items:center;
-font-size:14px;
-opacity:0.8;
-}
+        .sector-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            transition: 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
 
-.arrow{
-font-size:20px;
-animation:bounce 1.5s infinite;
-}
+        .sector-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+            background: rgba(0, 114, 255, 0.1);
+        }
 
-@keyframes bounce{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(6px);}
-}
+        .sector-card h3 { color: var(--accent); margin-top: 0; }
 
-/* SECCIONES */
-section{
-padding:60px 20px;
-text-align:center;
-}
+        /* PRODUCTOS PROPIOS */
+        .productos {
+            background: #020617;
+            padding: 80px 20px;
+        }
 
-h2{
-font-size:24px;
-max-width:320px;
-margin:0 auto 25px;
-}
+        .tech-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-/* BLOQUE MEJORAS */
-.mejoras{
-display:flex;
-flex-direction:column;
-gap:20px;
-max-width:320px;
-margin:0 auto;
-text-align:left;
-}
+        /* BOTONES */
+        .cta-main {
+            padding: 18px 40px;
+            background: var(--primary);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(0,114,255,0.3);
+        }
 
-.mejora{
-background:#020617;
-padding:20px;
-border-radius:12px;
-}
+        .cta-main:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0,114,255,0.5); }
 
-.mejora strong{
-display:block;
-margin-bottom:8px;
-}
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
 
-/* BLOQUE IMAGEN */
-.bloque-imagen{
-padding:40px 20px;
-display:flex;
-justify-content:center;
-}
+        .whatsapp-float img { width: 35px; }
 
-.bloque-imagen img{
-width:90%;
-max-width:270px;
-opacity:0.95;
-}
+        /* SECCIONES TEXTO */
+        section { padding: 80px 20px; text-align: center; }
+        h2 { font-size: clamp(24px, 4vw, 36px); margin-bottom: 40px; }
 
-/* EXPERIENCIA */
-.experiencia{
-background:#020617;
-}
+    </style>
+</head>
+<body>
 
-/* CTA FINAL */
-.cta2{
-margin-top:30px;
-display:inline-block;
-padding:16px;
-background:#0072ff;
-border-radius:12px;
-color:white;
-text-decoration:none;
-font-weight:700;
-width:100%;
-max-width:280px;
-}
+    <!-- HERO -->
+    <section class="hero">
+        <img src="logo.png" alt="Puliendo Ideas" class="logo">
+        <h1 class="headline">Pulimos su presencia digital.<br>Automatizamos su crecimiento.</h1>
+        <p class="sub">No solo creamos visibilidad; cerramos las fugas de tiempo y dinero en su negocio local con tecnología de vanguardia.</p>
+        <a href="https://wa.me/34643344106" class="cta-main">Diagnóstico Gratuito</a>
+    </section>
 
-/* WHATSAPP */
-.whatsapp-float{
-position:fixed;
-bottom:20px;
-right:20px;
-width:65px;
-height:65px;
-z-index:999;
-}
+    <!-- SELECTOR DE SECTORES -->
+    <section>
+        <h2>¿Qué tipo de negocio desea optimizar?</h2>
+        <div class="sectores">
+            <div class="sector-card">
+                <h3>Hostelería</h3>
+                <p>Recupere el control de su Google Business, gestione reseñas con IA y automatice sus reservas con <strong>TuLuzia</strong>.</p>
+            </div>
+            <div class="sector-card">
+                <h3>Clínicas y Salud</h3>
+                <p>Gestión inteligente de citas, recordatorios automáticos y posicionamiento local para ser la primera opción del paciente.</p>
+            </div>
+            <div class="sector-card">
+                <h3>Profesionales</h3>
+                <p>Inmobiliarias, abogados y servicios. Automatización de captación de clientes y estrategia de contenido con <strong>TuEXTRATEGIA IA</strong>.</p>
+            </div>
+        </div>
+    </section>
 
-.whatsapp-float img{
-width:100%;
-}
+    <!-- TECNOLOGÍA PROPIA -->
+    <section class="productos">
+        <h2>Nuestra Tecnología</h2>
+        <div class="sectores">
+            <div class="sector-card">
+                <span class="tech-badge">RESERVAS IA</span>
+                <h3>TuLuzia.com</h3>
+                <p>El asistente inteligente que gestiona sus reservas 24/7 sin que usted tenga que tocar el teléfono.</p>
+            </div>
+            <div class="sector-card">
+                <span class="tech-badge">CONTENIDO IA</span>
+                <h3>TuEXTRATEGIA IA</h3>
+                <p>La inyección de visibilidad que su marca necesita: contenido automatizado y estratégico para redes sociales.</p>
+            </div>
+        </div>
+    </section>
 
-/* DESKTOP */
-@media(min-width:768px){
+    <!-- EXPERIENCIA -->
+    <section style="background: #0b0f19;">
+        <h2>20 años "Puliendo Ideas"</h2>
+        <p style="max-width: 800px; margin: 0 auto; opacity: 0.8;">
+            Venimos del marketing real, del merchandising y del posicionamiento físico. Esa experiencia nos permite hoy aplicar la Inteligencia Artificial no como un juguete, sino como una herramienta de rentabilidad para el negocio de barrio.
+        </p>
+    </section>
 
-.logo{
-width:320px;
-}
+    <!-- CTA FINAL -->
+    <section>
+        <h2>¿Hablamos de su negocio?</h2>
+        <p>Le ayudamos a dejar de perder tiempo en tareas que la tecnología puede hacer mejor por usted.</p>
+        <a href="https://wa.me/34643344106" class="cta-main">Contactar por WhatsApp</a>
+    </section>
 
-.headline{
-font-size:52px;
-max-width:700px;
-}
+    <!-- WHATSAPP -->
+    <a href="https://wa.me/34643344106" class="whatsapp-float">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
-.mejoras{
-max-width:700px;
-}
-
-}
-
-</style></head><body><!-- HERO --><section class="hero"><img src="logo.png" class="logo"><h1 class="headline">
-Más clientes para su negocio local
-</h1><div class="sub">
-No hacemos todo.<br>
-Pero buscamos la excelencia en todo lo que hacemos.
-</div><a href="formulario.html" class="cta">
-¿Hablamos?
-</a><div class="scroll-indicator">
-<span>Desliza para más información</span>
-<div class="arrow">↓</div>
-</div></section><!-- FRASE --><section><h2>
-Su negocio es bueno.<br>
-Ahora necesita que internet lo reconozca.
-</h2></section><!-- IMAGEN --><section class="bloque-imagen">
-<img src="google-presencia.png">
-</section><!-- NUEVO BLOQUE --><section><h2>
-Mejoramos su presencia digital trabajando aspectos clave como:
-</h2><div class="mejoras"><div class="mejora">
-<strong>Mejor visibilidad</strong>
-Una página con contenidos actualizados y bien estructurados mejora su visibilidad en buscadores.
-</div><div class="mejora">
-<strong>Mejor presencia</strong>
-Su negocio se muestra de forma clara y constante en internet.
-</div><div class="mejora">
-<strong>Mejor comunicación</strong>
-Su mensaje se transmite de forma coherente y alineada.
-</div><div class="mejora">
-<strong>Mejor organización</strong>
-La información y los procesos se estructuran correctamente.
-</div><div class="mejora">
-<strong>Mejor gestión</strong>
-Contactos, reservas o solicitudes se gestionan de forma ordenada.
-</div></div></section><!-- EXPERIENCIA --><section class="experiencia"><h2>
-Casi dos décadas impulsando negocios.<br>
-Hoy aplicamos esa experiencia en el entorno digital.
-</h2><p>
-Durante años hemos trabajado en marketing, publicidad, merchandising, imagen y posicionamiento de empresas.  
-Hoy llevamos toda esa experiencia al entorno digital para ayudar a negocios locales a crecer con estructura, visibilidad y resultados.
-</p></section><!-- CIERRE --><section><h2>Si siente que podemos aportar valor a su negocio</h2><p>
-Estaremos encantados de hablar con usted.
-</p><a href="https://wa.me/34643344106" class="cta2">
-¿Hablamos?
-</a></section><!-- BOTÓN FLOTANTE --><a href="https://wa.me/34643344106" class="whatsapp-float">
-<img src="whatsapp.png">
-</a></body>
+</body>
 </html>
