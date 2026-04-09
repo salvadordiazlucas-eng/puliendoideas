@@ -86,16 +86,17 @@
         .cta-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0, 114, 255, 0.6); }
 
         /* =========================================
-           --- FLECHA DE SCROLL (INFALIBLE RESPONSIVE) ---
+           --- FLECHA DE SCROLL (Móvil Only) ---
            ========================================= */
         .scroll-indicator {
+            display: none; /* Oculta por defecto en PC */
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
             opacity: 0.8;
             transition: opacity 0.3s ease;
             pointer-events: none;
-            line-height: 0; /* Corrige espacio SVG */
+            line-height: 0;
         }
 
         .scroll-indicator.hidden { opacity: 0; }
@@ -176,30 +177,18 @@
            --- MEDIA QUERIES (RESPONSIVE) ---
            ========================================= */
 
-        /* PC y Escritorio (Corrección Salvador) */
         @media (min-width: 992px) {
-            .logo-img { margin-bottom: 10px; } /* Más cerca título */
-            .sub { margin-bottom: 20px; } /* Más cerca botón */
-            .cta-btn { margin-bottom: 30px; } /* Espacio para flecha relative */
-            
-            /* Flecha PC: Relative al hero, después del botón */
-            .scroll-indicator {
-                position: relative; 
-                margin-top: 20px;
-                margin-bottom: 50px;
-                z-index: 10;
-                width: 35px;
-                height: 35px;
-            }
+            .logo-img { margin-bottom: 15px; }
+            .sub { margin-bottom: 35px; }
+            .cta-btn { margin-bottom: 20px; }
         }
 
-        /* Móvil y Tablets (Mantenemos Visibilidad Faro) */
         @media (max-width: 991px) {
-            .hero { padding-bottom: 120px; } /* Padding inferior para dejar espacio a la flecha fixed */
-            
+            .hero { padding-bottom: 120px; }
             .scroll-indicator { 
+                display: block; /* Solo visible en móvil/tablet */
                 position: fixed; 
-                bottom: 60px; /* Flota elegantemente */
+                bottom: 60px;
                 z-index: 100;
                 width: 28px;
                 height: 28px;
@@ -249,11 +238,9 @@
     <script>
         window.addEventListener('scroll', function() {
             var scrollArrow = document.getElementById('scroll-arrow');
-            // Si el usuario baja más de 100px, oculta la flecha
             if (window.scrollY > 100) {
                 scrollArrow.classList.add('hidden');
             } else {
-                // Si vuelve arriba, la muestra
                 scrollArrow.classList.remove('hidden');
             }
         });
