@@ -13,7 +13,7 @@
             --accent: #00d4ff;
             --text-muted: #94a3b8;
             --border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         html { scroll-behavior: smooth; }
@@ -26,6 +26,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* =========================================
+           --- HERO: EL RESCATE ---
+           ========================================= */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -35,10 +38,18 @@
             justify-content: center;
             text-align: center;
             padding: 40px 20px;
+            box-sizing: border-box; /* Asegura que el padding no altere el height */
             background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
 
-        .logo-img { width: 100%; max-width: 280px; margin-bottom: 50px; filter: drop-shadow(0 0 20px rgba(0, 114, 255, 0.2)); }
+        /* CORRECCIÓN SALVADOR: Distancia reducida logo-texto (PC) */
+        .logo-img { 
+            width: 100%; 
+            max-width: 280px; 
+            height: auto;
+            margin-bottom: 20px; /* Reducido de 50px */
+            filter: drop-shadow(0 0 20px rgba(0, 114, 255, 0.2)); 
+        }
 
         .headline { 
             font-size: clamp(32px, 8vw, 68px); 
@@ -49,6 +60,14 @@
             background: linear-gradient(to bottom, #fff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .sub { 
+            font-size: 20px; 
+            color: var(--text-muted); 
+            max-width: 650px; 
+            margin-bottom: 45px; 
+            font-weight: 400;
         }
 
         .cta-btn {
@@ -63,10 +82,32 @@
             border-radius: 16px;
             font-size: 18px;
             box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4);
+            margin-bottom: 80px; /* Margen por defecto para PC */
             transition: var(--transition);
         }
+        .cta-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0, 114, 255, 0.6); }
 
-        .services-section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+        /* CORRECCIÓN SALVADOR: Flecha Recuperada y Visibilizada */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 10; /* Asegura que flote por encima del fondo y secciones */
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* =========================================
+           --- SECCIÓN SOLUCIONES ---
+           ========================================= */
+        .services-section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; position: relative;}
         .section-title { font-size: 42px; text-align: center; margin-bottom: 80px; font-weight: 700; letter-spacing: -2px; }
 
         .service-card {
@@ -117,6 +158,9 @@
             transition: var(--transition);
         }
 
+        /* =========================================
+           --- WHATSAPP FLOTANTE ---
+           ========================================= */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -125,6 +169,22 @@
             height: 65px;
             z-index: 1000;
         }
+
+        /* =========================================
+           --- MEDIA QUERIES (RESPONSIVE) ---
+           ========================================= */
+        @media (max-width: 768px) {
+            /* CORRECCIÓN SALVADOR: Botón elevado en móvil */
+            .cta-btn { 
+                margin-bottom: 40px; /* Reducido para que no quede tan bajo */
+                padding: 18px;
+                font-size: 16px;
+            }
+            
+            .headline { font-size: clamp(32px, 10vw, 48px); letter-spacing: -1px; }
+            .logo-img { max-width: 220px; }
+            .scroll-indicator { bottom: 15px; } /* Ajuste de posición flecha en móvil */
+        }
     </style>
 </head>
 <body>
@@ -132,8 +192,15 @@
     <section class="hero">
         <img src="logo.png" alt="Puliendo Ideas" class="logo-img">
         <h1 class="headline">Recupere el control de su negocio</h1>
-        <p style="color:var(--text-muted); max-width:600px; margin-bottom:40px;">Expertos en rescate de perfiles de Google y automatización estratégica.</p>
+        <p class="sub">Expertos en rescate de perfiles de Google y automatización estratégica.</p>
+        
         <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico Crítico</a>
+        
+        <div class="scroll-indicator">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+            </svg>
+        </div>
     </section>
 
     <section class="services-section">
