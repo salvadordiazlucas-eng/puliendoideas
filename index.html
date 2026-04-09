@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.2">
-    <title>Puliendo Ideas | Estrategia e IA para Negocios</title>
+    <title>Puliendo Ideas | Rescate Estratégico e IA</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,26 +12,14 @@
             --card-bg: rgba(255, 255, 255, 0.02);
             --accent: #00d4ff;
             --text-muted: #94a3b8;
-            --border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --border: rgba(255, 255, 255, 0.06);
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); /* Patinado ultrasuave */
         }
 
-        /* CONFIGURACIÓN GLOBAL - FLUIDEZ */
         html { scroll-behavior: smooth; }
-        
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: white;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: white; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden;}
 
-        /* =========================================
-           --- SECCIÓN HERO (ESTRUCTURA VALIDADA) ---
-           ========================================= */
+        /* --- HERO: EL RESCATE --- */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -40,205 +28,80 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-            background: radial-gradient(circle at top, #1e293b 0%, #020617 100%);
+            padding: 40px 20px;
+            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
+        .logo-img { width: 100%; max-width: 300px; margin-bottom: 50px; filter: drop-shadow(0 0 25px rgba(0, 114, 255, 0.2)); }
+        .headline { font-size: clamp(32px, 8vw, 68px); font-weight: 700; line-height: 1; margin-bottom: 24px; letter-spacing: -3px; background: linear-gradient(to bottom, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub { font-size: 20px; color: var(--text-muted); max-width: 650px; margin-bottom: 45px; }
+        .cta-btn { display: inline-block; width: 100%; max-width: 350px; padding: 22px; background: var(--primary); color: white !important; text-decoration: none; font-weight: 700; border-radius: 16px; font-size: 18px; box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4); transition: var(--transition); }
+        .cta-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0, 114, 255, 0.6); }
 
-        /* Logo profesional */
-        .logo-img { 
-            width: 100%; 
-            max-width: 260px; 
-            height: auto; 
-            margin-bottom: 40px; 
-            filter: drop-shadow(0 0 15px rgba(0, 114, 255, 0.2));
-        }
+        /* --- SECCIÓN SOLUCIONES: HISTORIAS VISUALES --- */
+        .services-section { padding: 120px 24px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: 42px; text-align: center; margin-bottom: 90px; font-weight: 700; letter-spacing: -2px; }
 
-        .headline { 
-            font-size: clamp(32px, 8vw, 64px); 
-            font-weight: 700; 
-            line-height: 1.1; 
-            margin-bottom: 20px; 
-            letter-spacing: -2px;
-            background: linear-gradient(180deg, #fff 0%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .sub { 
-            font-size: 18px; 
-            color: var(--text-muted); 
-            max-width: 580px; 
-            margin-bottom: 40px; 
-            font-weight: 400;
-        }
-
-        /* Botón de Diagnóstico */
-        .cta-btn {
-            display: inline-block;
-            width: 100%;
-            max-width: 320px;
-            padding: 20px;
-            background: var(--primary);
-            color: white !important;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 14px;
-            font-size: 17px;
-            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.4);
-            margin-bottom: 80px;
-            transition: var(--transition);
-        }
-        .cta-btn:hover { 
-            transform: translateY(-4px) scale(1.02); 
-            box-shadow: 0 15px 40px rgba(0, 114, 255, 0.6);
-            background: #0066e6;
-        }
-
-        /* Flecha de Scroll (Indicador de fluidez) */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2.5s infinite;
-            opacity: 0.6;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
-            40% {transform: translateX(-50%) translateY(-12px);}
-        }
-
-        /* =========================================
-           --- SECCIÓN SERVICIOS (PROFESIONAL) ---
-           ========================================= */
-        .services-section { 
-            padding: 120px 24px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-        }
-
-        .section-title { 
-            font-size: clamp(28px, 5vw, 42px); 
-            text-align: center; 
-            margin-bottom: 80px; 
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
-
-        .services-container { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 60px; 
-        }
-        
         .service-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 60px;
+            border-radius: 32px;
+            padding: 0; /* Padding interno para que la imagen llegue al borde */
             display: grid;
             grid-template-columns: 1fr;
-            gap: 40px;
-            align-items: center;
+            margin-bottom: 60px;
             transition: var(--transition);
-            backdrop-filter: blur(10px);
+            overflow: hidden; /* Corta la imagen si sobresale */
+            border-right: 2px solid rgba(0, 212, 255, 0); /* Brillo latente */
         }
-        .service-card:hover { 
-            border-color: rgba(0, 114, 255, 0.4); 
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-8px);
-        }
+        .service-card:hover { border-color: rgba(255, 255, 255, 0.2); border-right-color: var(--accent); transform: scale(1.02); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); }
 
-        /* Espacio para tus futuras imágenes profesionales */
-        .service-visual {
+        /* Contenedor de la Imagen descriptiva */
+        .service-visual-pro {
             width: 100%;
-            max-width: 240px;
-            height: 180px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
+            height: 400px; /* Altura fija para que la imagen narre */
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+        .service-visual-pro img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* La imagen se adapta y narra */
+            transition: var(--transition);
+        }
+        .service-card:hover .service-visual-pro img { transform: scale(1.05); }
+
+        /* Contenido de Texto Profesional */
+        .service-content-pro { padding: 50px; }
+        .service-tag { color: var(--accent); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; }
+        .service-content-pro h3 { font-size: 36px; margin: 0 0 20px; letter-spacing: -1px; }
+        .service-description { font-size: 18px; color: var(--text-muted); margin-bottom: 30px; }
+
+        /* Pie de página profesional */
+        .service-footer {
             display: flex;
-            justify-content: center;
+            flex-wrap: wrap;
             align-items: center;
-            border: 1px dashed var(--border);
+            justify-content: space-between;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            gap: 20px;
         }
-        .service-visual img { width: 100%; height: auto; object-fit: contain; }
+        .price-box { text-align: left; }
+        .price-amount { font-size: 48px; font-weight: 700; display: block; color: white; }
+        .price-label { font-size: 14px; color: var(--text-muted); }
 
-        .service-content h3 { font-size: 32px; margin: 0 0 15px; color: white; }
-        .service-tag { 
-            color: var(--accent); 
-            font-weight: 700; 
-            font-size: 13px; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            margin-bottom: 25px; 
-            display: block; 
-        }
-        .service-list { list-style: none; padding: 0; margin: 0; color: var(--text-muted); font-size: 17px; }
-        .service-list li { margin-bottom: 14px; padding-left: 30px; position: relative; }
-        .service-list li::before { 
-            content: '→'; 
-            position: absolute; 
-            left: 0; 
-            color: var(--accent); 
-            font-weight: 700; 
-        }
+        .btn-small { padding: 16px 32px; background: rgba(0, 114, 255, 0.1); color: var(--accent) !important; border: 1px solid var(--accent); text-decoration: none; font-weight: 700; border-radius: 12px; transition: var(--transition); }
+        .btn-small:hover { background: var(--accent); color: black !important; }
 
-        /* Panel lateral de precios */
-        .service-pricing {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-        }
-        .price { font-size: 48px; font-weight: 700; color: white; line-height: 1; margin-bottom: 8px; }
-        .price-detail { font-size: 14px; color: var(--text-muted); margin-bottom: 25px; }
-        
-        .service-btn-pro {
-            display: inline-block;
-            padding: 16px 32px;
-            background: var(--primary);
-            color: white !important;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 12px;
-            transition: var(--transition);
-        }
-        .service-btn-pro:hover { background: var(--accent); color: #000 !important; }
+        /* WHATSAPP */
+        .whatsapp-float { position: fixed; bottom: 40px; right: 40px; width: 70px; height: 70px; z-index: 999; transition: var(--transition); }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); }
 
-        /* =========================================
-           --- BOTÓN WHATSAPP (CORREGIDO) ---
-           ========================================= */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            z-index: 999;
-            transition: var(--transition);
-        }
-        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
-        .whatsapp-float img { width: 100%; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
-
-        /* =========================================
-           --- MEDIA QUERIES (ADAPTACIÓN) ---
-           ========================================= */
-        @media (min-width: 992px) {
-            .service-card { grid-template-columns: 240px 1fr 280px; gap: 60px; text-align: left; }
-            .service-visual { margin: 0; }
-        }
-
-        @media (max-width: 768px) {
-            .service-card { padding: 40px 24px; text-align: center; }
-            .service-list li { text-align: left; }
-            .service-pricing { margin-top: 20px; }
-            .headline { letter-spacing: -1px; }
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .service-visual-pro { height: 300px; }
+            .service-content-pro { padding: 30px; }
+            .price-amount { font-size: 38px; }
         }
     </style>
 </head>
@@ -246,71 +109,55 @@
 
     <section class="hero">
         <img src="logo.png" alt="Puliendo Ideas" class="logo-img">
-        
-        <h1 class="headline">Estrategia real para su negocio local</h1>
-        <p class="sub">Optimizamos su presencia en Google y automatizamos procesos estratégicos para escalar su rentabilidad.</p>
-        
-        <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico Gratuito</a>
-        
-        <div class="scroll-indicator">
-            <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
-            </svg>
-        </div>
+        <h1 class="headline">Recupere el control de su negocio</h1>
+        <p class="sub">Especialistas en rescate de perfiles de Google Business y optimización con IA para quienes buscan progreso real.</p>
+        <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico Crítico</a>
     </section>
 
-    <section id="servicios" class="services-section">
-        <h2 class="section-title">Nuestras Soluciones de Alto Impacto</h2>
+    <section class="services-section">
+        <h2 class="section-title">La Guía hacia la Luz</h2>
         
-        <div class="services-container">
-            
-            <div class="service-card">
-                <div class="service-visual">
-                    <img src="servicio-gbp.png" alt="Google Business Pro">
-                </div>
-                <div class="service-content">
-                    <span class="service-tag">Autoridad Local</span>
-                    <h3>Google Business Profile PRO</h3>
-                    <ul class="service-list">
-                        <li>Auditoría profunda y corrección de datos.</li>
-                        <li>Optimización SEO local y palabras clave.</li>
-                        <li>Geo-posicionamiento estratégico de imágenes.</li>
-                        <li>Gestión inteligente de reseñas con IA.</li>
-                    </ul>
-                </div>
-                <div class="service-pricing">
-                    <span class="price">499€</span>
-                    <span class="price-detail">Implementación Profesional</span>
-                    <a href="https://wa.me/34643344106" class="service-btn-pro">Reservar Auditoría</a>
+        <div class="service-card">
+            <div class="service-visual-pro">
+                <img src="historia-google.png" alt="Rescate de Presencia Google">
+            </div>
+            <div class="service-content-pro">
+                <span class="service-tag">Rescate de Propiedad</span>
+                <h3>Google Business Recovery</h3>
+                <p class="service-description">Convertimos su perfil en el faro que guía a los clientes. Desde el rescate de la titularidad hasta la demostración de valor (reseñas ★5), somos los mejorerre.</p>
+                
+                <div class="service-footer">
+                    <div class="price-box">
+                        <span class="price-amount">499€</span>
+                        <span class="price-label">Servicio de Intervención</span>
+                    </div>
+                    <a href="https://wa.me/34643344106" class="btn-small">Iniciar Rescate</a>
                 </div>
             </div>
+        </div>
 
-            <div class="service-card">
-                <div class="service-visual">
-                    <img src="servicio-tuluzia.png" alt="TuLuzia AI">
-                </div>
-                <div class="service-content">
-                    <span class="service-tag">Automatización IA</span>
-                    <h3>Asistente Inteligente TuLuzia</h3>
-                    <ul class="service-list">
-                        <li>Atención y gestión de reservas 24/7.</li>
-                        <li>Confirmaciones automáticas por WhatsApp.</li>
-                        <li>Sincronización con agenda en tiempo real.</li>
-                        <li>Sistema de recuperación de clientes.</li>
-                    </ul>
-                </div>
-                <div class="service-pricing">
-                    <span class="price">199€<small>/m</small></span>
-                    <span class="price-detail">+ Alta e Integración Inicial</span>
-                    <a href="https://wa.me/34643344106" class="service-btn-pro">Activar TuLuzia</a>
+        <div class="service-card">
+            <div class="service-visual-pro">
+                <img src="historia-tuluzia.png" alt="Automatización TuLuzia">
+            </div>
+            <div class="service-content-pro">
+                <span class="service-tag">Eficiencia IA</span>
+                <h3>Asistente de Reservas TuLuzia</h3>
+                <p class="service-description">La IA que nunca se apaga. Automatizamos su atención para que su negocio destaque por su rapidez y profesionalismo, multiplicando su rentabilidad.</p>
+                
+                <div class="service-footer">
+                    <div class="price-box">
+                        <span class="price-amount">199€<small>/m</small></span>
+                        <span class="price-label">Gestión Autónoma IA</span>
+                    </div>
+                    <a href="https://wa.me/34643344106" class="btn-small">Implementar Guía</a>
                 </div>
             </div>
-
         </div>
     </section>
 
     <a href="https://wa.me/34643344106" class="whatsapp-float">
-        <img src="WhatsApp.png" alt="WhatsApp Contacto">
+        <img src="WhatsApp.png" alt="WhatsApp" style="width:100%">
     </a>
 
 </body>
