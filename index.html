@@ -37,7 +37,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 40px 20px 120px 20px; /* Padding inferior para dejar espacio a la flecha fixed */
+            padding: 20px;
             box-sizing: border-box;
             background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
         }
@@ -53,8 +53,8 @@
         .headline { 
             font-size: clamp(32px, 8vw, 68px); 
             font-weight: 700; 
-            line-height: 1; 
-            margin-bottom: 24px; 
+            line-height: 1.1; 
+            margin-bottom: 20px; 
             letter-spacing: -3px;
             background: linear-gradient(to bottom, #fff, #94a3b8);
             -webkit-background-clip: text;
@@ -62,10 +62,10 @@
         }
 
         .sub { 
-            font-size: 20px; 
+            font-size: clamp(16px, 3vw, 20px); 
             color: var(--text-muted); 
             max-width: 650px; 
-            margin-bottom: 45px; 
+            margin-bottom: 30px; 
             font-weight: 400;
         }
 
@@ -73,7 +73,7 @@
             display: inline-block;
             width: 100%;
             max-width: 350px;
-            padding: 22px;
+            padding: 20px;
             background: var(--primary);
             color: white !important;
             text-decoration: none;
@@ -81,28 +81,24 @@
             border-radius: 16px;
             font-size: 18px;
             box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4);
-            margin-bottom: 40px; /* Reducido para mejor ajuste en hero */
             transition: var(--transition);
         }
         .cta-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0, 114, 255, 0.6); }
 
-        /* CORRECCIÓN SALVADOR: Flecha INFALIBLE y VISIBLE SIEMPRE */
+        /* =========================================
+           --- FLECHA DE SCROLL (INFALIBLE RESPONSIVE) ---
+           ========================================= */
         .scroll-indicator {
-            position: fixed; /* Fijada a la PANTALLA, no al contenido */
-            bottom: 80px; /* Flota elegantemente en PC */
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
-            z-index: 100; /* Por encima de todo */
             opacity: 0.8;
-            transition: opacity 0.3s ease; /* Para la desaparición suave */
-            pointer-events: none; /* No interfiere con clics */
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            line-height: 0; /* Corrige espacio SVG */
         }
 
-        /* Clase para ocultar la flecha con JS */
-        .scroll-indicator.hidden {
-            opacity: 0;
-        }
+        .scroll-indicator.hidden { opacity: 0; }
 
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
@@ -114,7 +110,7 @@
            --- SECCIÓN SOLUCIONES ---
            ========================================= */
         .services-section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; position: relative;}
-        .section-title { font-size: 42px; text-align: center; margin-bottom: 80px; font-weight: 700; letter-spacing: -2px; }
+        .section-title { font-size: clamp(28px, 6vw, 42px); text-align: center; margin-bottom: 60px; font-weight: 700; letter-spacing: -2px; }
 
         .service-card {
             background: var(--card-bg);
@@ -140,9 +136,9 @@
             object-fit: contain;
         }
 
-        .service-content-pro { padding: 40px; }
-        .service-tag { color: var(--accent); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; }
-        .service-content-pro h3 { font-size: 32px; margin: 0 0 15px; }
+        .service-content-pro { padding: clamp(20px, 5vw, 40px); }
+        .service-tag { color: var(--accent); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; display: block; }
+        .service-content-pro h3 { font-size: clamp(24px, 5vw, 32px); margin: 0 0 15px; }
 
         .service-footer {
             display: flex;
@@ -152,7 +148,7 @@
             border-top: 1px solid var(--border);
             margin-top: 20px;
         }
-        .price-amount { font-size: 38px; font-weight: 700; color: white; }
+        .price-amount { font-size: clamp(30px, 5vw, 38px); font-weight: 700; color: white; }
 
         .btn-small {
             padding: 14px 28px;
@@ -171,28 +167,40 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 65px;
-            height: 65px;
+            width: clamp(55px, 8vw, 65px);
+            height: auto;
             z-index: 1000;
         }
 
         /* =========================================
            --- MEDIA QUERIES (RESPONSIVE) ---
            ========================================= */
-        @media (max-width: 768px) {
-            .hero { padding-bottom: 100px; } /* Menos padding en móvil */
+
+        /* PC y Escritorio (Corrección Salvador) */
+        @media (min-width: 992px) {
+            .logo-img { margin-bottom: 10px; } /* Más cerca título */
+            .sub { margin-bottom: 20px; } /* Más cerca botón */
+            .cta-btn { margin-bottom: 30px; } /* Espacio para flecha relative */
             
-            .cta-btn { 
-                padding: 18px;
-                font-size: 16px;
+            /* Flecha PC: Relative al hero, después del botón */
+            .scroll-indicator {
+                position: relative; 
+                margin-top: 20px;
+                margin-bottom: 50px;
+                z-index: 10;
+                width: 35px;
+                height: 35px;
             }
+        }
+
+        /* Móvil y Tablets (Mantenemos Visibilidad Faro) */
+        @media (max-width: 991px) {
+            .hero { padding-bottom: 120px; } /* Padding inferior para dejar espacio a la flecha fixed */
             
-            .headline { font-size: clamp(32px, 10vw, 48px); letter-spacing: -1px; }
-            .logo-img { max-width: 220px; }
-            
-            /* Ajuste flecha fixed en móvil */
             .scroll-indicator { 
-                bottom: 60px; /* Un poco más arriba para salvar barras de navegación móvil */
+                position: fixed; 
+                bottom: 60px; /* Flota elegantemente */
+                z-index: 100;
                 width: 28px;
                 height: 28px;
             } 
@@ -204,18 +212,18 @@
     <section class="hero">
         <img src="logo.png" alt="Puliendo Ideas" class="logo-img">
         <h1 class="headline">Recupere el control de su negocio</h1>
-        <p class="sub">Expertos en rescate de perfiles de Google y automatización estratégica.</p>
+        <p class="sub">Expertos en rescate de perfiles de Google Business y automatización estratégica.</p>
         
         <a href="https://wa.me/34643344106" class="cta-btn">Solicitar Diagnóstico Crítico</a>
+
+        <div id="scroll-arrow" class="scroll-indicator">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+            </svg>
+        </div>
     </section>
 
-    <div id="scroll-arrow" class="scroll-indicator">
-        <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
-        </svg>
-    </div>
-
-    <section class="services-section">
+    <section id="servicios" class="services-section">
         <h2 class="section-title">La Guía hacia la Luz</h2>
         
         <div class="service-card">
