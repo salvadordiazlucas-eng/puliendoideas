@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motor de Diagnóstico Estratégico | Puliendo Ideas</title>
+    <title>Diagnóstico Estratégico | Experto en Google Business</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #0072ff; --bg: #020617; --card: #0f172a; --text-muted: #94a3b8; --border: rgba(255,255,255,0.1); }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
         
-        #diag-container { background: var(--card); border: 1px solid var(--border); width: 90%; max-width: 500px; padding: 40px; border-radius: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
-        .pan-mensaje { color: var(--primary); font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+        #diag-container { background: var(--card); border: 1px solid var(--border); width: 100%; max-width: 500px; padding: 40px; border-radius: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        .pan-mensaje { color: var(--primary); font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1px; min-height: 20px; }
         h2 { font-size: 24px; margin: 0 0 30px 0; line-height: 1.3; }
         .options-grid { display: grid; gap: 12px; }
-        .opt-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 18px; border-radius: 16px; color: white; cursor: pointer; text-align: left; transition: all 0.3s ease; font-size: 16px; }
+        .opt-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 18px; border-radius: 16px; color: white; cursor: pointer; text-align: left; transition: all 0.3s ease; font-size: 16px; width: 100%; }
         .opt-btn:hover { background: rgba(0,114,255,0.1); border-color: var(--primary); transform: translateX(5px); }
         .final-form { display: none; }
-        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: #1e293b; color: white; box-sizing: border-box; }
-        .cta-send { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: #1e293b; color: white; box-sizing: border-box; font-size: 16px; }
+        .cta-send { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 16px; transition: opacity 0.3s; }
+        .cta-send:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
@@ -31,36 +32,43 @@
 
     <div id="final-step" class="final-form">
         <span class="pan-mensaje">Diagnóstico Completado</span>
-        <h2>Cierre el círculo y recupere el control</h2>
+        <h2>Reciba su hoja de ruta personalizada</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Introduzca los datos de su negocio para que el experto analice su caso.</p>
         <input type="text" id="nombreNegocio" placeholder="Nombre de su negocio">
         <input type="tel" id="telefonoNegocio" placeholder="Su WhatsApp">
-        <button class="cta-send" onclick="enviarDiagnostico()">Enviar informe a Salvador</button>
+        <button class="cta-send" onclick="enviarDiagnostico()">Ver mi informe y hablar con el experto</button>
     </div>
 </div>
 
 <script>
-    // --- ESTA ES TU HERRAMIENTA DE EDICIÓN ---
-    // Aquí puedes añadir, quitar o cambiar todo a tu antojo.
+    // ARQUITECTURA DINÁMICA DEL ÁRBOL
     const arbol = {
         "inicio": {
             "pregunta": "¿Su negocio ya existe en Google Maps?",
             "respuestas": [
-                { "texto": "Sí, ya aparece", "salto": "gestion", "pan": "¡Genial! Tienes la base ganada." },
-                { "texto": "No, es una nueva apertura", "salto": "final", "pan": "Perfecto, nacerás con ventaja." }
+                { "texto": "Sí, ya aparece", "salto": "autoridad_si", "pan": "¡Genial! Ya tienes la base ganada." },
+                { "texto": "No, es una nueva apertura o nunca se registró", "salto": "autoridad_no", "pan": "Perfecto, nacerás con ventaja estratégica." }
             ]
         },
-        "gestion": {
-            "pregunta": "¿Es usted quien gestiona el contenido personalmente?",
+        "autoridad_si": {
+            "pregunta": "¿Es usted quien gestiona el contenido actualmente?",
             "respuestas": [
-                { "texto": "Sí, yo mismo", "salto": "claves", "pan": "El compromiso es el primer paso." },
-                { "texto": "No, lo lleva un tercero", "salto": "final", "pan": "Delegar es sabio, optimizar es necesario." }
+                { "texto": "Sí, yo mismo lo hago todo", "salto": "claves_acceso", "pan": "El compromiso es el primer paso." },
+                { "texto": "No, lo lleva un tercero (hijo, empleado, agencia)", "salto": "claves_acceso", "pan": "Delegar es sabio, optimizar es necesario." }
             ]
         },
-        "claves": {
+        "autoridad_no": {
+            "pregunta": "¿Es usted el propietario o quien tomará las decisiones del negocio?",
+            "respuestas": [
+                { "texto": "Sí, soy el propietario", "salto": "final", "pan": "La visión clara es la clave del éxito." },
+                { "texto": "No, estoy ayudando al propietario", "salto": "final", "pan": "Un buen apoyo es fundamental para crecer." }
+            ]
+        },
+        "claves_acceso": {
             "pregunta": "¿Tiene usted las claves de acceso al perfil?",
             "respuestas": [
-                { "texto": "Sí, tengo acceso total", "salto": "final", "pan": "Tienes las llaves, falta el motor." },
-                { "texto": "No tengo las claves", "salto": "final", "pan": "Tranquilo, recuperarlas es nuestra especialidad." }
+                { "texto": "Sí, tengo acceso total", "salto": "final", "pan": "Tienes las llaves, ahora pongamos el motor a punto." },
+                { "texto": "No tengo las claves o las tiene otro", "salto": "final", "pan": "Recuperar el control es nuestra prioridad." }
             ]
         }
     };
@@ -85,7 +93,7 @@
             btn.className = 'opt-btn';
             btn.innerText = opt.texto;
             btn.onclick = () => {
-                informe += `${nodo.pregunta}: ${opt.texto} | `;
+                informe += `\n- ${nodo.pregunta}: ${opt.texto}`;
                 document.getElementById('pan-feedback').innerText = opt.pan;
                 estadoActual = opt.salto;
                 renderizar();
@@ -97,7 +105,14 @@
     function enviarDiagnostico() {
         const nombre = document.getElementById('nombreNegocio').value;
         const tel = document.getElementById('telefonoNegocio').value;
-        const msg = `Hola Salvador, Diagnóstico completado:\n\n${informe}\nNegocio: ${nombre}\nTel: ${tel}`;
+        
+        if(!nombre || !tel) {
+            alert("Por favor, rellene los datos para recibir su informe.");
+            return;
+        }
+
+        const msg = `Hola Salvador, he completado el diagnóstico para mi negocio:\n${informe}\n\n*Datos de contacto:*\nNegocio: ${nombre}\nWhatsApp: ${tel}`;
+        // Tu número de WhatsApp con el código de país
         window.location.href = `https://wa.me/34643344106?text=${encodeURIComponent(msg)}`;
     }
 
