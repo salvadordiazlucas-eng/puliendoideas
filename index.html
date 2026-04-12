@@ -26,9 +26,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* =========================================
-           --- HERO: EL RESCATE ---
-           ========================================= */
+        /* HERO */
         .hero {
             position: relative;
             min-height: 100vh;
@@ -72,7 +70,7 @@
         .cta-btn {
             display: inline-block;
             width: 100%;
-            max-width: 350px;
+            max-width: 380px;
             padding: 20px;
             background: var(--primary);
             color: white !important;
@@ -82,14 +80,13 @@
             font-size: 18px;
             box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4);
             transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .cta-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0, 114, 255, 0.6); }
 
-        /* =========================================
-           --- FLECHA DE SCROLL (Móvil Only) ---
-           ========================================= */
         .scroll-indicator {
-            display: none; /* Oculta por defecto en PC */
+            display: none;
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
@@ -107,9 +104,7 @@
             60% {transform: translateX(-50%) translateY(-5px);}
         }
 
-        /* =========================================
-           --- SECCIÓN SOLUCIONES ---
-           ========================================= */
+        /* SERVICIOS */
         .services-section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; position: relative;}
         .section-title { font-size: clamp(28px, 6vw, 42px); text-align: center; margin-bottom: 60px; font-weight: 700; letter-spacing: -2px; }
 
@@ -161,9 +156,6 @@
             transition: var(--transition);
         }
 
-        /* =========================================
-           --- WHATSAPP FLOTANTE ---
-           ========================================= */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -172,10 +164,6 @@
             height: auto;
             z-index: 1000;
         }
-
-        /* =========================================
-           --- MEDIA QUERIES (RESPONSIVE) ---
-           ========================================= */
 
         @media (min-width: 992px) {
             .logo-img { margin-bottom: 15px; }
@@ -186,7 +174,7 @@
         @media (max-width: 991px) {
             .hero { padding-bottom: 120px; }
             .scroll-indicator { 
-                display: block; /* Solo visible en móvil/tablet */
+                display: block;
                 position: fixed; 
                 bottom: 60px;
                 z-index: 100;
@@ -203,7 +191,7 @@
         <h1 class="headline">Recupere el control de su negocio</h1>
         <p class="sub">Expertos en rescate de perfiles de Google Business y automatización estratégica.</p>
         
-        <a href="diagnóstico.html" class="cta-btn">Solicitar Diagnóstico Crítico</a>
+        <a href="diagnostico.html" class="cta-btn">Solicitar Diagnóstico Gratuito</a>
 
         <div id="scroll-arrow" class="scroll-indicator">
             <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -225,7 +213,7 @@
                 <p style="color:var(--text-muted);">Recuperamos la titularidad de su negocio y optimizamos su visibilidad frente a la competencia.</p>
                 <div class="service-footer">
                     <span class="price-amount">499€</span>
-                    <a href="diagnóstico.html" class="btn-small">Iniciar Rescate</a>
+                    <a href="diagnostico.html" class="btn-small">Iniciar Diagnóstico</a>
                 </div>
             </div>
         </div>
