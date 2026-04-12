@@ -9,16 +9,20 @@
         :root { --primary: #0072ff; --bg: #020617; --card: #0f172a; --text-muted: #94a3b8; --border: rgba(255,255,255,0.1); }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
         
-        #diag-container { background: var(--card); border: 1px solid var(--border); width: 100%; max-width: 500px; padding: 40px; border-radius: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+        #diag-container { background: var(--card); border: 1px solid var(--border); width: 100%; max-width: 550px; padding: 40px; border-radius: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         .pan-mensaje { color: var(--primary); font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1px; min-height: 20px; }
-        h2 { font-size: 24px; margin: 0 0 30px 0; line-height: 1.3; }
+        h2 { font-size: 24px; margin: 0 0 25px 0; line-height: 1.3; }
         .options-grid { display: grid; gap: 12px; }
         .opt-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 18px; border-radius: 16px; color: white; cursor: pointer; text-align: left; transition: all 0.3s ease; font-size: 16px; width: 100%; }
         .opt-btn:hover { background: rgba(0,114,255,0.1); border-color: var(--primary); transform: translateX(5px); }
+        
         .final-form { display: none; }
-        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: #1e293b; color: white; box-sizing: border-box; font-size: 16px; }
-        .cta-send { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 16px; transition: opacity 0.3s; }
-        .cta-send:hover { opacity: 0.9; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-left: 5px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: #1e293b; color: white; box-sizing: border-box; font-size: 15px; }
+        
+        .cta-send { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 16px; margin-top: 10px; transition: transform 0.2s; }
+        .cta-send:hover { transform: scale(1.02); background: #0061d9; }
     </style>
 </head>
 <body>
@@ -31,50 +35,81 @@
     </div>
 
     <div id="final-step" class="final-form">
-        <span class="pan-mensaje">Diagnóstico Completado</span>
-        <h2>Reciba su hoja de ruta personalizada</h2>
-        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 14px;">Introduzca los datos de su negocio para que el experto analice su caso.</p>
-        <input type="text" id="nombreNegocio" placeholder="Nombre de su negocio">
-        <input type="tel" id="telefonoNegocio" placeholder="Su WhatsApp">
-        <button class="cta-send" onclick="enviarDiagnostico()">Ver mi informe y hablar con el experto</button>
+        <span class="pan-mensaje">Análisis finalizado con éxito</span>
+        <h2>Datos para su Hoja de Ruta</h2>
+        
+        <div class="form-group">
+            <label>Nombre del Comercio</label>
+            <input type="text" id="nombreNegocio" placeholder="Ej: Fogonxito">
+        </div>
+        
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+                <label>Población / Ciudad</label>
+                <input type="text" id="poblacion" placeholder="Ej: Majadahonda">
+            </div>
+            <div>
+                <label>Persona de Contacto</label>
+                <input type="text" id="contacto" placeholder="Su nombre">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" id="emailCliente" placeholder="email@ejemplo.com">
+        </div>
+
+        <div class="form-group">
+            <label>WhatsApp</label>
+            <input type="tel" id="telefonoNegocio" placeholder="+34 000 000 000">
+        </div>
+
+        <div class="form-group">
+            <label>¿Cómo prefiere que le contactemos?</label>
+            <select id="preferencia">
+                <option value="WhatsApp">Prefiero WhatsApp</option>
+                <option value="Email">Prefiero Email</option>
+            </select>
+        </div>
+
+        <button class="cta-send" onclick="enviarInformeEmail()">Enviar informe al Experto</button>
     </div>
 </div>
 
 <script>
-    // ARQUITECTURA DINÁMICA DEL ÁRBOL
     const arbol = {
         "inicio": {
             "pregunta": "¿Su negocio ya existe en Google Maps?",
             "respuestas": [
-                { "texto": "Sí, ya aparece", "salto": "autoridad_si", "pan": "¡Genial! Ya tienes la base ganada." },
-                { "texto": "No, es una nueva apertura o nunca se registró", "salto": "autoridad_no", "pan": "Perfecto, nacerás con ventaja estratégica." }
+                { "texto": "Sí, ya aparece", "salto": "autoridad_si", "pan": "Excelente base de partida." },
+                { "texto": "No aparece o es apertura", "salto": "autoridad_no", "pan": "Momento ideal para el éxito." }
             ]
         },
         "autoridad_si": {
             "pregunta": "¿Es usted quien gestiona el contenido actualmente?",
             "respuestas": [
-                { "texto": "Sí, yo mismo lo hago todo", "salto": "claves_acceso", "pan": "El compromiso es el primer paso." },
-                { "texto": "No, lo lleva un tercero (hijo, empleado, agencia)", "salto": "claves_acceso", "pan": "Delegar es sabio, optimizar es necesario." }
+                { "texto": "Sí, yo mismo", "salto": "claves_acceso", "pan": "Compromiso detectado." },
+                { "texto": "No, lo lleva un tercero", "salto": "claves_acceso", "pan": "Optimizaremos esa gestión." }
             ]
         },
         "autoridad_no": {
-            "pregunta": "¿Es usted el propietario o quien tomará las decisiones del negocio?",
+            "pregunta": "¿Es usted el propietario del negocio?",
             "respuestas": [
-                { "texto": "Sí, soy el propietario", "salto": "final", "pan": "La visión clara es la clave del éxito." },
-                { "texto": "No, estoy ayudando al propietario", "salto": "final", "pan": "Un buen apoyo es fundamental para crecer." }
+                { "texto": "Sí, soy el dueño", "salto": "final", "pan": "Visión de propietario confirmada." },
+                { "texto": "Soy encargado/apoyo", "salto": "final", "pan": "Equipo de apoyo detectado." }
             ]
         },
         "claves_acceso": {
             "pregunta": "¿Tiene usted las claves de acceso al perfil?",
             "respuestas": [
-                { "texto": "Sí, tengo acceso total", "salto": "final", "pan": "Tienes las llaves, ahora pongamos el motor a punto." },
-                { "texto": "No tengo las claves o las tiene otro", "salto": "final", "pan": "Recuperar el control es nuestra prioridad." }
+                { "texto": "Sí, acceso total", "salto": "final", "pan": "Control absoluto. Vamos a por el motor." },
+                { "texto": "No tengo las claves", "salto": "final", "pan": "Recuperaremos su propiedad legal." }
             ]
         }
     };
 
     let estadoActual = "inicio";
-    let informe = "";
+    let informeTexto = "";
 
     function renderizar() {
         const nodo = arbol[estadoActual];
@@ -93,7 +128,7 @@
             btn.className = 'opt-btn';
             btn.innerText = opt.texto;
             btn.onclick = () => {
-                informe += `\n- ${nodo.pregunta}: ${opt.texto}`;
+                informeTexto += `${nodo.pregunta}: ${opt.texto}\n`;
                 document.getElementById('pan-feedback').innerText = opt.pan;
                 estadoActual = opt.salto;
                 renderizar();
@@ -102,18 +137,36 @@
         });
     }
 
-    function enviarDiagnostico() {
-        const nombre = document.getElementById('nombreNegocio').value;
-        const tel = document.getElementById('telefonoNegocio').value;
-        
-        if(!nombre || !tel) {
-            alert("Por favor, rellene los datos para recibir su informe.");
+    function enviarInformeEmail() {
+        const datos = {
+            negocio: document.getElementById('nombreNegocio').value,
+            poblacion: document.getElementById('poblacion').value,
+            contacto: document.getElementById('contacto').value,
+            email: document.getElementById('emailCliente').value,
+            tel: document.getElementById('telefonoNegocio').value,
+            preferencia: document.getElementById('preferencia').value
+        };
+
+        if(!datos.negocio || !datos.email || !datos.tel) {
+            alert("Por favor, rellene los campos obligatorios para el experto.");
             return;
         }
 
-        const msg = `Hola Salvador, he completado el diagnóstico para mi negocio:\n${informe}\n\n*Datos de contacto:*\nNegocio: ${nombre}\nWhatsApp: ${tel}`;
-        // Tu número de WhatsApp con el código de país
-        window.location.href = `https://wa.me/34643344106?text=${encodeURIComponent(msg)}`;
+        const subject = encodeURIComponent(`Nuevo Diagnóstico GMB: ${datos.negocio}`);
+        const body = encodeURIComponent(
+            `INFORME DE DIAGNÓSTICO ESTRATÉGICO\n` +
+            `----------------------------------\n` +
+            `${informeTexto}\n` +
+            `DATOS DEL CLIENTE:\n` +
+            `- Negocio: ${datos.negocio}\n` +
+            `- Ubicación: ${datos.poblacion}\n` +
+            `- Persona de contacto: ${datos.contacto}\n` +
+            `- Email: ${datos.email}\n` +
+            `- WhatsApp: ${datos.tel}\n` +
+            `- Contacto preferente por: ${datos.preferencia}\n`
+        );
+
+        window.location.href = `mailto:info@puliendoideas.com?subject=${subject}&body=${body}`;
     }
 
     renderizar();
