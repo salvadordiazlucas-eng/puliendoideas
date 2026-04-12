@@ -8,21 +8,17 @@
     <style>
         :root { --primary: #0072ff; --bg: #020617; --card: #0f172a; --text-muted: #94a3b8; --border: rgba(255,255,255,0.1); }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
-        
         #diag-container { background: var(--card); border: 1px solid var(--border); width: 100%; max-width: 550px; padding: 40px; border-radius: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
         .pan-mensaje { color: var(--primary); font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; text-transform: uppercase; letter-spacing: 1px; min-height: 20px; }
         h2 { font-size: 24px; margin: 0 0 25px 0; line-height: 1.3; }
         .options-grid { display: grid; gap: 12px; }
         .opt-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 18px; border-radius: 16px; color: white; cursor: pointer; text-align: left; transition: all 0.3s ease; font-size: 16px; width: 100%; }
         .opt-btn:hover { background: rgba(0,114,255,0.1); border-color: var(--primary); transform: translateX(5px); }
-        
         .final-form { display: none; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; margin-left: 5px; text-transform: uppercase; }
+        label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 5px; margin-left: 5px; text-transform: uppercase; }
         input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: #1e293b; color: white; box-sizing: border-box; font-size: 15px; }
-        
-        .cta-send { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 16px; margin-top: 10px; transition: transform 0.2s; }
-        .cta-send:hover { transform: scale(1.02); background: #0061d9; }
+        .cta-send { width: 100%; padding: 20px; background: var(--primary); border: none; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 16px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -36,74 +32,57 @@
 
     <div id="final-step" class="final-form">
         <span class="pan-mensaje">Análisis finalizado con éxito</span>
-        <h2>Datos para su Hoja de Ruta</h2>
-        
-        <div class="form-group">
-            <label>Nombre del Comercio</label>
-            <input type="text" id="nombreNegocio" placeholder="Ej: Fogonxito">
-        </div>
-        
+        <h2>Reciba su Hoja de Ruta</h2>
+        <div class="form-group"><label>Nombre del Comercio</label><input type="text" id="nombreNegocio" placeholder="Ej: Fogonxito"></div>
         <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div>
-                <label>Población / Ciudad</label>
-                <input type="text" id="poblacion" placeholder="Ej: Majadahonda">
-            </div>
-            <div>
-                <label>Persona de Contacto</label>
-                <input type="text" id="contacto" placeholder="Su nombre">
-            </div>
+            <div><label>Población</label><input type="text" id="poblacion" placeholder="Ej: Madrid"></div>
+            <div><label>Contacto</label><input type="text" id="contacto" placeholder="Su nombre"></div>
         </div>
-
+        <div class="form-group"><label>Correo Electrónico</label><input type="email" id="emailCliente" placeholder="email@ejemplo.com"></div>
+        <div class="form-group"><label>WhatsApp</label><input type="tel" id="telefonoNegocio" placeholder="+34 000 000 000"></div>
         <div class="form-group">
-            <label>Correo Electrónico</label>
-            <input type="email" id="emailCliente" placeholder="email@ejemplo.com">
+            <label>Preferencia de contacto</label>
+            <select id="preferencia"><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option></select>
         </div>
-
-        <div class="form-group">
-            <label>WhatsApp</label>
-            <input type="tel" id="telefonoNegocio" placeholder="+34 000 000 000">
-        </div>
-
-        <div class="form-group">
-            <label>¿Cómo prefiere que le contactemos?</label>
-            <select id="preferencia">
-                <option value="WhatsApp">Prefiero WhatsApp</option>
-                <option value="Email">Prefiero Email</option>
-            </select>
-        </div>
-
-        <button class="cta-send" onclick="enviarInformeEmail()">Enviar informe al Experto</button>
+        <button class="cta-send" id="submit-btn" onclick="enviarInformeInvisible()">Enviar informe al Experto</button>
     </div>
 </div>
 
 <script>
     const arbol = {
         "inicio": {
-            "pregunta": "¿Su negocio ya existe en Google Maps?",
+            "pregunta": "¿Su negocio ya aparece en Google Maps?",
             "respuestas": [
                 { "texto": "Sí, ya aparece", "salto": "autoridad_si", "pan": "Excelente base de partida." },
                 { "texto": "No aparece o es apertura", "salto": "autoridad_no", "pan": "Momento ideal para el éxito." }
             ]
         },
         "autoridad_si": {
-            "pregunta": "¿Es usted quien gestiona el contenido actualmente?",
+            "pregunta": "¿Es usted quien lo gestiona actualmente?",
             "respuestas": [
-                { "texto": "Sí, yo mismo", "salto": "claves_acceso", "pan": "Compromiso detectado." },
-                { "texto": "No, lo lleva un tercero", "salto": "claves_acceso", "pan": "Optimizaremos esa gestión." }
+                { "texto": "Sí, yo mismo", "salto": "satisfaccion", "pan": "Compromiso detectado." },
+                { "texto": "No, lo lleva un tercero", "salto": "satisfaccion", "pan": "Optimizaremos esa gestión." }
             ]
         },
         "autoridad_no": {
-            "pregunta": "¿Es usted el propietario del negocio?",
+            "pregunta": "¿Es usted el propietario?",
             "respuestas": [
-                { "texto": "Sí, soy el dueño", "salto": "final", "pan": "Visión de propietario confirmada." },
-                { "texto": "Soy encargado/apoyo", "salto": "final", "pan": "Equipo de apoyo detectado." }
+                { "texto": "Sí, soy el dueño", "salto": "objetivo", "pan": "Visión de propietario confirmada." },
+                { "texto": "Soy encargado/apoyo", "salto": "objetivo", "pan": "Equipo de apoyo detectado." }
             ]
         },
-        "claves_acceso": {
-            "pregunta": "¿Tiene usted las claves de acceso al perfil?",
+        "satisfaccion": {
+            "pregunta": "Del 1 al 10, ¿cómo de satisfecho está con su imagen actual?",
             "respuestas": [
-                { "texto": "Sí, acceso total", "salto": "final", "pan": "Control absoluto. Vamos a por el motor." },
-                { "texto": "No tengo las claves", "salto": "final", "pan": "Recuperaremos su propiedad legal." }
+                { "texto": "1-5 (Necesito un cambio)", "salto": "objetivo", "pan": "Reconocerlo es el primer paso al éxito." },
+                { "texto": "6-10 (Quiero mejorar)", "salto": "objetivo", "pan": "La excelencia requiere mantenimiento." }
+            ]
+        },
+        "objetivo": {
+            "pregunta": "¿Qué es lo que más le urge conseguir?",
+            "respuestas": [
+                { "texto": "Más reseñas positivas automáticas", "salto": "final", "pan": "Reputación es imán de clientes." },
+                { "texto": "Aparecer sobre mi competencia", "salto": "final", "pan": "La visibilidad es poder." }
             ]
         }
     };
@@ -118,17 +97,15 @@
             document.getElementById('final-step').style.display = 'block';
             return;
         }
-
         document.getElementById('pregunta-texto').innerText = nodo.pregunta;
         const contenedor = document.getElementById('opciones-container');
         contenedor.innerHTML = "";
-
         nodo.respuestas.forEach(opt => {
             const btn = document.createElement('button');
             btn.className = 'opt-btn';
             btn.innerText = opt.texto;
             btn.onclick = () => {
-                informeTexto += `${nodo.pregunta}: ${opt.texto}\n`;
+                informeTexto += `${nodo.pregunta}: ${opt.texto} | `;
                 document.getElementById('pan-feedback').innerText = opt.pan;
                 estadoActual = opt.salto;
                 renderizar();
@@ -137,40 +114,45 @@
         });
     }
 
-    function enviarInformeEmail() {
+    async function enviarInformeInvisible() {
+        const btn = document.getElementById('submit-btn');
         const datos = {
             negocio: document.getElementById('nombreNegocio').value,
             poblacion: document.getElementById('poblacion').value,
             contacto: document.getElementById('contacto').value,
             email: document.getElementById('emailCliente').value,
             tel: document.getElementById('telefonoNegocio').value,
-            preferencia: document.getElementById('preferencia').value
+            preferencia: document.getElementById('preferencia').value,
+            diagnostico: informeTexto
         };
 
         if(!datos.negocio || !datos.email || !datos.tel) {
-            alert("Por favor, rellene los campos obligatorios para el experto.");
+            alert("Por favor, rellene los campos obligatorios.");
             return;
         }
 
-        const subject = encodeURIComponent(`Nuevo Diagnóstico GMB: ${datos.negocio}`);
-        const body = encodeURIComponent(
-            `INFORME DE DIAGNÓSTICO ESTRATÉGICO\n` +
-            `----------------------------------\n` +
-            `${informeTexto}\n` +
-            `DATOS DEL CLIENTE:\n` +
-            `- Negocio: ${datos.negocio}\n` +
-            `- Ubicación: ${datos.poblacion}\n` +
-            `- Persona de contacto: ${datos.contacto}\n` +
-            `- Email: ${datos.email}\n` +
-            `- WhatsApp: ${datos.tel}\n` +
-            `- Contacto preferente por: ${datos.preferencia}\n`
-        );
+        btn.innerText = "ENVIANDO INFORME...";
+        btn.disabled = true;
 
-        window.location.href = `mailto:info@puliendoideas.com?subject=${subject}&body=${body}`;
+        try {
+            // USANDO TU ID: xqewzpbr
+            const response = await fetch('https://formspree.io/f/xqewzpbr', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(datos)
+            });
+
+            if (response.ok) {
+                alert("¡Informe enviado con éxito! El experto analizará su caso y le contactará en breve.");
+                window.location.reload(); 
+            } else { throw new Error(); }
+        } catch {
+            alert("Error al enviar. Inténtelo de nuevo o contacte directamente.");
+            btn.innerText = "Enviar informe al Experto";
+            btn.disabled = false;
+        }
     }
-
     renderizar();
 </script>
-
 </body>
 </html>
