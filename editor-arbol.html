@@ -2,59 +2,61 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editor Visual de Diagnóstico | Salvador Díaz</title>
+    <title>Editor Estratégico con PAN | Salvador Díaz</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 40px; color: #333; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-        h1 { color: #0072ff; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .node-box { border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 20px; background: #fafafa; }
-        label { font-weight: bold; display: block; margin: 10px 0 5px; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        .btn-add { background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; margin-top: 20px; }
-        .btn-generate { background: #0072ff; color: white; border: none; padding: 15px 30px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 30px; }
+        :root { --primary: #0072ff; --bg: #f4f7f6; --text: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 40px; color: var(--text); }
+        .container { max-width: 950px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h1 { color: var(--primary); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .node-box { border: 1px solid #ddd; padding: 25px; border-radius: 12px; margin-bottom: 25px; background: #fafafa; border-left: 5px solid var(--primary); }
+        label { font-weight: bold; display: block; margin: 10px 0 5px; font-size: 13px; text-transform: uppercase; color: #666; }
+        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; margin-bottom: 10px; }
+        .pan-input { border-color: #0072ff66; background: #eef6ff; font-style: italic; }
+        .btn-add { background: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+        .btn-generate { background: var(--primary); color: white; border: none; padding: 18px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 30px; font-size: 16px; }
         #output-container { display: none; margin-top: 30px; }
-        textarea { width: 100%; height: 200px; font-family: monospace; background: #272822; color: #f8f8f2; padding: 15px; border-radius: 8px; }
-        .instrucciones { background: #e7f3ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; }
+        textarea { width: 100%; height: 250px; font-family: 'Consolas', monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 10px; line-height: 1.5; }
+        .badge-pan { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; margin-bottom: 5px; display: inline-block; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Configurador de Árbol Estratégico</h1>
-    <p class="instrucciones">
-        <strong>Instrucciones:</strong> Define aquí tus preguntas. El "ID de la Rama" es el nombre interno (ej: <i>satisfaccion</i>). 
-        En "Salto a", escribe el ID de la siguiente rama o <b>final</b> si quieres que ahí termine y aparezca el formulario.
-    </p>
+    <h1>Configurador de Diagnóstico (Con Sistema PAN)</h1>
+    <p>Diseña tu árbol. El <b>Mensaje PAN</b> es el feedback que aparece arriba cuando el cliente elige esa opción.</p>
 
     <div id="editor-ramas">
-        <div class="node-box" id="node-inicio">
-            <h3>Rama: inicio (Punto de partida)</h3>
-            <label>Pregunta:</label>
+        <div class="node-box" data-id="inicio">
+            <h3>Rama: inicio</h3>
+            <label>Pregunta Principal:</label>
             <input type="text" class="q-text" value="¿Su negocio ya aparece en Google Maps?">
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
-                <div>
-                    <label>Opción 1:</label>
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+                    <label>Respuesta A:</label>
                     <input type="text" class="opt-text" value="Sí, ya aparece">
                     <label>Salto a:</label>
                     <input type="text" class="opt-jump" value="autoridad_si">
+                    <span class="badge-pan">MENSAJE PAN (Feedback)</span>
+                    <input type="text" class="opt-pan pan-input" value="Excelente base de partida.">
                 </div>
-                <div>
-                    <label>Opción 2:</label>
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+                    <label>Respuesta B:</label>
                     <input type="text" class="opt-text" value="No aparece o es apertura">
                     <label>Salto a:</label>
                     <input type="text" class="opt-jump" value="autoridad_no">
+                    <span class="badge-pan">MENSAJE PAN (Feedback)</span>
+                    <input type="text" class="opt-pan pan-input" value="Momento ideal para el éxito.">
                 </div>
             </div>
         </div>
     </div>
 
-    <button class="btn-add" onclick="agregarRama()">+ Añadir nueva Rama (Pregunta)</button>
+    <button class="btn-add" onclick="agregarRama()">+ Añadir nueva Pregunta (Rama)</button>
     <button class="btn-generate" onclick="generarCodigo()">GENERAR CÓDIGO TÉCNICO</button>
 
     <div id="output-container">
-        <h3>Código generado con éxito:</h3>
-        <p style="font-size: 13px; color: #666;">Copia este código y pégalo en tu archivo <i>diagnostico.html</i>, sustituyendo la variable <b>const arbol = { ... };</b></p>
+        <h3>Código para copiar en diagnostico.html:</h3>
         <textarea id="output-code" readonly></textarea>
     </div>
 </div>
@@ -62,25 +64,28 @@
 <script>
     function agregarRama() {
         const container = document.getElementById('editor-ramas');
-        const id = "rama_" + Date.now();
         const div = document.createElement('div');
         div.className = 'node-box';
         div.innerHTML = `
             <h3>ID de la Rama: <input type="text" class="rama-id" placeholder="ej: satisfaccion" style="display:inline; width:200px;"></h3>
             <label>Pregunta:</label>
-            <input type="text" class="q-text" placeholder="Escribe aquí la pregunta">
+            <input type="text" class="q-text" placeholder="Escribe la pregunta aquí">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
-                <div>
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
                     <label>Opción 1:</label>
                     <input type="text" class="opt-text" placeholder="Respuesta A">
                     <label>Salto a:</label>
-                    <input type="text" class="opt-jump" placeholder="ID de la siguiente rama o 'final'">
+                    <input type="text" class="opt-jump" placeholder="ej: final">
+                    <span class="badge-pan">MENSAJE PAN (Feedback)</span>
+                    <input type="text" class="opt-pan pan-input" placeholder="Comentario de experto...">
                 </div>
-                <div>
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
                     <label>Opción 2:</label>
                     <input type="text" class="opt-text" placeholder="Respuesta B">
                     <label>Salto a:</label>
                     <input type="text" class="opt-jump" placeholder="final">
+                    <span class="badge-pan">MENSAJE PAN (Feedback)</span>
+                    <input type="text" class="opt-pan pan-input" placeholder="Comentario de experto...">
                 </div>
             </div>
         `;
@@ -92,22 +97,17 @@
         const boxes = document.querySelectorAll('.node-box');
         
         boxes.forEach(box => {
-            let id;
-            if(box.id === 'node-inicio') {
-                id = "inicio";
-            } else {
-                id = box.querySelector('.rama-id').value;
-            }
-            
+            let id = box.dataset.id || box.querySelector('.rama-id').value;
             const pregunta = box.querySelector('.q-text').value;
             const optTexts = box.querySelectorAll('.opt-text');
             const optJumps = box.querySelectorAll('.opt-jump');
+            const optPans = box.querySelectorAll('.opt-pan');
             
             ramas[id] = {
                 "pregunta": pregunta,
                 "respuestas": [
-                    { "texto": optTexts[0].value, "salto": optJumps[0].value, "pan": "Actualizado" },
-                    { "texto": optTexts[1].value, "salto": optJumps[1].value, "pan": "Actualizado" }
+                    { "texto": optTexts[0].value, "salto": optJumps[0].value, "pan": optPans[0].value },
+                    { "texto": optTexts[1].value, "salto": optJumps[1].value, "pan": optPans[1].value }
                 ]
             };
         });
@@ -115,7 +115,7 @@
         const finalCode = "const arbol = " + JSON.stringify(ramas, null, 4) + ";";
         document.getElementById('output-code').value = finalCode;
         document.getElementById('output-container').style.display = 'block';
-        document.getElementById('output-container').scrollIntoView();
+        window.scrollTo(0, document.body.scrollHeight);
     }
 </script>
 
