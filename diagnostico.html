@@ -50,42 +50,37 @@
 
 <script>
     const arbol = {
-        "inicio": {
-            "pregunta": "¿Su negocio ya aparece en Google Maps?",
-            "respuestas": [
-                { "texto": "Sí, ya aparece", "salto": "autoridad_si", "pan": "Excelente base de partida." },
-                { "texto": "No aparece o es apertura", "salto": "autoridad_no", "pan": "Momento ideal para el éxito." }
-            ]
-        },
-        "autoridad_si": {
-            "pregunta": "¿Es usted quien lo gestiona actualmente?",
-            "respuestas": [
-                { "texto": "Sí, yo mismo", "salto": "satisfaccion", "pan": "Compromiso detectado." },
-                { "texto": "No, lo lleva un tercero", "salto": "satisfaccion", "pan": "Optimizaremos esa gestión." }
-            ]
-        },
-        "autoridad_no": {
-            "pregunta": "¿Es usted el propietario?",
-            "respuestas": [
-                { "texto": "Sí, soy el dueño", "salto": "objetivo", "pan": "Visión de propietario confirmada." },
-                { "texto": "Soy encargado/apoyo", "salto": "objetivo", "pan": "Equipo de apoyo detectado." }
-            ]
-        },
-        "satisfaccion": {
-            "pregunta": "Del 1 al 10, ¿cómo de satisfecho está con su imagen actual?",
-            "respuestas": [
-                { "texto": "1-5 (Necesito un cambio)", "salto": "objetivo", "pan": "Reconocerlo es el primer paso al éxito." },
-                { "texto": "6-10 (Quiero mejorar)", "salto": "objetivo", "pan": "La excelencia requiere mantenimiento." }
-            ]
-        },
-        "objetivo": {
-            "pregunta": "¿Qué es lo que más le urge conseguir?",
-            "respuestas": [
-                { "texto": "Más reseñas positivas automáticas", "salto": "final", "pan": "Reputación es imán de clientes." },
-                { "texto": "Aparecer sobre mi competencia", "salto": "final", "pan": "La visibilidad es poder." }
-            ]
-        }
-    };
+    "inicio": {
+        "pregunta": "¿Su negocio ya aparece en Google Maps?",
+        "respuestas": [
+            {
+                "texto": "Sí, ya aparece",
+                "salto": "autoridad_si",
+                "pan": "Excelente base de partida."
+            },
+            {
+                "texto": "No aparece o es apertura",
+                "salto": "autoridad_no",
+                "pan": "Momento ideal para el éxito."
+            }
+        ]
+    },
+    "": {
+        "pregunta": "¿En que rango de edad se mueven sus clientes?",
+        "respuestas": [
+            {
+                "texto": "De 18 a 30 años",
+                "salto": "autoridad_si",
+                "pan": "Genial, esas edades son insaciables"
+            },
+            {
+                "texto": "De 31 en adelante",
+                "salto": "autoridad_no",
+                "pan": "Genail, esas edades saben lo que quieren.."
+            }
+        ]
+    }
+};
 
     let estadoActual = "inicio";
     let informeTexto = "";
