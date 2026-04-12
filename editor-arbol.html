@@ -2,122 +2,130 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Constructor Maestro de Diagnósticos | Salvador Díaz</title>
+    <title>Constructor Maestro Pro | Salvador Díaz</title>
     <style>
-        :root { --primary: #0072ff; --bg: #f8f9fa; --text: #2d3436; }
+        :root { --primary: #0072ff; --bg: #f8f9fa; --text: #2d3436; --success: #2ecc71; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 30px; margin: 0; }
-        .container { max-width: 1000px; margin: auto; display: grid; grid-template-columns: 1fr; gap: 20px; }
-        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        h1, h2 { color: var(--primary); margin-top: 0; }
-        .step { margin-bottom: 30px; border-left: 4px solid var(--primary); padding-left: 20px; }
-        textarea { width: 100%; height: 150px; font-family: monospace; background: #2d3436; color: #dfe6e9; padding: 15px; border-radius: 8px; border: none; font-size: 12px; }
-        .node-box { background: #f1f2f6; border-radius: 12px; padding: 20px; margin-bottom: 15px; border: 1px solid #dfe6e9; }
-        .rama-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        input { padding: 10px; border: 1px solid #ced4da; border-radius: 6px; width: 100%; box-sizing: border-box; }
+        .container { max-width: 1000px; margin: auto; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        h1 { color: var(--primary); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        textarea { width: 100%; height: 120px; font-family: monospace; background: #2d3436; color: #dfe6e9; padding: 15px; border-radius: 8px; border: none; font-size: 12px; margin-top: 10px; }
+        .node-box { background: #f1f2f6; border-radius: 12px; padding: 25px; margin-bottom: 20px; border-left: 6px solid var(--primary); }
+        .rama-id-input { font-weight: bold; width: 200px; display: inline-block; margin-left: 10px; }
+        .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .option-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #dee2e6; position: relative; }
+        .btn { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-add-rama { background: var(--text); color: white; }
+        .btn-add-opt { background: var(--success); color: white; font-size: 11px; padding: 5px 10px; margin-top: 10px; }
+        .btn-main { background: var(--primary); color: white; width: 100%; font-size: 18px; padding: 20px; margin-top: 30px; }
+        .btn-del { background: #ff7675; color: white; font-size: 10px; padding: 4px 8px; position: absolute; top: 10px; right: 10px; }
+        .badge { background: #636e72; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; display: block; margin: 8px 0 4px 0; width: fit-content; }
         .pan-input { background: #e3f2fd; border-color: #90caf9; font-style: italic; }
-        .btn { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-add { background: #2ecc71; color: white; margin-top: 10px; }
-        .btn-main { background: var(--primary); color: white; width: 100%; font-size: 18px; margin-top: 20px; }
-        .grid-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
-        .option-card { background: white; padding: 12px; border-radius: 8px; border: 1px solid #eee; }
-        .badge { background: var(--primary); color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+        input { padding: 10px; border: 1px solid #ced4da; border-radius: 6px; width: 100%; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="card">
-        <h1>Constructor Maestro de Diagnósticos</h1>
-        
-        <div class="step">
-            <h2>1. Pega aquí tu código de GitHub (diagnostico.html)</h2>
-            <textarea id="html-base" placeholder="Copia todo el contenido de tu archivo diagnostico.html y pégalo aquí..."></textarea>
-        </div>
+        <h1>Constructor Maestro Pro</h1>
+        <p>1. Pega aquí tu código de GitHub (diagnostico.html):</p>
+        <textarea id="html-base" placeholder="Pega el código completo aquí..."></textarea>
+    </div>
 
-        <div class="step">
-            <h2>2. Configura la Estrategia (Árbol y PAN)</h2>
-            <div id="editor-ramas">
-                <div class="node-box" data-id="inicio">
-                    <div class="rama-header"><strong>Rama: inicio</strong></div>
-                    <input type="text" class="q-text" value="¿Su negocio ya aparece en Google Maps?">
-                    <div class="grid-options">
-                        <div class="option-card">
-                            <label class="badge">RESPUESTA A</label>
-                            <input type="text" class="opt-text" value="Sí, ya aparece">
-                            <label class="badge">SALTO A</label>
-                            <input type="text" class="opt-jump" value="autoridad_si">
-                            <label class="badge">MENSAJE PAN</label>
-                            <input type="text" class="opt-pan pan-input" value="Excelente base de partida.">
-                        </div>
-                        <div class="option-card">
-                            <label class="badge">RESPUESTA B</label>
-                            <input type="text" class="opt-text" value="No aparece o es apertura">
-                            <label class="badge">SALTO A</label>
-                            <input type="text" class="opt-jump" value="autoridad_no">
-                            <label class="badge">MENSAJE PAN</label>
-                            <input type="text" class="opt-pan pan-input" value="Momento ideal para el éxito.">
-                        </div>
-                    </div>
+    <div id="editor-ramas">
+        <div class="node-box" data-id="inicio">
+            <div class="rama-header"><strong>ID Rama: inicio</strong> (Principal)</div>
+            <label class="badge">PREGUNTA</label>
+            <input type="text" class="q-text" value="¿Su negocio ya aparece en Google Maps?">
+            
+            <div class="grid-options" id="opts-inicio">
+                <div class="option-card">
+                    <label class="badge">RESPUESTA</label><input type="text" class="opt-text" value="Sí, ya aparece">
+                    <label class="badge">SALTO A</label><input type="text" class="opt-jump" value="autoridad_si">
+                    <label class="badge">MENSAJE PAN</label><input type="text" class="opt-pan pan-input" value="Excelente base de partida.">
+                </div>
+                <div class="option-card">
+                    <label class="badge">RESPUESTA</label><input type="text" class="opt-text" value="No aparece">
+                    <label class="badge">SALTO A</label><input type="text" class="opt-jump" value="autoridad_no">
+                    <label class="badge">MENSAJE PAN</label><input type="text" class="opt-pan pan-input" value="Momento ideal para el éxito.">
                 </div>
             </div>
-            <button class="btn btn-add" onclick="agregarRama()">+ Añadir Pregunta</button>
+            <button class="btn btn-add-opt" onclick="agregarOpcion('inicio')">+ Añadir Opción</button>
         </div>
+    </div>
 
-        <button class="btn btn-main" onclick="ensamblarYGenerar()">ENSAMBLAR CÓDIGO FINAL</button>
+    <button class="btn btn-add-rama" onclick="agregarRama()">+ Añadir Nueva Pregunta</button>
+    <button class="btn btn-main" onclick="ensamblarYGenerar()">ENSAMBLAR Y GENERAR CÓDIGO FINAL</button>
 
-        <div id="resultado-container" style="display:none; margin-top:30px;">
-            <h2>3. ¡Listo! Copia este código y pégalo en GitHub</h2>
-            <textarea id="codigo-final" style="height: 400px; background: #1e1e1e;"></textarea>
-        </div>
+    <div id="resultado-container" class="card" style="display:none;">
+        <h2>Resultado Final</h2>
+        <p>Copia todo este código y pégalo en tu archivo diagnostico.html de GitHub:</p>
+        <textarea id="codigo-final" style="height: 400px; background: #1e1e1e;"></textarea>
     </div>
 </div>
 
 <script>
+    function agregarOpcion(ramaId) {
+        const container = document.getElementById('opts-' + ramaId);
+        const div = document.createElement('div');
+        div.className = 'option-card';
+        div.innerHTML = `
+            <button class="btn btn-del" onclick="this.parentElement.remove()">X</button>
+            <label class="badge">RESPUESTA</label><input type="text" class="opt-text">
+            <label class="badge">SALTO A</label><input type="text" class="opt-jump" placeholder="ej: final">
+            <label class="badge">MENSAJE PAN</label><input type="text" class="opt-pan pan-input">`;
+        container.appendChild(div);
+    }
+
     function agregarRama() {
+        const ramaId = 'rama_' + Date.now();
         const div = document.createElement('div');
         div.className = 'node-box';
         div.innerHTML = `
-            <div class="rama-header"><strong>ID Rama:</strong> <input type="text" class="rama-id" placeholder="ej: satisfaccion" style="width:150px"></div>
+            <div class="rama-header"><strong>ID Rama:</strong> <input type="text" class="rama-id-input" placeholder="ej: satisfaccion"></div>
+            <label class="badge">PREGUNTA</label>
             <input type="text" class="q-text" placeholder="Escribe la pregunta...">
-            <div class="grid-options">
+            <div class="grid-options" id="opts-${ramaId}">
                 <div class="option-card">
-                    <label class="badge">RESPUESTA A</label><input type="text" class="opt-text">
-                    <label class="badge">SALTO A</label><input type="text" class="opt-jump" placeholder="ej: final">
-                    <label class="badge">MENSAJE PAN</label><input type="text" class="opt-pan pan-input">
-                </div>
-                <div class="option-card">
-                    <label class="badge">RESPUESTA B</label><input type="text" class="opt-text">
+                    <label class="badge">RESPUESTA</label><input type="text" class="opt-text">
                     <label class="badge">SALTO A</label><input type="text" class="opt-jump" value="final">
                     <label class="badge">MENSAJE PAN</label><input type="text" class="opt-pan pan-input">
                 </div>
-            </div>`;
+            </div>
+            <button class="btn btn-add-opt" onclick="agregarOpcion('${ramaId}')">+ Añadir Opción</button>
+            <button class="btn btn-del" onclick="this.parentElement.remove()" style="position:relative; float:right; margin-top:10px;">Eliminar Pregunta</button>
+            <div style="clear:both"></div>`;
         document.getElementById('editor-ramas').appendChild(div);
     }
 
     function ensamblarYGenerar() {
         const htmlBase = document.getElementById('html-base').value;
         if(!htmlBase.includes('const arbol =')) {
-            alert("Por favor, pega el contenido correcto de tu archivo diagnostico.html");
-            return;
+            alert("Pega primero tu código de diagnostico.html"); return;
         }
 
-        // 1. Extraer el nuevo árbol del editor
         const ramas = {};
         document.querySelectorAll('.node-box').forEach(box => {
-            let id = box.dataset.id || box.querySelector('.rama-id').value;
+            let id = box.dataset.id || box.querySelector('.rama-id-input').value;
+            if(!id) return;
+
+            const opciones = [];
+            box.querySelectorAll('.option-card').forEach(opt => {
+                opciones.push({
+                    "texto": opt.querySelector('.opt-text').value,
+                    "salto": opt.querySelector('.opt-jump').value,
+                    "pan": opt.querySelector('.opt-pan').value
+                });
+            });
+
             ramas[id] = {
                 "pregunta": box.querySelector('.q-text').value,
-                "respuestas": [
-                    { "texto": box.querySelectorAll('.opt-text')[0].value, "salto": box.querySelectorAll('.opt-jump')[0].value, "pan": box.querySelectorAll('.opt-pan')[0].value },
-                    { "texto": box.querySelectorAll('.opt-text')[1].value, "salto": box.querySelectorAll('.opt-jump')[1].value, "pan": box.querySelectorAll('.opt-pan')[1].value }
-                ]
+                "respuestas": opciones
             };
         });
 
         const nuevoArbolJs = "const arbol = " + JSON.stringify(ramas, null, 4) + ";";
-
-        // 2. Inyectar el nuevo árbol en el HTML base usando Regex
-        // Busca desde 'const arbol =' hasta el primer '};' que encuentre después
         const regexArbol = /const arbol = \{[\s\S]*?\};/;
         const htmlFinal = htmlBase.replace(regexArbol, nuevoArbolJs);
 
