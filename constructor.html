@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Puliendo Ideas | Constructor Maestro de Bloques</title>
+    <style>
+        :root { --cobalto: #0072ff; --noche: #020617; --pizarra: #1e293b; --texto: #f8fafc; }
+        body { font-family: 'Inter', sans-serif; background: var(--noche); color: var(--texto); margin: 0; display: flex; height: 100vh; }
+        
+        /* Panel Izquierdo: Configuración */
+        .sidebar { width: 400px; background: #0f172a; border-right: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; padding: 20px; overflow-y: auto; }
+        
+        /* Panel Derecho: Vista Previa */
+        .preview { flex-grow: 1; background: #fff; display: flex; flex-direction: column; }
+        iframe { width: 100%; height: 100%; border: none; background: #fff; }
+
+        .modulo-card { background: var(--pizarra); padding: 15px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid var(--cobalto); }
+        .modulo-card h3 { margin: 0 0 10px 0; font-size: 14px; text-transform: uppercase; color: var(--cobalto); }
+        
+        label { display: block; font-size: 12px; margin-top: 10px; color: #94a3b8; }
+        input, textarea { width: 100%; background: #0f172a; border: 1px solid #334155; color: white; padding: 8px; border-radius: 6px; margin-top: 5px; box-sizing: border-box; }
+        
+        .btn-primary { background: var(--cobalto); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px; }
+        .btn-download { background: #10b981; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Constructor Maestro</h2>
+    <p style="font-size: 12px; color: #94a3b8;">Pega tu HTML base y edita los módulos.</p>
+    
+    <textarea id="rawCode" placeholder="Pega aquí el código HTML de la web..." style="height: 100px;"></textarea>
+    <button class="btn-primary" onclick="analizarWeb()">Analizar Estructura</button>
+    
+    <hr style="width:100%; opacity:0.1; margin: 20px 0;">
+    
+    <div id="editorInputs">
+        </div>
+
+    <button class="btn-primary btn-download" onclick="descargarHTML()">Descargar Web Final</button>
+</div>
+
+<div class="preview">
+    <div style="background: #1e293b; padding: 10px; font-size: 12px; text-align: center;">Vista Previa en Tiempo Real</div>
+    <iframe id="vistaPrevia"></iframe>
+</div>
+
+<script>
+    function analizarWeb() {
+        const code = document.getElementById('rawCode').value;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(code, 'text/html');
+        const container = document.getElementById('editorInputs');
+        container.innerHTML = '';
+
+        // Buscamos secciones o divs principales para crear módulos
+        const secciones = doc.querySelectorAll('section, header, footer');
+        
+        secciones.forEach((sec, index) => {
+            const card = document.createElement('div');
+            card.className = 'modulo-card';
+            const id = sec.id || `modulo-${index}`;
+            
+            card.innerHTML = `<h3>Módulo: ${id}</h3>`;
+            
+            // Buscar Títulos
+            const titulo = sec.querySelector('h1, h2, h3');
+            if(titulo) {
+                card.innerHTML += `<label>Título</label><input type="text" value="${titulo.innerText}" oninput="actualizarVp('${id}', 'text', this.value, 'h1,h2,h3')">`;
+            }
+
+            // Buscar Párrafos
+            const parrafo = sec.querySelector('p');
+            if(parrafo) {
+                card.innerHTML += `<label>Descripción</label><textarea oninput="actualizarVp('${id}', 'text', this.value, 'p')">${parrafo.innerText}</textarea>`;
+            }
+
+            // Buscar Imágenes
+            const img = sec.querySelector('img');
+            if(img) {
+                card.innerHTML += `<label>Imagen (Nombre archivo)</label><input type="text" value="${img.getAttribute('src')}" oninput="actualizarVp('${id}', 'src', this.value, 'img')">`;
+            }
+
+            container.appendChild(card);
+        });
+
+        actualizarIframe(code);
+    }
+
+    function actualizarIframe(html) {
+        const iframe = document.getElementById('vistaPrevia');
+        iframe.srcdoc = html;
+    }
+
+    function actualizarVp(secId, tipo, valor, selector) {
+        const iframe = document.getElementById('vistaPrevia');
+        const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const section = innerDoc.getElementById(secId) || innerDoc.querySelectorAll('section, header, footer')[parseInt(secId.split('-')[1])];
+        
+        if(section) {
+            const el = section.querySelector(selector);
+            if(el) {
+                if(tipo === 'text') el.innerText = valor;
+                if(tipo === 'src') el.setAttribute('src', valor);
+            }
+        }
+    }
+
+    function descargarHTML() {
+        const iframe = document.getElementById('vistaPrevia');
+        const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const finalHtml = "<!DOCTYPE html>\n" + innerDoc.documentElement.outerHTML;
+        
+        const blob = new Blob([finalHtml], {type: 'text/html'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'web-final.html';
+        a.click();
+    }
+</script>
+
+</body>
+</html>
