@@ -80,8 +80,8 @@
             htmlOpciones += `
                 <div class="option-card">
                     <label class="badge">RESPUESTA</label><input type="text" class="opt-text" value="${resp.texto || ''}" oninput="dibujarMapa()">
-                    <label class="badge">SALTO A</label><input type="text" class="opt-jump" value="${resp.salto || ''}" oninput="dibujarMapa()">
-                    <label class="badge">PAN</label><input type="text" class="opt-pan" value="${resp.pan || ''}" style="font-style:italic; background:#eef;" oninput="dibujarMapa()">
+                    <label class="badge">SALTO A (ID o URL Formulario)</label><input type="text" class="opt-jump" value="${resp.salto || ''}" oninput="dibujarMapa()">
+                    <label class="badge">PAN (Mensaje opcional)</label><input type="text" class="opt-pan" value="${resp.pan || ''}" style="font-style:italic; background:#eef;" oninput="dibujarMapa()">
                 </div>`;
         });
 
@@ -109,7 +109,7 @@
         div.className = 'option-card';
         div.innerHTML = `
             <label class="badge">RESPUESTA</label><input type="text" class="opt-text" oninput="dibujarMapa()">
-            <label class="badge">SALTO A</label><input type="text" class="opt-jump" value="final" oninput="dibujarMapa()">
+            <label class="badge">SALTO A (ID o URL)</label><input type="text" class="opt-jump" value="final" oninput="dibujarMapa()">
             <label class="badge">PAN</label><input type="text" class="opt-pan" style="font-style:italic; background:#eef;" oninput="dibujarMapa()">`;
         container.appendChild(div);
         dibujarMapa();
@@ -135,7 +135,7 @@
             
             box.querySelectorAll('.opt-jump').forEach(jump => {
                 const destino = jump.value || "...";
-                contenido += `<span style="color:#666">→</span> <span style="${destino === 'final' ? 'color:green;font-weight:bold' : ''}">${destino}</span><br>`;
+                contenido += `<span style="color:#666">→</span> <span style="${destino.includes('http') || destino === 'final' ? 'color:green;font-weight:bold' : ''}">${destino}</span><br>`;
             });
             
             nodoDiv.innerHTML = contenido;
@@ -144,7 +144,6 @@
     }
 
     function generarEstructuraLimpia(arbolTexto) {
-        // Al separar esto con concatenaciones sencillas de cadenas de texto de JS nativas evitamos que el motor del navegador rompa
         let h = '<!DOCTYPE html>\n<html lang="es">\n<head>\n    <meta charset="UTF-8">\n';
         h += '    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
         h += '    <title>Sistema de Diagnóstico Automatizado</title>\n    <style>\n';
@@ -166,15 +165,24 @@
         h += '            const contenedorOpciones = document.getElementById("opciones-contenedor");\n';
         h += '            const textoPregunta = document.getElementById("pregunta-texto");\n';
         h += '            contenedorOpciones.innerHTML = "";\n\n';
-        h += '            if (id === "final" || !arbol[id]) {\n';
+        h += '            // SI EL DESTINO ES UN FORMULARIO O RUTA EXTERNA (CONTIENE HTTP O ES EL FORMULARIO FINAL)\n';
+        h += '            if (id === "final" || id.startsWith("http") || !arbol[id]) {\n';
         h += '                textoPregunta.innerText = "¡Diagnóstico Concluido!";\n';
+        h += '                let htmlResumen = "";\n';
         h += '                if (historial.length > 0) {\n';
-        h += '                    let htmlResumen = "<h3>Recomendaciones del Plan de Acción (PAN):</h3>";\n';
+        h += '                    htmlResumen += "<h3>Recomendaciones del Plan de Acción (PAN):</h3>";\n';
         h += '                    historial.forEach(item => {\n';
         h += '                        if(item.pan) htmlResumen += \'<div class="resultado-pan">\' + item.pan + \'</div>\';\n';
         h += '                    });\n';
-        h += '                    contenedorOpciones.innerHTML = htmlResumen;\n';
         h += '                }\n';
+        h += '                \n';
+        h += '                // SI ES UNA URL DIRECTA, REDIRIGIMOS AUTOMÁTICAMENTE\n';
+        h += '                if(id.startsWith("http")) {\n';
+        h += '                    htmlResumen += \'<p style="color:#38bdf8;text-align:center;">Redirigiendo a tu formulario...</p>\';\n';
+        h += '                    setTimeout(() => { window.open(id, "_blank"); }, 1500);\n';
+        h += '                }\n';
+        h += '                \n';
+        h += '                contenedorOpciones.innerHTML = htmlResumen;\n';
         h += '                contenedorOpciones.innerHTML += \'<button class="btn-restart" onclick="reiniciar()">Iniciar Nuevo Diagnóstico</button>\';\n';
         h += '                return;\n';
         h += '            }\n\n';
@@ -224,7 +232,7 @@
         }
 
         if (!tieneInicio) {
-            alert("¡Error de estructura! Debes tener al menos una pregunta con el ID exacto 'inicio' para saber por dónde empezar.");
+            alert("¡Error de estructura! Debes tener al menos una pregunta con el ID exacto 'inicio'.");
             return;
         }
 
