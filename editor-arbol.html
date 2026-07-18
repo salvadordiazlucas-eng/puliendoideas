@@ -143,6 +143,60 @@
         });
     }
 
+    function generarEstructuraLimpia(arbolTexto) {
+        // Al separar esto con concatenaciones sencillas de cadenas de texto de JS nativas evitamos que el motor del navegador rompa
+        let h = '<!DOCTYPE html>\n<html lang="es">\n<head>\n    <meta charset="UTF-8">\n';
+        h += '    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+        h += '    <title>Sistema de Diagnóstico Automatizado</title>\n    <style>\n';
+        h += '        body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }\n';
+        h += '        .card { background: #1e293b; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-width: 600px; width: 100%; border: 1px solid #334155; }\n';
+        h += '        h2 { color: #38bdf8; margin-top: 0; }\n';
+        h += '        .btn-option { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #334155; color: white; border: none; border-radius: 8px; cursor: pointer; text-align: left; font-size: 16px; transition: all 0.2s; box-sizing: border-box; }\n';
+        h += '        .btn-option:hover { background: #0284c7; transform: translateX(5px); }\n';
+        h += '        .resultado-pan { background: #0284c7; padding: 15px; border-radius: 8px; font-weight: bold; margin-top: 15px; border-left: 5px solid #bae6fd; }\n';
+        h += '        .btn-restart { background: #ef4444; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }\n';
+        h += '        .btn-restart:hover { background: #dc2626; }\n    </style>\n</head>\n<body>\n';
+        h += '    <div class="card" id="quiz-container">\n        <h2 id="pregunta-texto">Cargando diagnóstico...</h2>\n';
+        h += '        <div id="opciones-contenedor"></div>\n    </div>\n\n    <script>\n';
+        h += '        // === ARBOL DE DECISIÓN GENERADO ===\n';
+        h += '        ' + arbolTexto + '\n';
+        h += '        // ==================================\n\n';
+        h += '        let historial = [];\n\n';
+        h += '        function mostrarRama(id) {\n';
+        h += '            const contenedorOpciones = document.getElementById("opciones-contenedor");\n';
+        h += '            const textoPregunta = document.getElementById("pregunta-texto");\n';
+        h += '            contenedorOpciones.innerHTML = "";\n\n';
+        h += '            if (id === "final" || !arbol[id]) {\n';
+        h += '                textoPregunta.innerText = "¡Diagnóstico Concluido!";\n';
+        h += '                if (historial.length > 0) {\n';
+        h += '                    let htmlResumen = "<h3>Recomendaciones del Plan de Acción (PAN):</h3>";\n';
+        h += '                    historial.forEach(item => {\n';
+        h += '                        if(item.pan) htmlResumen += \'<div class="resultado-pan">\' + item.pan + \'</div>\';\n';
+        h += '                    });\n';
+        h += '                    contenedorOpciones.innerHTML = htmlResumen;\n';
+        h += '                }\n';
+        h += '                contenedorOpciones.innerHTML += \'<button class="btn-restart" onclick="reiniciar()">Iniciar Nuevo Diagnóstico</button>\';\n';
+        h += '                return;\n';
+        h += '            }\n\n';
+        h += '            const nodoActual = arbol[id];\n';
+        h += '            textoPregunta.innerText = nodoActual.pregunta;\n\n';
+        h += '            nodoActual.respuestas.forEach(resp => {\n';
+        h += '                const boton = document.createElement("button");\n';
+        h += '                boton.className = "btn-option";\n';
+        h += '                boton.innerText = resp.texto;\n';
+        h += '                boton.onclick = () => {\n';
+        h += '                    if(resp.pan) historial.push({ pregunta: nodoActual.pregunta, respuesta: resp.texto, pan: resp.pan });\n';
+        h += '                    mostrarRama(resp.salto);\n';
+        h += '                };\n';
+        h += '                contenedorOpciones.appendChild(boton);\n';
+        h += '            });\n';
+        h += '        }\n\n';
+        h += '        function reiniciar() {\n            historial = [];\n            mostrarRama("inicio");\n        }\n\n';
+        h += '        window.onload = () => mostrarRama("inicio");\n';
+        h += '    ' + '<\/script>\n</body>\n</html>';
+        return h;
+    }
+
     function ensamblarYGenerar() {
         const htmlBase = document.getElementById('html-base').value.trim();
         const ramas = {};
@@ -178,21 +232,9 @@
         let htmlFinal = "";
 
         if (htmlBase) {
-            // CAMINO A: Si hay código previo, reemplazamos el árbol antiguo
             htmlFinal = htmlBase.replace(/const arbol\s*=\s*\{[\s\S]*?\};/, nuevoArbolJs);
         } else {
-            // CAMINO B: Si está vacío, construimos el HTML limpio por bloques (Evita errores del navegador)
-            htmlFinal = '<!DOCTYPE html>\n<html lang="es">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Sistema de Diagnóstico Automatizado</title>\n    <style>\n        body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }\n        .card { background: #1e293b; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-width: 600px; width: 100%; border: 1px solid #334155; }\n        h2 { color: #38bdf8; margin-top: 0; }\n        .btn-option { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #334155; color: white; border: none; border-radius: 8px; cursor: pointer; text-align: left; font-size: 16px; transition: all 0.2s; box-sizing: border-box; }\n        .btn-option:hover { background: #0284c7; transform: translateX(5px); }\n        .resultado-pan { background: #0284c7; padding: 15px; border-radius: 8px; font-weight: bold; margin-top: 15px; border-left: 5px solid #bae6fd; }\n        .btn-restart { background: #ef4444; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; }\n        .btn-restart:hover { background: #dc2626; }\n    </style>\n</head>\n<body>\n    <div class="card" id="quiz-container">\n        <h2 id="pregunta-texto">Cargando diagnóstico...</h2>\n        <div id="opciones-contenedor"></div>\n    </div>\n\n    <script>\n        // === ARBOL DE DECISIÓN GENERADO ===\n        ' + nuevoArbolJs + '\n        // ==================================\n\n        let historial = [];\n\n        function mostrarRama(id) {\n            const contenedorOpciones = document.getElementById("opciones-contenedor");\n            const textoPregunta = document.getElementById("pregunta-texto");\n            contenedorOpciones.innerHTML = "";\n\n            if (id === "final" || !arbol[id]) {\n                textoPregunta.innerText = "¡Diagnóstico Concluido!";\n                if (historial.length > 0) {\n                    let htmlResumen = "<h3>Recomendaciones del Plan de Acción (PAN):</h3>";\n                    historial.forEach(item => {\n                        if(item.pan) htmlResumen += \'<div class="resultado-pan">\' + item.pan + \'</div>\';\n                    });\n                    contenedorOpciones.innerHTML = htmlResumen;\n                }\n                contenedorOpciones.innerHTML += \'<button class="btn-restart" onclick="reiniciar()">Iniciar Nuevo Diagnóstico</button>\';\n                return;\n            }\n\n            const nodoActual = arbol[id];\n            textoPregunta.innerText = nodoActual.pregunta;\n\n            nodoActual.respuestas.forEach(resp => {\n                const boton = document.createElement("button");\n                boton.className = "btn-option";\n                boton.innerText = resp.texto;\n                boton.onclick = () => {\n                    if(resp.pan) historial.push({ pregunta: nodoActual.pregunta, respuesta: resp.texto, pan: resp.pan });\n                    mostrarRama(resp.salto);\n                };\n                contenedorOpciones.appendChild(boton);
-            });
-        }
-
-        function reiniciar() {
-            historial = [];
-            mostrarRama("inicio");
-        }
-
-        window.onload = () => mostrarRama("inicio");
-    <\/script>\n</body>\n</html>`;
+            htmlFinal = generarEstructuraLimpia(nuevoArbolJs);
         }
 
         document.getElementById('codigo-final').value = htmlFinal;
