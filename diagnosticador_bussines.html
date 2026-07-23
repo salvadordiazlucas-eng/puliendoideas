@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditor de Posicionamiento Local & Google Business</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #38bdf8;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); padding: 40px 20px; }
+        
+        .container { max-width: 850px; margin: 0 auto; }
+        
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 28px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+        header p { color: var(--muted); font-size: 15px; }
+
+        .search-card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .form-group input:focus { border-color: var(--accent); }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #0f172a;
+            font-weight: 800;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+        .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* RESULTADOS */
+        #results { display: none; margin-top: 30px; }
+        
+        .score-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #334155;
+            margin-bottom: 25px;
+        }
+
+        .score-number {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin: 15px 0;
+        }
+
+        .section-title { font-size: 18px; font-weight: 600; margin-bottom: 15px; color: var(--text); }
+
+        .audit-list { list-style: none; margin-bottom: 30px; }
+        .audit-item {
+            background: var(--card);
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #334155;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+        .badge.warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); }
+        .badge.success { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid var(--success); }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        .comp-table th, .comp-table td { padding: 14px 16px; text-align: left; font-size: 14px; }
+        .comp-table th { background: #0f172a; color: var(--muted); font-weight: 600; }
+        .comp-table tr:border-bottom { border-bottom: 1px solid #334155; }
+        .is-client { background: rgba(56, 189, 248, 0.1); font-weight: 600; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Auditoría de Visibilidad Local</h1>
+        <p>Diagnóstico automático de ficha y posicionamiento en Google Maps</p>
+    </header>
+
+    <div class="search-card">
+        <div class="form-group">
+            <label>Clave API de Google Cloud</label>
+            <input type="password" id="apiKey" placeholder="Pega aquí tu API Key de Google">
+        </div>
+        <div class="form-group">
+            <label>Nombre del Negocio a Auditar</label>
+            <input type="text" id="businessName" placeholder="Ej: Fogoncto Majadahonda">
+        </div>
+        <div class="form-group">
+            <label>Palabra Clave + Localidad (Sector)</label>
+            <input type="text" id="keyword" placeholder="Ej: Restaurante en Majadahonda">
+        </div>
+        <button class="btn-submit" onclick="runAudit()">GENERAR DIAGNÓSTICO EN TIEMPO REAL</button>
+    </div>
+
+    <div id="results">
+        <div class="score-card">
+            <div style="font-size: 14px; color: var(--muted); font-weight: 600;">SALUD GENERAL DE LA FICHA</div>
+            <div class="score-number" id="scoreValue">--/100</div>
+            <p id="scoreSummary" style="color: var(--muted); font-size: 14px;"></p>
+        </div>
+
+        <h3 class="section-title">🔍 Errores y Puntos de Mejora Detectados</h3>
+        <ul class="audit-list" id="auditPoints"></ul>
+
+        <h3 class="section-title">🏆 Posicionamiento frente a la Competencia Directa</h3>
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Negocio</th>
+                    <th>Valoración</th>
+                    <th>Reseñas</th>
+                </tr>
+            </thead>
+            <tbody id="compBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+async function runAudit() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    const businessName = document.getElementById('businessName').value.trim();
+    const keyword = document.getElementById('keyword').value.trim();
+
+    if(!apiKey || !businessName || !keyword) {
+        alert("Por favor, rellena los tres campos para lanzar la auditoría.");
+        return;
+    }
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('scoreValue').innerText = "Analyzing...";
+
+    try {
+        // 1. Buscar la Ficha del Cliente
+        const clientRes = await fetch(`https://places.googleapis.com/v1/places:searchText`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': apiKey,
+                'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.regularOpeningHours'
+            },
+            body: JSON.stringify({ textQuery: businessName })
+        });
+        
+        const clientData = await clientRes.json();
+        const clientPlace = clientData.places ? clientData.places[0] : null;
+
+        // 2. Buscar Competencia por Palabra Clave
+        const compRes = await fetch(`https://places.googleapis.com/v1/places:searchText`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': apiKey,
+                'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount'
+            },
+            body: JSON.stringify({ textQuery: keyword, pageSize: 5 })
+        });
+
+        const compData = await compRes.json();
+        const competitors = compData.places || [];
+
+        // 3. Evaluar Puntuación de Salud
+        let score = 100;
+        let pointsHTML = '';
+
+        if(clientPlace) {
+            if(!clientPlace.websiteUri) {
+                score -= 20;
+                pointsHTML += `<li class="audit-item"><span>Sin Web Vinculada</span><span class="badge danger">Crítico (-20 pts)</span></li>`;
+            } else {
+                pointsHTML += `<li class="audit-item"><span>Sitio Web Correcto</span><span class="badge success">Correcto</span></li>`;
+            }
+
+            if(!clientPlace.regularOpeningHours) {
+                score -= 15;
+                pointsHTML += `<li class="audit-item"><span>Horarios Incompletos o No Verificados</span><span class="badge warning">Mejorable (-15 pts)</span></li>`;
+            }
+
+            if((clientPlace.rating || 0) < 4.2) {
+                score -= 25;
+                pointsHTML += `<li class="audit-item"><span>Nota Media Baja (${clientPlace.rating || 'N/A'}★)</span><span class="badge danger">Crítico (-25 pts)</span></li>`;
+            }
+
+            if((clientPlace.userRatingCount || 0) < 30) {
+                score -= 15;
+                pointsHTML += `<li class="audit-item"><span>Volumen Bajo de Reseñas (${clientPlace.userRatingCount || 0})</span><span class="badge warning">Mejorable (-15 pts)</span></li>`;
+            }
+        } else {
+            score = 30;
+            pointsHTML = `<li class="audit-item"><span>Ficha no encontrada directamente con este nombre</span><span class="badge danger">Crítico</span></li>`;
+        }
+
+        document.getElementById('scoreValue').innerText = `${Math.max(score, 10)}/100`;
+        document.getElementById('auditPoints').innerHTML = pointsHTML;
+
+        // 4. Pintar Tabla Competencia
+        let compHTML = '';
+        competitors.forEach((c, index) => {
+            const isClient = clientPlace && c.displayName.text.toLowerCase().includes(clientPlace.displayName.text.toLowerCase());
+            compHTML += `
+                <tr class="${isClient ? 'is-client' : ''}">
+                    <td>#${index + 1}</td>
+                    <td>${c.displayName.text} ${isClient ? '(TU CLIENTE)' : ''}</td>
+                    <td>${c.rating || 'N/A'} ★</td>
+                    <td>${c.userRatingCount || 0} reseñas</td>
+                </tr>
+            `;
+        });
+        document.getElementById('compBody').innerHTML = compHTML;
+
+    } catch (e) {
+        alert("Error consultando la API de Google. Revisa tu API Key.");
+        console.error(e);
+    }
+}
+</script>
+
+</body>
+</html>
