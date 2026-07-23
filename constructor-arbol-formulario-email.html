@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Suite Maestra: Diagnósticos & Formularios | Salvador Díaz</title>
+    <style>
+        :root { --primary: #0072ff; --bg: #f8f9fa; --text: #2d3436; --success: #2ecc71; --dark: #1e293b; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 30px; margin: 0; }
+        .container { max-width: 1100px; margin: auto; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        h1 { color: var(--primary); margin: 0 0 10px 0; }
+        textarea { width: 100%; height: 80px; font-family: monospace; background: #2d3436; color: #dfe6e9; padding: 12px; border-radius: 8px; font-size: 11px; box-sizing: border-box; }
+        .node-box { background: #f1f2f6; border-radius: 12px; padding: 20px; margin-bottom: 15px; border-left: 6px solid var(--primary); position: relative; }
+        .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 10px; margin-top: 10px; }
+        .option-card { background: white; padding: 12px; border-radius: 8px; border: 1px solid #dee2e6; }
+        .btn { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px; transition: all 0.2s; }
+        .btn-main { background: var(--primary); color: white; width: 100%; font-size: 18px; padding: 18px; margin-top: 10px; }
+        .btn-action { background: #2d3436; color: white; }
+        .btn-action:hover { background: #0f172a; }
+        .badge { background: #636e72; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; display: block; margin: 6px 0 2px 0; width: fit-content; }
+        .badge-locked { background: #0284c7; color: white; font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
+        #mapa-visual { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; padding: 20px; background: #fff; border-radius: 12px; border: 2px dashed #ccc; }
+        .mapa-nodo { border: 2px solid var(--primary); padding: 10px; border-radius: 8px; background: #eef6ff; font-size: 11px; min-width: 140px; }
+        input, select { padding: 8px; border: 1px solid #ced4da; border-radius: 6px; width: 100%; box-sizing: border-box; font-size: 12px; }
+        .btn-del { position: absolute; top: 10px; right: 10px; background: #ff7675; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 10px; }
+        .form-builder { background: #e0f2fe; border: 1px dashed #0284c7; padding: 12px; border-radius: 8px; margin-top: 8px; }
+        .form-field-row { display: flex; gap: 5px; margin-bottom: 5px; }
+        .helper-text { font-size: 12px; color: #64748b; margin-top: -5px; margin-bottom: 15px; display: block; }
+        .email-receiver-box { background: #fff; border: 1px solid #0284c7; padding: 8px; border-radius: 6px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>1. Cargar Proyecto Actual (Opcional)</h1>
+        <p class="helper-text">Pega aquí el código HTML previo si quieres editar un proyecto existente. Si vas a crear uno nuevo, déjalo en blanco.</p>
+        <textarea id="html-base" placeholder="Pega el código completo aquí para editar..." oninput="cargarArbolDesdeCodigo()"></textarea>
+    </div>
+
+    <div class="card">
+        <h1>2. Estructura del Proyecto</h1>
+        <p class="helper-text">Construye tu árbol conversacional o tu formulario interactivo. La herramienta gestionará la lógica de inicio automáticamente.</p>
+        
+        <div id="mapa-visual">
+            <p style="color:#666; font-style:italic;">El mapa de navegación aparecerá aquí...</p>
+        </div>
+        
+        <div id="editor-ramas" style="margin-top:20px;"></div>
+        
+        <button id="btn-add-step" class="btn btn-action" onclick="agregarRama()">+ Crear Árbol o Formulario</button>
+    </div>
+
+    <button class="btn btn-main" onclick="ensamblarYGenerar()">3. GENERAR Y ACTUALIZAR CÓDIGO FINAL</button>
+
+    <div id="resultado-container" class="card" style="display:none;">
+        <h2>Código Web Listo para Usar</h2>
+        <p class="helper-text">Copia este código completo y sustitúyelo en tu archivo de GitHub (ej. `cafe.html`):</p>
+        <textarea id="codigo-final" style="height: 400px; background: #1e1e1e; color: #38bdf8; font-size: 12px;"></textarea>
+    </div>
+</div>
+
+<script>
+    function actualizarTextoBoton() {
+        const btn = document.getElementById('btn-add-step');
+        const tieneCajas = document.querySelectorAll('.node-box').length > 0;
+        if (!tieneCajas) {
+            btn.innerText = "+ Crear Árbol o Formulario";
+            btn.style.background = "#0072ff";
+        } else {
+            btn.innerText = "+ Añadir Siguiente Pregunta";
+            btn.style.background = "#2d3436";
+        }
+    }
+
+    function cargarArbolDesdeCodigo() {
+        const codigo = document.getElementById('html-base').value;
+        const regex = /const arbol\s*=\s*(\{[\s\S]*?\});/;
+        const match = codigo.match(regex);
+
+        if (match) {
+            try {
+                const arbolObj = new Function(`return ${match[1]}`)();
+                document.getElementById('editor-ramas').innerHTML = ""; 
+                for (let id in arbolObj) { crearCajaRama(id, arbolObj[id]); }
+                dibujarMapa();
+            } catch (e) { console.log("Cargando estructura..."); }
+        }
+        actualizarTextoBoton();
+    }
+
+    function crearCajaRama(id, datos) {
+        const div = document.createElement('div');
+        div.className = 'node-box';
+        div.setAttribute('data-id', id);
+        
+        let htmlOpciones = "";
+        datos.respuestas.forEach((resp) => { htmlOpciones += crearHtmlOpcion(resp); });
+
+        const esPasoInicial = (id === 'inicio');
+
+        div.innerHTML = `
+            ${!esPasoInicial ? '<button class="btn-del" onclick="this.parentElement.remove(); dibujarMapa(); actualizarTextoBoton();">Eliminar</button>' : ''}
+            <div>
+                ${esPasoInicial ? '<span class="badge-locked">🚀 PASO INICIAL (PUNTO DE ENTRADA AUTOMÁTICO)</span>' : `<strong>ID de la Pregunta:</strong> <input type="text" class="rama-id-input" value="${id}" oninput="this.parentElement.parentElement.setAttribute('data-id', this.value); dibujarMapa()">`}
+            </div>
+            
+            <input type="text" class="q-text" value="${datos.pregunta || ''}" style="margin-top:10px" placeholder="${esPasoInicial ? 'Escribe el título inicial o primera pregunta...' : 'Escribe aquí la pregunta...'}" oninput="dibujarMapa()">
+            
+            <div class="grid-options">${htmlOpciones}</div>
+            <button class="btn" style="margin-top:10px; background:#2ecc71; color:white" onclick="agregarOpcion(this)">+ Añadir Opción de Respuesta</button>
+        `;
+        document.getElementById('editor-ramas').appendChild(div);
+        actualizarTextoBoton();
+    }
+
+    function crearHtmlOpcion(resp = {}) {
+        const saltoVal = resp.salto || 'final';
+        const esFormNativo = typeof saltoVal === 'object' && saltoVal.tipo === 'nativo';
+        
+        return `
+            <div class="option-card">
+                <label class="badge">RESPUESTA / BOTÓN</label>
+                <input type="text" class="opt-text" value="${resp.texto || ''}" placeholder="Ej. Continuar / Empezar" oninput="dibujarMapa()">
+                
+                <label class="badge">¿QUÉ HACE ESTA OPCIÓN?</label>
+                <select class="opt-type-select" onchange="cambiarTipoSalto(this)">
+                    <option value="id" ${!esFormNativo && !saltoVal.startsWith('http') && !saltoVal.includes('<') ? 'selected' : ''}>Ir a Siguiente Pregunta (Árbol Conversacional)</option>
+                    <option value="url" ${saltoVal.startsWith('http') ? 'selected' : ''}>Redirigir a Formulario Web (URL)</option>
+                    <option value="html" ${saltoVal.includes('<') ? 'selected' : ''}>Pegar Código Formulario (HTML / iFrame)</option>
+                    <option value="nativo" ${esFormNativo ? 'selected' : ''}>✨ Generar Formulario Integrado Nativo</option>
+                </select>
+
+                <div class="salto-input-container" style="margin-top:5px;">
+                    ${generarCampoSalto(saltoVal)}
+                </div>
+
+                <label class="badge">PAN (Notas opcionales)</label>
+                <input type="text" class="opt-pan" value="${resp.pan || ''}" style="font-style:italic; background:#f8fafc;" oninput="dibujarMapa()">
+            </div>`;
+    }
+
+    function generarCampoSalto(saltoVal) {
+        if (typeof saltoVal === 'object' && saltoVal.tipo === 'nativo') {
+            let camposHtml = "";
+            const emailDestino = saltoVal.emailDestino || "";
+            saltoVal.campos.forEach(c => {
+                camposHtml += `<div class="form-field-row">
+                    <input type="text" class="f-label" value="${c.label}" placeholder="Ej. Nombre Completo">
+                    <select class="f-type">
+                        <option value="text" ${c.type==='text'?'selected':''}>Texto</option>
+                        <option value="email" ${c.type==='email'?'selected':''}>Email</option>
+                        <option value="tel" ${c.type==='tel'?'selected':''}>Teléfono</option>
+                    </select>
+                </div>`;
+            });
+            return `<div class="form-builder">
+                <div class="email-receiver-box">
+                    <label style="font-size:11px; font-weight:bold; color:#0284c7;">📩 Correo de Recepción de Respuestas:</label>
+                    <input type="email" class="f-receiver-email" value="${emailDestino}" placeholder="ejemplo@midominio.com" style="margin-top:4px;">
+                </div>
+                <strong>Campos del Formulario Nativo:</strong>
+                <div class="form-fields-list" style="margin-top:5px;">${camposHtml}</div>
+                <button class="btn" style="background:#0284c7; color:white; margin-top:5px;" onclick="addFormField(this)">+ Añadir Campo</button>
+            </div>`;
+        }
+        return `<input type="text" class="opt-jump" value="${typeof saltoVal === 'string' ? saltoVal : 'final'}" placeholder="Escribe el ID, URL o HTML aquí" oninput="dibujarMapa()">`;
+    }
+
+    function cambiarTipoSalto(select) {
+        const container = select.nextElementSibling;
+        const tipo = select.value;
+        if (tipo === 'nativo') {
+            container.innerHTML = generarCampoSalto({ 
+                tipo: 'nativo', 
+                emailDestino: '',
+                campos: [{label: 'Nombre Completo', type: 'text'}, {label: 'Correo Electrónico', type: 'email'}] 
+            });
+        } else {
+            container.innerHTML = `<input type="text" class="opt-jump" value="${tipo === 'id' ? 'final' : ''}" placeholder="${tipo==='url'?'https://...':'Código <iframe>'}" oninput="dibujarMapa()">`;
+        }
+        dibujarMapa();
+    }
+
+    function addFormField(btn) {
+        const list = btn.previousElementSibling;
+        const div = document.createElement('div');
+        div.className = 'form-field-row';
+        div.innerHTML = `
+            <input type="text" class="f-label" placeholder="Ej. Teléfono">
+            <select class="f-type">
+                <option value="text">Texto</option>
+                <option value="email">Email</option>
+                <option value="tel">Teléfono</option>
+            </select>`;
+        list.appendChild(div);
+    }
+
+    function agregarRama() {
+        const tieneInicio = document.querySelector('.node-box[data-id="inicio"]');
+        const idTemp = tieneInicio ? "pregunta_" + Date.now().toString().slice(-4) : "inicio";
+        crearCajaRama(idTemp, { pregunta: "", respuestas: [{ texto: "", salto: "final", pan: "" }] });
+        dibujarMapa();
+    }
+
+    function agregarOpcion(btn) {
+        const container = btn.previousElementSibling;
+        const div = document.createElement('div');
+        div.innerHTML = crearHtmlOpcion();
+        container.appendChild(div.firstElementChild);
+        dibujarMapa();
+    }
+
+    function dibujarMapa() {
+        const mapa = document.getElementById('mapa-visual');
+        mapa.innerHTML = "";
+        const cajas = document.querySelectorAll('.node-box');
+        if(cajas.length === 0) {
+            mapa.innerHTML = '<p style="color:#666; font-style:italic;">El mapa de navegación aparecerá aquí...</p>';
+            return;
+        }
+
+        cajas.forEach(box => {
+            const id = box.getAttribute('data-id');
+            if(!id) return;
+            const nodoDiv = document.createElement('div');
+            nodoDiv.className = 'mapa-nodo';
+            let contenido = `<strong>${id.toUpperCase()}</strong><br>`;
+            
+            box.querySelectorAll('.option-card').forEach(opt => {
+                const selectType = opt.querySelector('.opt-type-select').value;
+                let dest = selectType === 'nativo' ? '[FORMULARIO NATIVO]' : (opt.querySelector('.opt-jump')?.value || '...');
+                contenido += `<span style="color:#666">→</span> <span style="color:green;font-weight:bold">${dest}</span><br>`;
+            });
+            nodoDiv.innerHTML = contenido;
+            mapa.appendChild(nodoDiv);
+        });
+    }
+
+    function ensamblarYGenerar() {
+        const htmlBase = document.getElementById('html-base').value.trim();
+        const ramas = {};
+        let tieneInicio = false;
+        
+        document.querySelectorAll('.node-box').forEach(box => {
+            const id = box.getAttribute('data-id');
+            if(!id) return;
+            if(id === 'inicio') tieneInicio = true;
+
+            const opciones = [];
+            box.querySelectorAll('.option-card').forEach(opt => {
+                const tipoSalto = opt.querySelector('.opt-type-select').value;
+                let valorSalto = "";
+
+                if (tipoSalto === 'nativo') {
+                    const campos = [];
+                    const emailDestino = opt.querySelector('.f-receiver-email')?.value || '';
+                    opt.querySelectorAll('.form-field-row').forEach(row => {
+                        campos.push({
+                            label: row.querySelector('.f-label').value,
+                            type: row.querySelector('.f-type').value
+                        });
+                    });
+                    valorSalto = { tipo: 'nativo', emailDestino: emailDestino, campos: campos };
+                } else {
+                    valorSalto = opt.querySelector('.opt-jump').value;
+                }
+
+                opciones.push({
+                    "texto": opt.querySelector('.opt-text').value,
+                    "salto": valorSalto,
+                    "pan": opt.querySelector('.opt-pan').value
+                });
+            });
+            ramas[id] = { "pregunta": box.querySelector('.q-text').value, "respuestas": opciones };
+        });
+
+        if (!tieneInicio) { alert("¡Por favor, haz clic en '+ Crear Árbol o Formulario' para comenzar!"); return; }
+
+        const nuevoArbolJs = "const arbol = " + JSON.stringify(ramas, null, 4) + ";";
+        let htmlFinal = generarEstructuraLimpia(nuevoArbolJs);
+
+        document.getElementById('codigo-final').value = htmlFinal;
+        document.getElementById('resultado-container').style.display = 'block';
+        document.getElementById('resultado-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function generarEstructuraLimpia(arbolTexto) {
+        let h = '<!DOCTYPE html>\n<html lang="es">\n<head>\n    <meta charset="UTF-8">\n';
+        h += '    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+        h += '    <title>Diagnóstico Interactivo</title>\n    <style>\n';
+        h += '        body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }\n';
+        h += '        .card { background: #1e293b; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-width: 600px; width: 100%; border: 1px solid #334155; text-align: center; box-sizing: border-box; }\n';
+        h += '        h2 { color: #38bdf8; margin-top: 0; }\n';
+        h += '        .btn-option { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #334155; color: white; border: none; border-radius: 8px; cursor: pointer; text-align: left; font-size: 16px; transition: all 0.2s; box-sizing: border-box; }\n';
+        h += '        .btn-option:hover { background: #0284c7; transform: translateX(5px); }\n';
+        h += '        .native-input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }\n';
+        h += '        .btn-submit { background: #10b981; color: white; padding: 14px; border: none; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }\n';
+        h += '        .btn-submit:hover { background: #059669; }\n';
+        h += '    </style>\n</head>\n<body>\n';
+        h += '    <div class="card" id="quiz-container">\n        <h2 id="pregunta-texto">Cargando...</h2>\n';
+        h += '        <div id="opciones-contenedor"></div>\n    </div>\n\n    <script>\n';
+        h += '        ' + arbolTexto + '\n\n';
+        h += '        function mostrarRama(salto) {\n';
+        h += '            const contenedor = document.getElementById("opciones-contenedor");\n';
+        h += '            const titulo = document.getElementById("pregunta-texto");\n';
+        h += '            contenedor.innerHTML = "";\n\n';
+        h += '            if (typeof salto === "object" && salto.tipo === "nativo") {\n';
+        h += '                titulo.innerText = "¡Último Paso! Déjanos tus datos:";\n';
+        h += '                const emailDestino = salto.emailDestino || "ejemplo@dominio.com";\n';
+        h += '                let fHtml = `<form action="https://formsubmit.co/\${emailDestino}" method="POST">\n`;\n';
+        h += '                fHtml += `<input type="hidden" name="_captcha" value="false">\n`;\n';
+        h += '                salto.campos.forEach((c, idx) => {\n';
+        h += '                    fHtml += `<div style="text-align:left; margin-bottom:5px;"><label style="font-size:12px; color:#94a3b8;">\${c.label}</label><input type="\${c.type}" name="\${c.label}" class="native-input" required></div>`;\n';
+        h += '                });\n';
+        h += '                fHtml += `<button type="submit" class="btn-submit">Enviar Solicitud</button></form>`;\n';
+        h += '                contenedor.innerHTML = fHtml;\n';
+        h += '                return;\n';
+        h += '            }\n\n';
+        h += '            if (typeof salto === "string") {\n';
+        h += '                if (salto.startsWith("http")) { window.location.href = salto; return; }\n';
+        h += '                if (salto.includes("<")) { titulo.innerText = "¡Diagnóstico Concluido!"; contenedor.innerHTML = salto; return; }\n';
+        h += '            }\n\n';
+        h += '            const nodo = arbol[salto];\n';
+        h += '            if (!nodo) { titulo.innerText = "¡Gracias!"; return; }\n';
+        h += '            titulo.innerText = nodo.pregunta;\n';
+        h += '            nodo.respuestas.forEach(r => {\n';
+        h += '                const btn = document.createElement("button");\n';
+        h += '                btn.className = "btn-option";\n';
+        h += '                btn.innerText = r.texto;\n';
+        h += '                btn.onclick = () => mostrarRama(r.salto);\n';
+        h += '                contenedor.appendChild(btn);\n';
+        h += '            });\n';
+        h += '        }\n';
+        h += '        window.onload = () => mostrarRama("inicio");\n';
+        h += '    ' + '<\/script>\n</body>\n</html>';
+        return h;
+    }
+
+    actualizarTextoBoton();
+</script>
+</body>
+</html>
