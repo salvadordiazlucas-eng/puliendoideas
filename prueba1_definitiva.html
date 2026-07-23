@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Interactivo</title>
+    <style>
+        body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); max-width: 600px; width: 100%; border: 1px solid #334155; text-align: center; box-sizing: border-box; }
+        h2 { color: #38bdf8; margin-top: 0; }
+        .btn-option { display: block; width: 100%; padding: 14px; margin: 10px 0; background: #334155; color: white; border: none; border-radius: 8px; cursor: pointer; text-align: left; font-size: 16px; transition: all 0.2s; box-sizing: border-box; }
+        .btn-option:hover { background: #0284c7; transform: translateX(5px); }
+        .native-input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; box-sizing: border-box; }
+        .btn-submit { background: #10b981; color: white; padding: 14px; border: none; border-radius: 8px; width: 100%; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; }
+        .btn-submit:hover { background: #059669; }
+    </style>
+</head>
+<body>
+    <div class="card" id="quiz-container">
+        <h2 id="pregunta-texto">Cargando...</h2>
+        <div id="opciones-contenedor"></div>
+    </div>
+
+    <script>
+        const arbol = {
+    "inicio": {
+        "pregunta": "prueba, definitiva1",
+        "respuestas": [
+            {
+                "texto": "siiiiiiiiiiii",
+                "salto": {
+                    "tipo": "nativo",
+                    "emailDestino": "salvadordiazlucas@gmail.com",
+                    "campos": [
+                        {
+                            "label": "Nombre Completo",
+                            "type": "text"
+                        },
+                        {
+                            "label": "Correo Electrónico",
+                            "type": "email"
+                        }
+                    ]
+                },
+                "pan": "geniallllll"
+            },
+            {
+                "texto": "solucionable",
+                "salto": {
+                    "tipo": "nativo",
+                    "emailDestino": "",
+                    "campos": [
+                        {
+                            "label": "Nombre Completo",
+                            "type": "text"
+                        },
+                        {
+                            "label": "Correo Electrónico",
+                            "type": "email"
+                        }
+                    ]
+                },
+                "pan": ""
+            }
+        ]
+    }
+};
+
+        function mostrarRama(salto) {
+            const contenedor = document.getElementById("opciones-contenedor");
+            const titulo = document.getElementById("pregunta-texto");
+            contenedor.innerHTML = "";
+
+            if (typeof salto === "object" && salto.tipo === "nativo") {
+                titulo.innerText = "¡Último Paso! Déjanos tus datos:";
+                const emailDestino = salto.emailDestino || "ejemplo@dominio.com";
+                let fHtml = `<form action="https://formsubmit.co/${emailDestino}" method="POST">
+`;
+                fHtml += `<input type="hidden" name="_captcha" value="false">
+`;
+                salto.campos.forEach((c, idx) => {
+                    fHtml += `<div style="text-align:left; margin-bottom:5px;"><label style="font-size:12px; color:#94a3b8;">${c.label}</label><input type="${c.type}" name="${c.label}" class="native-input" required></div>`;
+                });
+                fHtml += `<button type="submit" class="btn-submit">Enviar Solicitud</button></form>`;
+                contenedor.innerHTML = fHtml;
+                return;
+            }
+
+            if (typeof salto === "string") {
+                if (salto.startsWith("http")) { window.location.href = salto; return; }
+                if (salto.includes("<")) { titulo.innerText = "¡Diagnóstico Concluido!"; contenedor.innerHTML = salto; return; }
+            }
+
+            const nodo = arbol[salto];
+            if (!nodo) { titulo.innerText = "¡Gracias!"; return; }
+            titulo.innerText = nodo.pregunta;
+            nodo.respuestas.forEach(r => {
+                const btn = document.createElement("button");
+                btn.className = "btn-option";
+                btn.innerText = r.texto;
+                btn.onclick = () => mostrarRama(r.salto);
+                contenedor.appendChild(btn);
+            });
+        }
+        window.onload = () => mostrarRama("inicio");
+    </script>
+</body>
+</html>
