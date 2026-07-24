@@ -130,6 +130,40 @@
             font-weight: bold;
             color: var(--accent-color);
         }
+
+        /* Ajustes visuales para el desplegable de sugerencias de Google Places */
+        .pac-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            margin-top: 4px;
+        }
+
+        .pac-item {
+            padding: 10px 14px;
+            color: var(--text-color);
+            border-top: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .pac-item:first-child {
+            border-top: none;
+        }
+
+        .pac-item:hover, .pac-item-selected {
+            background-color: var(--input-bg);
+        }
+
+        .pac-item-query {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+        }
+
+        .pac-matched {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -149,12 +183,18 @@
 
             <div class="form-group">
                 <label for="businessName">NOMBRE DEL NEGOCIO A AUDITAR</label>
-                <input type="text" id="businessName" placeholder="Ej: Fogoncito Majadahonda" required>
+                <input type="text" id="businessName" placeholder="Ej: Fogonxito" required>
+            </div>
+
+            <!-- CAMPO CON AUTOCOMPLETADO INTELIGENTE -->
+            <div class="form-group">
+                <label for="cityInput">UBICACIÓN / CIUDAD (SELECCIONA DE LA LISTA)</label>
+                <input type="text" id="cityInput" placeholder="Empieza a escribir tu ciudad (ej: Majadahonda)..." required>
             </div>
 
             <div class="form-group">
-                <label for="keywords">PALABRAS CLAVE + LOCALIDAD (SEPARADAS POR COMA)</label>
-                <input type="text" id="keywords" placeholder="Ej: Restaurante mexicano Majadahonda, Tacos Majadahonda" required>
+                <label for="keywords">PALABRAS CLAVE (SEPARADAS POR COMA)</label>
+                <input type="text" id="keywords" placeholder="Ej: tacos, nachos, restaurante mexicano" required>
             </div>
 
             <button type="submit" class="btn-submit">GENERAR DIAGNÓSTICO ESTRATÉGICO</button>
@@ -165,16 +205,39 @@
 </div>
 
 <script>
+let autocomplete;
+
+// Carga dinámica de la API de Autocomplete al escribir/pegar la API Key
+document.getElementById('apiKey').addEventListener('blur', cargarGoogleAutocomplete);
+document.getElementById('apiKey').addEventListener('change', cargarGoogleAutocomplete);
+
+function cargarGoogleAutocomplete() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey || window.google) return;
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=es`;
+    script.async = true;
+    script.onload = () => {
+        const input = document.getElementById('cityInput');
+        autocomplete = new google.maps.places.Autocomplete(input, {
+            types: ['(cities)'],
+            componentRestrictions: { country: 'es' } // Filtro restringido a España por defecto
+        });
+    };
+    document.head.appendChild(script);
+}
+
 document.getElementById('diagnosticForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const apiKey = document.getElementById('apiKey').value.trim();
     const businessName = document.getElementById('businessName').value.trim();
-    const keywords = document.getElementById('keywords').value.trim();
+    const city = document.getElementById('cityInput').value.trim();
     const resultadoDiv = document.getElementById('resultado');
 
-    if (!apiKey || !businessName) {
-        alert('Por favor introduce la API Key y el Nombre del Negocio.');
+    if (!apiKey || !businessName || !city) {
+        alert('Por favor completa todos los campos obligatorios.');
         return;
     }
 
@@ -182,7 +245,7 @@ document.getElementById('diagnosticForm').addEventListener('submit', async funct
     resultadoDiv.innerHTML = '<p>Consultando API de Google Places...</p>';
 
     try {
-        const placeData = await ejecutarDiagnosticoPlaces(businessName, apiKey);
+        const placeData = await ejecutarDiagnosticoPlaces(businessName, city, apiKey);
         
         if (placeData) {
             resultadoDiv.innerHTML = `
@@ -199,10 +262,11 @@ document.getElementById('diagnosticForm').addEventListener('submit', async funct
     }
 });
 
-async function ejecutarDiagnosticoPlaces(nombreNegocio, apiKey) {
+async function ejecutarDiagnosticoPlaces(nombre, ciudad, apiKey) {
     const url = 'https://places.googleapis.com/v1/places:searchText';
-    
-    // Máscara corregida sin el parámetro problemático 'places.generatesProvisionalReservations'
+    const queryCompleta = `${nombre} ${ciudad}`.trim();
+
+    // Máscara de campos optimizada y limpia (cero error 400)
     const fieldMask = [
         'places.id',
         'places.displayName',
@@ -224,21 +288,23 @@ async function ejecutarDiagnosticoPlaces(nombreNegocio, apiKey) {
             'X-Goog-FieldMask': fieldMask
         },
         body: JSON.stringify({
-            textQuery: nombreNegocio
+            textQuery: queryCompleta,
+            languageCode: 'es',
+            regionCode: 'ES'
         })
     });
 
     if (!response.ok) {
         const errorData = await response.json();
-        console.error('Detalle del error API Google:', errorData);
-        alert('Error 400/API: Revisa la consola de desarrollador para ver el detalle.');
+        console.error('Error API:', errorData);
+        alert('Error en la API de Google Places. Revisa la consola de desarrollador.');
         return null;
     }
 
     const data = await response.json();
 
     if (!data.places || data.places.length === 0) {
-        alert('No se encontró el negocio con ese nombre.');
+        alert('No se encontró el negocio con los datos especificados.');
         return null;
     }
 
