@@ -3,431 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informe Oficial de Visibilidad y Conversión Local - Google API</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Diagnóstico Estratégico de Negocio Local</title>
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --card-inner: #0f172a;
-            --accent: #38bdf8;
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #10b981;
-            --border: #334155;
-            --google-blue: #4285F4;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --input-bg: #0f172a;
+            --border-color: #334155;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-color: #0ea5e9;
+            --accent-hover: #0284c7;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); padding: 40px 20px; line-height: 1.6; }
-        
-        .container { max-width: 900px; margin: 0 auto; }
-        
-        header { text-align: center; margin-bottom: 30px; }
-        header h1 { font-size: 26px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
-        header p { color: var(--muted); font-size: 15px; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
 
-        .search-card {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .header {
+            text-align: center;
             margin-bottom: 30px;
         }
 
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input {
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], input[type="password"] {
             width: 100%;
             padding: 14px 16px;
-            background: #0f172a;
-            border: 1px solid var(--border);
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #fff;
-            font-size: 15px;
-            outline: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease;
         }
-        .form-group input:focus { border-color: var(--accent); }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
 
         .btn-submit {
             width: 100%;
             padding: 16px;
-            background: var(--accent);
-            color: #0f172a;
-            font-weight: 800;
+            background-color: var(--accent-color);
+            color: #ffffff;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .btn-submit:hover { opacity: 0.9; }
-
-        #results { display: none; margin-top: 30px; }
-        
-        .report-header {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 30px;
-            border: 1px solid var(--border);
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .google-certified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 10px 18px;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            margin-top: 14px;
-        }
-
-        .google-icon {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0;
-        }
-
-        .google-badge-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .google-badge-title {
-            font-size: 12px;
-            font-weight: 800;
-            color: #1e293b;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-
-        .google-badge-sub {
-            font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-        }
-
-        .score-box {
-            text-align: center;
-            background: var(--card-inner);
-            padding: 20px 30px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .score-number {
-            font-size: 44px;
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
-        }
-
-        .section-box {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 30px;
-            border: 1px solid var(--border);
-            margin-bottom: 25px;
-        }
-
-        .section-title {
-            font-size: 18px;
+            font-size: 1rem;
             font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 10px;
         }
 
-        .audit-detail {
-            background: var(--card-inner);
-            padding: 18px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            border-left: 4px solid var(--border);
+        .btn-submit:hover {
+            background-color: var(--accent-hover);
         }
 
-        .audit-detail.warning { border-left-color: var(--warning); }
-        .audit-detail.success { border-left-color: var(--success); }
-
-        .audit-detail h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-        .audit-detail p { font-size: 14px; color: var(--muted); }
-
-        .comp-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--card-inner);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-top: 15px;
-            border: 1px solid var(--border);
-        }
-        .comp-table th, .comp-table td { padding: 14px 16px; text-align: left; font-size: 14px; }
-        .comp-table th { background: #0b1120; color: var(--muted); font-weight: 600; }
-        .comp-table tr { border-bottom: 1px solid var(--border); }
-        .is-client { background: rgba(56, 189, 248, 0.15); font-weight: 700; color: var(--accent); }
-
-        .action-plan {
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 12px;
+        #resultado {
+            margin-top: 30px;
             padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: none;
         }
-        .action-plan li { margin-left: 20px; margin-bottom: 10px; font-size: 14px; color: #e2e8f0; }
+
+        .result-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
+    <div class="header">
         <h1>Diagnóstico Estratégico de Negocio Local</h1>
         <p>Análisis de presencia, interacción con clientes y potencial de conversión</p>
-    </header>
-
-    <div class="search-card">
-        <div class="form-group">
-            <label>Clave API de Google Cloud</label>
-            <input type="password" id="apiKey" placeholder="Pega aquí tu API Key de Google">
-        </div>
-        <div class="form-group">
-            <label>Nombre del Negocio a Auditar</label>
-            <input type="text" id="businessName" placeholder="Ej: Fogoncito Majadahonda">
-        </div>
-        <div class="form-group">
-            <label>Palabras Clave + Localidad (Separadas por coma)</label>
-            <input type="text" id="keywords" placeholder="Ej: Restaurante mexicano Majadahonda, Tacos Majadahonda, Cenar en Majadahonda">
-        </div>
-        <button class="btn-submit" onclick="runAudit()">GENERAR DIAGNÓSTICO ESTRATÉGICO</button>
     </div>
 
-    <div id="results">
-        
-        <div class="report-header">
-            <div>
-                <h2 id="reportBusinessName" style="font-size: 24px; font-weight: 800;">---</h2>
-                <p id="reportKeywords" style="color: var(--muted); font-size: 14px;">Términos analizados: ---</p>
-
-                <!-- INSIGNIA CERTIFICADA GOOGLE PLACES -->
-                <div class="google-certified-badge">
-                    <svg class="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
-                        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.15C3.26 21.3 7.31 24 12 24z"/>
-                        <path fill="#FBBC05" d="M5.28 14.24c-.25-.72-.38-1.49-.38-2.24s.13-1.52.38-2.24V6.61H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.39l3.99-3.15z"/>
-                        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.61l3.99 3.15c.95-2.85 3.6-4.96 6.72-4.96z"/>
-                    </svg>
-                    <div class="google-badge-text">
-                        <span class="google-badge-title">Auditoría Certificada Google Places</span>
-                        <span class="google-badge-sub">Datos extraídos en tiempo real vía Google Cloud Platform</span>
-                    </div>
-                </div>
-
+    <div class="card">
+        <form id="diagnosticForm">
+            <div class="form-group">
+                <label for="apiKey">CLAVE API DE GOOGLE CLOUD</label>
+                <input type="password" id="apiKey" placeholder="Pega aquí tu API Key de Google" required>
             </div>
-            <div class="score-box">
-                <div style="font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase;">Índice de Optimización</div>
-                <div class="score-number" id="scoreValue">--/100</div>
+
+            <div class="form-group">
+                <label for="businessName">NOMBRE DEL NEGOCIO A AUDITAR</label>
+                <input type="text" id="businessName" placeholder="Ej: Fogoncito Majadahonda" required>
             </div>
-        </div>
 
-        <div class="section-box">
-            <div class="section-title">⭐ 1. Reputación y Vínculo con los Clientes</div>
-            <div id="reputationAudit"></div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">🍽️ 2. Canales de Reserva y Conversión de Clientes</div>
-            <div id="conversionAudit"></div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">🗺️ 3. Contexto del Sector y Potencial de Demanda</div>
-            <p style="color: var(--muted); font-size: 14px; margin-bottom: 15px;">Panorama general de los principales establecimientos de la zona extraído directamente de los servidores de Google:</p>
-            
-            <table class="comp-table">
-                <thead>
-                    <tr>
-                        <th>Posición</th>
-                        <th>Establecimiento</th>
-                        <th>Valoración</th>
-                        <th>Opiniones Totales</th>
-                    </tr>
-                </thead>
-                <tbody id="compBody"></tbody>
-            </table>
-            
-            <div style="margin-top: 20px;" id="demandEstimation"></div>
-        </div>
-
-        <div class="section-box">
-            <div class="section-title">🚀 4. Plan de Crecimiento Sugerido</div>
-            <div class="action-plan">
-                <ul id="actionPlanList"></ul>
+            <div class="form-group">
+                <label for="keywords">PALABRAS CLAVE + LOCALIDAD (SEPARADAS POR COMA)</label>
+                <input type="text" id="keywords" placeholder="Ej: Restaurante mexicano Majadahonda, Tacos Majadahonda" required>
             </div>
-        </div>
 
+            <button type="submit" class="btn-submit">GENERAR DIAGNÓSTICO ESTRATÉGICO</button>
+        </form>
     </div>
+
+    <div id="resultado"></div>
 </div>
 
 <script>
-async function runAudit() {
+document.getElementById('diagnosticForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
     const apiKey = document.getElementById('apiKey').value.trim();
     const businessName = document.getElementById('businessName').value.trim();
-    const keywordsInput = document.getElementById('keywords').value.trim();
+    const keywords = document.getElementById('keywords').value.trim();
+    const resultadoDiv = document.getElementById('resultado');
 
-    if(!apiKey || !businessName || !keywordsInput) {
-        alert("Por favor, rellena todos los campos.");
+    if (!apiKey || !businessName) {
+        alert('Por favor introduce la API Key y el Nombre del Negocio.');
         return;
     }
 
-    const keywordList = keywordsInput.split(',').map(k => k.trim());
-    const mainKeyword = keywordList[0];
-
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('scoreValue').innerText = "...";
+    resultadoDiv.style.display = 'block';
+    resultadoDiv.innerHTML = '<p>Consultando API de Google Places...</p>';
 
     try {
-        // 1. Datos del Cliente
-        const clientRes = await fetch(`https://places.googleapis.com/v1/places:searchText`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Goog-Api-Key': apiKey,
-                'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.regularOpeningHours,places.reservable,places.generatesProvisionalReservations'
-            },
-            body: JSON.stringify({ textQuery: businessName })
-        });
-        const clientData = await clientRes.json();
-        const client = clientData.places ? clientData.places[0] : null;
-
-        // 2. Mercado Local
-        const compRes = await fetch(`https://places.googleapis.com/v1/places:searchText`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Goog-Api-Key': apiKey,
-                'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount'
-            },
-            body: JSON.stringify({ textQuery: mainKeyword, pageSize: 5 })
-        });
-        const compData = await compRes.json();
-        const competitors = compData.places || [];
-
-        if(!client) {
-            alert("No se encontró el negocio con ese nombre.");
-            return;
+        const placeData = await ejecutarDiagnosticoPlaces(businessName, apiKey);
+        
+        if (placeData) {
+            resultadoDiv.innerHTML = `
+                <h3>Resultados para: ${placeData.displayName ? placeData.displayName.text : businessName}</h3>
+                <div class="result-item"><span class="result-label">Dirección:</span> ${placeData.formattedAddress || 'No disponible'}</div>
+                <div class="result-item"><span class="result-label">Puntuación:</span> ${placeData.rating || 'N/A'} ⭐ (${placeData.userRatingCount || 0} reseñas)</div>
+                <div class="result-item"><span class="result-label">Teléfono:</span> ${placeData.nationalPhoneNumber || 'No disponible'}</div>
+                <div class="result-item"><span class="result-label">Sitio Web:</span> ${placeData.websiteUri ? `<a href="${placeData.websiteUri}" target="_blank" style="color:#0ea5e9;">${placeData.websiteUri}</a>` : 'No disponible'}</div>
+                <div class="result-item"><span class="result-label">Permite Reservas:</span> ${placeData.reservable ? 'Sí' : 'No / No especificado'}</div>
+            `;
         }
-
-        document.getElementById('reportBusinessName').innerText = client.displayName.text;
-        document.getElementById('reportKeywords').innerText = `Analizando: ${keywordList.join(" | ")}`;
-
-        let score = 100;
-        let repHTML = '';
-        let convHTML = '';
-        let planHTML = '';
-
-        // --- REPUTACIÓN Y ENGAGEMENT ---
-        const clientRating = client.rating || 0;
-        const clientReviews = client.userRatingCount || 0;
-
-        repHTML += `
-            <div class="audit-detail success">
-                <h4>✅ Sólida base de clientes acumulada</h4>
-                <p>Tu negocio cuenta con <strong>${clientReviews} opiniones de clientes</strong> y una valoración de <strong>${clientRating}★</strong>. Tienes una comunidad de clientes satisfechos que ya respaldan la calidad de tu establecimiento.</p>
-            </div>
-        `;
-
-        repHTML += `
-            <div class="audit-detail warning">
-                <h4>📈 Oportunidad de Fidelización: Gestión Activa de Opiniones</h4>
-                <p>Responder a las opiniones de los usuarios fortalece la cercanía con el cliente. Según los estándares de Google, las fichas con interacción activa por parte de la gerencia consiguen mayor alcance orgánico en las búsquedas locales.</p>
-            </div>
-        `;
-        planHTML += `<li><strong>Protocolo de Atención en Reseñas:</strong> Establecer una rutina de respuesta sistemática para proyectar atención al cliente y potenciar la visibilidad en el algoritmo local.</li>`;
-
-        // --- RESERVAS Y CONVERSIÓN ---
-        if (client.reservable || client.generatesProvisionalReservations) {
-            convHTML += `
-                <div class="audit-detail success">
-                    <h4>✅ Canal de Reserva Directa Activo</h4>
-                    <p>La ficha cuenta con opción de gestión de reservas, lo que facilita la conversión inmediata cuando un cliente decide acudir a tu establecimiento.</p>
-                </div>
-            `;
-        } else {
-            score -= 15;
-            convHTML += `
-                <div class="audit-detail warning">
-                    <h4>💡 Potencial Dormido: Automatización de Reservas y Turnos</h4>
-                    <p>Actualmente la ficha no dispone de un botón directo de reserva en línea habilitado. Integrar un motor de reservas instantáneo permite captar clientes fuera del horario comercial, reducir la pérdida de llamadas no atendidas en horas punta y optimizar la rotación de mesas por turnos de disponibilidad.</p>
-                </div>
-            `;
-            planHTML += `<li><strong>Sistema de Reserva Directa:</strong> Habilitar la confirmación instantánea de mesas en la ficha de Google para maximizar la ocupación del comedor y aumentar la facturación mensual.</li>`;
-        }
-
-        if (client.websiteUri) {
-            convHTML += `
-                <div class="audit-detail success">
-                    <h4>✅ Acceso Digital a Carta y Menú</h4>
-                    <p>Enlace corporativo correctamente configurado (<code>${client.websiteUri}</code>), permitiendo al cliente consultar la propuesta gastronómica previa.</p>
-                </div>
-            `;
-        } else {
-            score -= 15;
-            convHTML += `
-                <div class="audit-detail warning">
-                    <h4>💡 Oportunidad: Carta Digital y Menú Interactivo</h4>
-                    <p>Vincular un sitio web optimizado para móviles o la carta digitalizada directamente en el perfil ayuda a que el usuario tome la decisión de visita de forma mucho más rápida.</p>
-                </div>
-            `;
-            planHTML += `<li><strong>Despliegue de Carta Interactiva:</strong> Vincular una página de destino adaptada a dispositivos móviles con el menú completo y llamadas a la acción claras.</li>`;
-        }
-
-        // --- TABLA DE COMPETENCIA NEUTRAL Y ESTIMACIÓN ---
-        let compHTML = '';
-        let totalCompReviews = 0;
-        competitors.forEach((c, index) => {
-            const isClient = c.displayName.text.toLowerCase().includes(client.displayName.text.toLowerCase());
-            totalCompReviews += (c.userRatingCount || 0);
-            compHTML += `
-                <tr class="${isClient ? 'is-client' : ''}">
-                    <td>#${index + 1}</td>
-                    <td>${c.displayName.text} ${isClient ? '(TU ESTABLECIMIENTO)' : ''}</td>
-                    <td>${c.rating || 'N/A'} ★</td>
-                    <td>${c.userRatingCount || 0} opiniones</td>
-                </tr>
-            `;
-        });
-        document.getElementById('compBody').innerHTML = compHTML;
-
-        // Estímulo de Demanda Estimada
-        document.getElementById('demandEstimation').innerHTML = `
-            <div class="audit-detail warning">
-                <h4>📊 Estimación de Demanda y Potencial de Conversión en la Zona</h4>
-                <p>Los principales negocios del sector en tu área acumulan un volumen conjunto de <strong>+${totalCompReviews} opiniones registradas</strong> en Google. Se estima que hasta un <strong>20% de los usuarios</strong> que consultan estas fichas buscan realizar una reserva o consulta inmediata. Contar con canales directos de reserva automatizados permite capturar esa demanda activa sin perder clientes en el proceso de decisión.</p>
-            </div>
-        `;
-
-        // Pintar Resultados
-        document.getElementById('reputationAudit').innerHTML = repHTML;
-        document.getElementById('conversionAudit').innerHTML = convHTML;
-        document.getElementById('actionPlanList').innerHTML = planHTML;
-        document.getElementById('scoreValue').innerText = `${Math.max(score, 60)}/100`;
-
-    } catch (e) {
-        alert("Error consultando la API de Google. Verifica tu clave.");
-        console.error(e);
+    } catch (error) {
+        resultadoDiv.innerHTML = `<p style="color: #ef4444;">Error al ejecutar el diagnóstico: ${error.message}</p>`;
     }
+});
+
+async function ejecutarDiagnosticoPlaces(nombreNegocio, apiKey) {
+    const url = 'https://places.googleapis.com/v1/places:searchText';
+    
+    // Máscara corregida sin el parámetro problemático 'places.generatesProvisionalReservations'
+    const fieldMask = [
+        'places.id',
+        'places.displayName',
+        'places.formattedAddress',
+        'places.location',
+        'places.rating',
+        'places.userRatingCount',
+        'places.websiteUri',
+        'places.nationalPhoneNumber',
+        'places.regularOpeningHours',
+        'places.reservable'
+    ].join(',');
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': apiKey,
+            'X-Goog-FieldMask': fieldMask
+        },
+        body: JSON.stringify({
+            textQuery: nombreNegocio
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Detalle del error API Google:', errorData);
+        alert('Error 400/API: Revisa la consola de desarrollador para ver el detalle.');
+        return null;
+    }
+
+    const data = await response.json();
+
+    if (!data.places || data.places.length === 0) {
+        alert('No se encontró el negocio con ese nombre.');
+        return null;
+    }
+
+    return data.places[0];
 }
 </script>
 
