@@ -8,27 +8,30 @@
         :root {
             --bg-color: #0f172a;
             --card-bg: #1e293b;
-            --input-bg: #0f172a;
-            --border-color: #334155;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-color: #0ea5e9;
+            --accent-blue: #38bdf8;
             --accent-hover: #0284c7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --success-bg: rgba(34, 197, 94, 0.1);
+            --success-border: #22c55e;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --warning-border: #f59e0b;
         }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
             display: flex;
             justify-content: center;
         }
 
         .container {
             width: 100%;
-            max-width: 700px;
+            max-width: 900px;
         }
 
         .header {
@@ -38,277 +41,462 @@
 
         .header h1 {
             font-size: 2rem;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            color: #ffffff;
         }
 
         .header p {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
-        .card {
+        .form-card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            padding: 24px;
             border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        label {
+        .form-group label {
             display: block;
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
             margin-bottom: 8px;
         }
 
-        input[type="text"], input[type="password"] {
+        .form-group input {
             width: 100%;
-            padding: 14px 16px;
-            background-color: var(--input-bg);
+            padding: 12px 16px;
+            background-color: #0f172a;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: var(--text-color);
+            color: #ffffff;
             font-size: 1rem;
             box-sizing: border-box;
-            transition: border-color 0.2s ease;
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
-            outline: none;
-            border-color: var(--accent-color);
+        .form-group input:focus {
+            border-color: var(--accent-blue);
         }
 
         .btn-submit {
             width: 100%;
-            padding: 16px;
-            background-color: var(--accent-color);
-            color: #ffffff;
+            padding: 14px;
+            background-color: var(--accent-blue);
+            color: #0f172a;
+            font-size: 1.1rem;
+            font-weight: 700;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
             cursor: pointer;
-            transition: background-color 0.2s ease;
-            margin-top: 10px;
+            transition: background-color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
         .btn-submit:hover {
             background-color: var(--accent-hover);
+            color: #ffffff;
         }
 
-        #resultado {
-            margin-top: 30px;
-            padding: 20px;
+        /* RESULTADOS Y AUDITORÍA */
+        #results {
+            display: none;
             background-color: var(--card-bg);
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            display: none;
+            padding: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
-        .result-item {
-            margin-bottom: 12px;
-            padding-bottom: 12px;
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .result-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        .report-title h2 {
+            margin: 0 0 6px 0;
+            font-size: 1.8rem;
+            color: #ffffff;
         }
 
-        .result-label {
-            font-weight: bold;
-            color: var(--accent-color);
-        }
-
-        /* Ajustes visuales para el desplegable de sugerencias de Google Places */
-        .pac-container {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-family: inherit;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-            margin-top: 4px;
-        }
-
-        .pac-item {
-            padding: 10px 14px;
-            color: var(--text-color);
-            border-top: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-
-        .pac-item:first-child {
-            border-top: none;
-        }
-
-        .pac-item:hover, .pac-item-selected {
-            background-color: var(--input-bg);
-        }
-
-        .pac-item-query {
-            color: var(--accent-color);
+        .report-title p {
+            margin: 0;
+            color: var(--text-muted);
             font-size: 0.95rem;
         }
 
-        .pac-matched {
+        .score-box {
+            background-color: #0f172a;
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 12px 20px;
+            text-align: center;
+        }
+
+        .score-box .score-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .score-box .score-val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-blue);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 16px;
+            color: var(--accent-blue);
+        }
+
+        /* TARJETAS AUDIT DETAIL */
+        .audit-detail {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            background-color: #0f172a;
+        }
+
+        .audit-detail.success {
+            border-left: 4px solid var(--success-border);
+            background-color: var(--success-bg);
+        }
+
+        .audit-detail.warning {
+            border-left: 4px solid var(--warning-border);
+            background-color: var(--warning-bg);
+        }
+
+        .audit-detail h4 {
+            margin: 0 0 6px 0;
+            font-size: 1rem;
+            color: #ffffff;
+        }
+
+        .audit-detail p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        /* TABLA COMPETENCIA */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 14px;
+            background-color: #0f172a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comp-table th, .comp-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .comp-table th {
+            background-color: #1e293b;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .comp-table tr.is-client {
+            background-color: rgba(56, 189, 248, 0.15);
             font-weight: bold;
+            color: var(--accent-blue);
+        }
+
+        /* PLAN DE ACCIÓN */
+        .action-plan ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .action-plan li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        /* BRANDING LOGO GOOGLE */
+        .google-branding {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .google-logo {
+            height: 18px;
+            width: auto;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+
     <div class="header">
         <h1>Diagnóstico Estratégico de Negocio Local</h1>
         <p>Análisis de presencia, interacción con clientes y potencial de conversión</p>
     </div>
 
-    <div class="card">
-        <form id="diagnosticForm">
-            <div class="form-group">
-                <label for="apiKey">CLAVE API DE GOOGLE CLOUD</label>
-                <input type="password" id="apiKey" placeholder="Pega aquí tu API Key de Google" required>
-            </div>
-
-            <div class="form-group">
-                <label for="businessName">NOMBRE DEL NEGOCIO A AUDITAR</label>
-                <input type="text" id="businessName" placeholder="Ej: Fogonxito" required>
-            </div>
-
-            <!-- CAMPO CON AUTOCOMPLETADO INTELIGENTE -->
-            <div class="form-group">
-                <label for="cityInput">UBICACIÓN / CIUDAD (SELECCIONA DE LA LISTA)</label>
-                <input type="text" id="cityInput" placeholder="Empieza a escribir tu ciudad (ej: Majadahonda)..." required>
-            </div>
-
-            <div class="form-group">
-                <label for="keywords">PALABRAS CLAVE (SEPARADAS POR COMA)</label>
-                <input type="text" id="keywords" placeholder="Ej: tacos, nachos, restaurante mexicano" required>
-            </div>
-
-            <button type="submit" class="btn-submit">GENERAR DIAGNÓSTICO ESTRATÉGICO</button>
-        </form>
+    <!-- FORMULARIO DE ENTRADA -->
+    <div class="form-card">
+        <div class="form-group">
+            <label for="apiKey">Clave API de Google Cloud</label>
+            <input type="password" id="apiKey" placeholder="AIzaSy...">
+        </div>
+        <div class="form-group">
+            <label for="businessName">Nombre del Negocio a Auditar</label>
+            <input type="text" id="businessName" placeholder="Ej: Fogonxito Majadahonda">
+        </div>
+        <div class="form-group">
+            <label for="keywords">Palabras Clave (separadas por coma)</label>
+            <input type="text" id="keywords" placeholder="tacos, restaurante mexicano, nachos">
+        </div>
+        <button class="btn-submit" onclick="runAudit()">Generar Diagnóstico Estratégico</button>
     </div>
 
-    <div id="resultado"></div>
+    <!-- BLOQUE DE RESULTADOS / INFORME -->
+    <div id="results">
+        
+        <div class="report-header">
+            <div class="report-title">
+                <h2 id="reportBusinessName">Nombre del Negocio</h2>
+                <p id="reportKeywords">Analizando palabras clave...</p>
+            </div>
+            <div class="score-box">
+                <span class="score-label">Salud Digital</span>
+                <span class="score-val" id="scoreValue">--/100</span>
+            </div>
+        </div>
+
+        <h3 class="section-title">1. Reputación y Presencia Digital</h3>
+        <div id="reputationAudit"></div>
+
+        <h3 class="section-title">2. Conversión y Canales de Venta</h3>
+        <div id="conversionAudit"></div>
+
+        <h3 class="section-title">3. Análisis del Mercado Local</h3>
+        <div id="demandEstimation"></div>
+        
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Establecimiento</th>
+                    <th>Valoración</th>
+                    <th>Reseñas Totales</th>
+                </tr>
+            </thead>
+            <tbody id="compBody"></tbody>
+        </table>
+
+        <h3 class="section-title">4. Plan de Acción Recomendado</h3>
+        <div class="action-plan">
+            <ul id="actionPlanList"></ul>
+        </div>
+
+        <!-- ATRIBUCIÓN OFICIAL DE GOOGLE -->
+        <div class="google-branding">
+            <span>Powered by</span>
+            <img class="google-logo" src="https://maps.gstatic.com/mapfiles/api-3/images/google_white5.png" alt="Google">
+        </div>
+
+    </div>
+
 </div>
 
 <script>
-let autocomplete;
-
-// Carga dinámica de la API de Autocomplete al escribir/pegar la API Key
-document.getElementById('apiKey').addEventListener('blur', cargarGoogleAutocomplete);
-document.getElementById('apiKey').addEventListener('change', cargarGoogleAutocomplete);
-
-function cargarGoogleAutocomplete() {
-    const apiKey = document.getElementById('apiKey').value.trim();
-    if (!apiKey || window.google) return;
-
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=es`;
-    script.async = true;
-    script.onload = () => {
-        const input = document.getElementById('cityInput');
-        autocomplete = new google.maps.places.Autocomplete(input, {
-            types: ['(cities)'],
-            componentRestrictions: { country: 'es' } // Filtro restringido a España por defecto
-        });
-    };
-    document.head.appendChild(script);
-}
-
-document.getElementById('diagnosticForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
+async function runAudit() {
     const apiKey = document.getElementById('apiKey').value.trim();
     const businessName = document.getElementById('businessName').value.trim();
-    const city = document.getElementById('cityInput').value.trim();
-    const resultadoDiv = document.getElementById('resultado');
+    const keywordsInput = document.getElementById('keywords').value.trim();
 
-    if (!apiKey || !businessName || !city) {
-        alert('Por favor completa todos los campos obligatorios.');
+    if(!apiKey || !businessName || !keywordsInput) {
+        alert("Por favor, rellena todos los campos.");
         return;
     }
 
-    resultadoDiv.style.display = 'block';
-    resultadoDiv.innerHTML = '<p>Consultando API de Google Places...</p>';
+    const keywordList = keywordsInput.split(',').map(k => k.trim());
+    const mainKeyword = keywordList[0];
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('scoreValue').innerText = "...";
 
     try {
-        const placeData = await ejecutarDiagnosticoPlaces(businessName, city, apiKey);
+        // 1. Datos del Cliente (Máscara limpia y corregida sin campos inválidos)
+        const clientRes = await fetch(`https://places.googleapis.com/v1/places:searchText`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': apiKey,
+                'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.reservable'
+            },
+            body: JSON.stringify({ textQuery: businessName })
+        });
         
-        if (placeData) {
-            resultadoDiv.innerHTML = `
-                <h3>Resultados para: ${placeData.displayName ? placeData.displayName.text : businessName}</h3>
-                <div class="result-item"><span class="result-label">Dirección:</span> ${placeData.formattedAddress || 'No disponible'}</div>
-                <div class="result-item"><span class="result-label">Puntuación:</span> ${placeData.rating || 'N/A'} ⭐ (${placeData.userRatingCount || 0} reseñas)</div>
-                <div class="result-item"><span class="result-label">Teléfono:</span> ${placeData.nationalPhoneNumber || 'No disponible'}</div>
-                <div class="result-item"><span class="result-label">Sitio Web:</span> ${placeData.websiteUri ? `<a href="${placeData.websiteUri}" target="_blank" style="color:#0ea5e9;">${placeData.websiteUri}</a>` : 'No disponible'}</div>
-                <div class="result-item"><span class="result-label">Permite Reservas:</span> ${placeData.reservable ? 'Sí' : 'No / No especificado'}</div>
-            `;
+        const clientData = await clientRes.json();
+        
+        if (clientData.error) {
+            alert(`Error de Google API (${clientData.error.code}): ${clientData.error.message}`);
+            console.error("Detalle completo:", clientData.error);
+            return;
         }
-    } catch (error) {
-        resultadoDiv.innerHTML = `<p style="color: #ef4444;">Error al ejecutar el diagnóstico: ${error.message}</p>`;
+
+        const client = (clientData.places && clientData.places.length > 0) ? clientData.places[0] : null;
+
+        if(!client) {
+            alert("No se encontró el negocio con ese nombre.");
+            return;
+        }
+
+        // 2. Mercado Local
+        const compRes = await fetch(`https://places.googleapis.com/v1/places:searchText`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Goog-Api-Key': apiKey,
+                'X-Goog-FieldMask': 'places.displayName,places.rating,places.userRatingCount'
+            },
+            body: JSON.stringify({ textQuery: mainKeyword, pageSize: 5 })
+        });
+        const compData = await compRes.json();
+        const competitors = compData.places || [];
+
+        document.getElementById('reportBusinessName').innerText = client.displayName ? client.displayName.text : businessName;
+        document.getElementById('reportKeywords').innerText = `Analizando: ${keywordList.join(" | ")}`;
+
+        let score = 100;
+        let repHTML = '';
+        let convHTML = '';
+        let planHTML = '';
+
+        // --- REPUTACIÓN Y ENGAGEMENT ---
+        const clientRating = client.rating || 0;
+        const clientReviews = client.userRatingCount || 0;
+
+        repHTML += `
+            <div class="audit-detail success">
+                <h4>✅ Sólida base de clientes acumulada</h4>
+                <p>Tu negocio cuenta con <strong>${clientReviews} opiniones de clientes</strong> y una valoración de <strong>${clientRating}★</strong>. Tienes una comunidad de clientes satisfechos que ya respaldan la calidad de tu establecimiento.</p>
+            </div>
+        `;
+
+        repHTML += `
+            <div class="audit-detail warning">
+                <h4>📈 Oportunidad de Fidelización: Gestión Activa de Opiniones</h4>
+                <p>Responder a las opiniones de los usuarios fortalece la cercanía con el cliente. Según los estándares de Google, las fichas con interacción activa por parte de la gerencia consiguen mayor alcance orgánico en las búsquedas locales.</p>
+            </div>
+        `;
+        planHTML += `<li><strong>Protocolo de Atención en Reseñas:</strong> Establecer una rutina de respuesta sistemática para proyectar atención al cliente y potenciar la visibilidad en el algoritmo local.</li>`;
+
+        // --- RESERVAS Y CONVERSIÓN ---
+        if (client.reservable) {
+            convHTML += `
+                <div class="audit-detail success">
+                    <h4>✅ Canal de Reserva Directa Activo</h4>
+                    <p>La ficha cuenta con opción de gestión de reservas, lo que facilita la conversión inmediata cuando un cliente decide acudir a tu establecimiento.</p>
+                </div>
+            `;
+        } else {
+            score -= 15;
+            convHTML += `
+                <div class="audit-detail warning">
+                    <h4>💡 Potencial Dormido: Automatización de Reservas y Turnos</h4>
+                    <p>Actualmente la ficha no dispone de un botón directo de reserva en línea habilitado. Integrar un motor de reservas instantáneo permite captar clientes fuera del horario comercial, reducir la pérdida de llamadas no atendidas en horas punta y optimizar la rotación de mesas por turnos de disponibilidad.</p>
+                </div>
+            `;
+            planHTML += `<li><strong>Sistema de Reserva Directa:</strong> Habilitar la confirmación instantánea de mesas en la ficha de Google para maximizar la ocupación del comedor y aumentar la facturación mensual.</li>`;
+        }
+
+        if (client.websiteUri) {
+            convHTML += `
+                <div class="audit-detail success">
+                    <h4>✅ Acceso Digital a Carta y Menú</h4>
+                    <p>Enlace corporativo correctamente configurado (<code>${client.websiteUri}</code>), permitiendo al cliente consultar la propuesta gastronómica previa.</p>
+                </div>
+            `;
+        } else {
+            score -= 15;
+            convHTML += `
+                <div class="audit-detail warning">
+                    <h4>💡 Oportunidad: Carta Digital y Menú Interactivo</h4>
+                    <p>Vincular un sitio web optimizado para móviles o la carta digitalizada directamente en el perfil ayuda a que el usuario tome la decisión de visita de forma mucho más rápida.</p>
+                </div>
+            `;
+            planHTML += `<li><strong>Despliegue de Carta Interactiva:</strong> Vincular una página de destino adaptada a dispositivos móviles con el menú completo y llamadas a la acción claras.</li>`;
+        }
+
+        // --- TABLA DE COMPETENCIA ---
+        let compHTML = '';
+        let totalCompReviews = 0;
+        competitors.forEach((c, index) => {
+            const compName = c.displayName ? c.displayName.text : 'Negocio Local';
+            const isClient = compName.toLowerCase().includes((client.displayName ? client.displayName.text : businessName).toLowerCase());
+            totalCompReviews += (c.userRatingCount || 0);
+            compHTML += `
+                <tr class="${isClient ? 'is-client' : ''}">
+                    <td>#${index + 1}</td>
+                    <td>${compName} ${isClient ? '(TU ESTABLECIMIENTO)' : ''}</td>
+                    <td>${c.rating || 'N/A'} ★</td>
+                    <td>${c.userRatingCount || 0} opiniones</td>
+                </tr>
+            `;
+        });
+        document.getElementById('compBody').innerHTML = compHTML;
+
+        // Estímulo de Demanda Estimada
+        document.getElementById('demandEstimation').innerHTML = `
+            <div class="audit-detail warning">
+                <h4>📊 Estimación de Demanda y Potencial de Conversión en la Zona</h4>
+                <p>Los principales negocios del sector en tu área acumulan un volumen conjunto de <strong>+${totalCompReviews} opiniones registradas</strong> en Google. Se estima que hasta un <strong>20% de los usuarios</strong> que consultan estas fichas buscan realizar una reserva o consulta inmediata. Contar con canales directos de reserva automatizados permite capturar esa demanda activa sin perder clientes en el proceso de decisión.</p>
+            </div>
+        `;
+
+        // Pintar Resultados
+        document.getElementById('reputationAudit').innerHTML = repHTML;
+        document.getElementById('conversionAudit').innerHTML = convHTML;
+        document.getElementById('actionPlanList').innerHTML = planHTML;
+        document.getElementById('scoreValue').innerText = `${Math.max(score, 60)}/100`;
+
+    } catch (e) {
+        alert("Ocurrió un error inesperado al procesar la solicitud.");
+        console.error("Error catch:", e);
     }
-});
-
-async function ejecutarDiagnosticoPlaces(nombre, ciudad, apiKey) {
-    const url = 'https://places.googleapis.com/v1/places:searchText';
-    const queryCompleta = `${nombre} ${ciudad}`.trim();
-
-    // Máscara de campos optimizada y limpia (cero error 400)
-    const fieldMask = [
-        'places.id',
-        'places.displayName',
-        'places.formattedAddress',
-        'places.location',
-        'places.rating',
-        'places.userRatingCount',
-        'places.websiteUri',
-        'places.nationalPhoneNumber',
-        'places.regularOpeningHours',
-        'places.reservable'
-    ].join(',');
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Goog-Api-Key': apiKey,
-            'X-Goog-FieldMask': fieldMask
-        },
-        body: JSON.stringify({
-            textQuery: queryCompleta,
-            languageCode: 'es',
-            regionCode: 'ES'
-        })
-    });
-
-    if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error API:', errorData);
-        alert('Error en la API de Google Places. Revisa la consola de desarrollador.');
-        return null;
-    }
-
-    const data = await response.json();
-
-    if (!data.places || data.places.length === 0) {
-        alert('No se encontró el negocio con los datos especificados.');
-        return null;
-    }
-
-    return data.places[0];
 }
 </script>
 
