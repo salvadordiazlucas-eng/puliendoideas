@@ -34,9 +34,21 @@
             max-width: 900px;
         }
 
+        /* ESTILOS DE CABECERA Y LOGO RESPONSIVE */
         .header {
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        .brand-logo {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 8px;
         }
 
         .header h1 {
@@ -48,6 +60,7 @@
         .header p {
             color: var(--text-muted);
             font-size: 1.05rem;
+            margin-top: 0;
         }
 
         .form-card {
@@ -280,13 +293,43 @@
             align-items: center;
             gap: 8px;
         }
+
+        /* ESTILOS PARA EL DESPLEGABLE DE GOOGLE AUTOCOMPLETE EN MODO OSCURO */
+        .pac-container {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+            font-family: inherit;
+        }
+        .pac-item {
+            color: #cbd5e1;
+            padding: 8px 12px;
+            border-top: 1px solid #334155;
+        }
+        .pac-item:hover {
+            background-color: #0f172a;
+        }
+        .pac-item-query {
+            color: #ffffff;
+        }
+        .pac-matched {
+            color: var(--accent-blue);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
 
+    <!-- CABECERA CON IMAGEN RESPONSIVE (MÓVIL / PC) -->
     <div class="header">
+        <picture>
+            <!-- Muestra esta imagen en pantallas de hasta 768px (Móvil/Tablet) -->
+            <source media="(max-width: 768px)" srcset="cabecera-puliendo-ideas_movil.png">
+            <!-- Muestra esta imagen por defecto en PC/Escritorio -->
+            <img src="cabecera-puliendo-ideas_pc.png" alt="Puliendo Ideas - Diagnóstico Estratégico" class="brand-logo">
+        </picture>
         <h1>Diagnóstico Estratégico de Negocio Local</h1>
         <p>Análisis de presencia, interacción con clientes y potencial de conversión</p>
     </div>
@@ -300,20 +343,20 @@
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 <path d="M9 12l2 2 4-4"/>
             </svg>
-            <span><strong>Conexión Verificada:</strong> Integrado oficialmente con Google Cloud Places API (v1).</span>
+            <span><strong>Conexión Verificada:</strong> Integrado oficialmente con Google Cloud Places API.</span>
         </div>
 
         <div class="form-group">
             <label for="apiKey">Clave API de Google Cloud</label>
-            <input type="password" id="apiKey" placeholder="AIzaSy...">
+            <input type="password" id="apiKey" placeholder="AIzaSy..." onchange="initAutocomplete()" onblur="initAutocomplete()">
         </div>
         <div class="form-group">
             <label for="businessName">Nombre del Negocio a Auditar</label>
             <input type="text" id="businessName" placeholder="Ej: Fogonxito">
         </div>
         <div class="form-group">
-            <label for="location">Ubicación / Ciudad</label>
-            <input type="text" id="location" placeholder="Ej: Majadahonda, Madrid">
+            <label for="location">Ubicación / Ciudad (Selecciona de la lista)</label>
+            <input type="text" id="location" placeholder="Comienza a escribir una ciudad...">
         </div>
         <div class="form-group">
             <label for="keywords">Palabras Clave (separadas por coma)</label>
@@ -384,6 +427,28 @@
 </div>
 
 <script>
+let autocompleteLoaded = false;
+
+// Inicializa el autocompletado cargando la API de Google Maps dinámicamente
+function initAutocomplete() {
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if (!apiKey || autocompleteLoaded) return;
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&language=es`;
+    script.async = true;
+    script.defer = true;
+    script.onload = () => {
+        autocompleteLoaded = true;
+        const input = document.getElementById('location');
+        const options = {
+            types: ['(cities)'] // Sugiere únicamente ciudades y municipios
+        };
+        new google.maps.places.Autocomplete(input, options);
+    };
+    document.head.appendChild(script);
+}
+
 async function runAudit() {
     const apiKey = document.getElementById('apiKey').value.trim();
     const businessName = document.getElementById('businessName').value.trim();
